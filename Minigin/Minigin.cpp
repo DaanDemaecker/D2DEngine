@@ -104,9 +104,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		while (lag >= fixedTimeStep)
 		{
 			Time::GetInstance().SetDeltaTime(fixedTimeStep);
-			sceneManager.Update();
+			sceneManager.FixedUpdate();
 			lag -= fixedTimeStep;
 		}
+
+		Time::GetInstance().SetDeltaTime(deltaTime);
+		sceneManager.Update();
 
 		sceneManager.PostUpdate();
 

@@ -18,7 +18,7 @@ namespace dae
 
 		float m_AccumulatedTime{};
 		int m_FramesSinceLastUpdate{};
-		const int m_FramesToUpdate{ 20 };
+		const int m_FramesToUpdate{ 60 };
 
 	};
 

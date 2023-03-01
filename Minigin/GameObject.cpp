@@ -13,6 +13,14 @@ void dae::GameObject::Update()
 	}
 }
 
+void dae::GameObject::FixedUpdate()
+{
+	for (auto& pComponent : m_pComponents)
+	{
+		pComponent->FixedUpdate();
+	}
+}
+
 void dae::GameObject::Render() const
 {
 	for (auto& pRenderComponent : m_pRenderComponents)

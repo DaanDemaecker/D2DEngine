@@ -18,6 +18,9 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 		virtual void Update();
+
+		virtual void FixedUpdate();
+
 		virtual void Render() const;
 
 		virtual void PostUpdate();

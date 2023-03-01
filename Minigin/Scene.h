@@ -13,6 +13,9 @@ namespace dae
 		void RemoveAll();
 
 		void Update();
+
+		void FixedUpdate();
+
 		void Render() const;
 
 		void PostUpdate();

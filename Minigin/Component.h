@@ -16,6 +16,8 @@ namespace dae
 		Component& operator=(Component&& other) = delete;
 
 		virtual void Update() {};
+
+		virtual void FixedUpdate() {};
 		
 		void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() { return m_ShouldDestroy; }
