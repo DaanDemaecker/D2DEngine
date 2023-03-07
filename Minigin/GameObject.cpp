@@ -45,11 +45,7 @@ void dae::GameObject::PostUpdate()
 
 void dae::GameObject::SetParent(std::weak_ptr<GameObject> pParent)
 {
-	if (m_pParent.expired())
-	{
-		m_pParent = pParent;
-	}
-	else
+	if (!m_pParent.expired())
 	{
 		auto pCurrentParent{ m_pParent.lock() };
 
@@ -57,11 +53,11 @@ void dae::GameObject::SetParent(std::weak_ptr<GameObject> pParent)
 			return;
 
 		pCurrentParent.get()->RemoveChild(weak_from_this());
-
-		pParent.lock().get()->m_pChildren.push_back(weak_from_this());
-
-		m_pParent = pParent;
 	}
+
+	pParent.lock()->m_pChildren.push_back(weak_from_this());
+
+	m_pParent = pParent;
 
 	m_pTransform->SetDirtyFlag();
 }
