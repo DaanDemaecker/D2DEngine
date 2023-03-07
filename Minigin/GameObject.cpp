@@ -62,6 +62,8 @@ void dae::GameObject::SetParent(std::weak_ptr<GameObject> pParent)
 
 		m_pParent = pParent;
 	}
+
+	m_pTransform->SetDirtyFlag();
 }
 
 void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> pChild)
