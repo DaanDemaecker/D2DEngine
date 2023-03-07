@@ -54,5 +54,10 @@ void dae::Scene::PostUpdate()
 	{
 		object->PostUpdate();
 	}
+
+	m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(), [](std::shared_ptr<GameObject> pObject)
+		{
+			return pObject->ShouldDestroy();
+		}), m_objects.end());
 }
 

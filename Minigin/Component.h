@@ -31,10 +31,10 @@ namespace dae
 		std::shared_ptr<T> GetComponent() const;
 
 	protected:
-		std::weak_ptr<GameObject> m_pParent{};
+		std::weak_ptr<GameObject> m_pOwner{};
 
 	private:
-		void SetParent(std::weak_ptr<GameObject> pParent) { m_pParent = pParent; }
+		void SetOwner(std::weak_ptr<GameObject> pOwner) { m_pOwner = pOwner; }
 		
 		bool m_ShouldDestroy{false};
 	};
@@ -46,10 +46,10 @@ namespace dae
 		if (!std::is_base_of<Component, T>())
 			return nullptr;
 
-		if (m_pParent.expired())
+		if (m_pOwner.expired())
 			return nullptr;
 
-		return m_pParent.lock()->GetComponent<T>();
+		return m_pOwner.lock()->GetComponent<T>();
 	}
 }
 

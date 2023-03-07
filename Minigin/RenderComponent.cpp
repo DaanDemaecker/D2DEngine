@@ -14,7 +14,7 @@ void dae::RenderComponent::Render() const
 	if (!tranform || !m_pTexture)
 		return;
 
-	glm::vec2 pos{ tranform->GetPosition() };
+	glm::vec2 pos{ tranform->GetWorldPosition() };
 
 	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }
