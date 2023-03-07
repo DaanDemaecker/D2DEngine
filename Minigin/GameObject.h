@@ -71,7 +71,9 @@ namespace dae
 			return nullptr;
 
 		if (HasComponent<T>())
-			return nullptr;
+		{
+			return GetComponent<T>();
+		}
 
 		auto pComponent = std::make_shared<T>();
 
