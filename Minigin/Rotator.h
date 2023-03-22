@@ -12,10 +12,10 @@ namespace dae
 
 		virtual void Update() override;
 
-		void SetRotSpeed(float newSpeed) { m_RotSpeed = newSpeed; }
+		void SetRotSpeed(float newSpeed) { m_RotSpeed = newSpeed/5; }
 
 	private:
-		float m_Distance{ 80.f };
+		float m_Distance{ 40.f };
 		float m_RotSpeed{glm::radians(180.f)};
 		float m_CurrentAngle{};
 	};

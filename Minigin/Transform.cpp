@@ -15,7 +15,6 @@ void dae::Transform::SetLocalPosition(const glm::vec2& pos)
 	{
 		pChild.lock()->GetTransform()->SetDirtyFlag();
 	}
-
 }
 
 glm::vec2 dae::Transform::GetWorldPosition()

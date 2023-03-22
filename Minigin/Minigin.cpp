@@ -95,7 +95,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	time.SetFixedTime(fixedTimeStep);
 
-	constexpr float desiredFrameRate = 60.f;
+	constexpr float desiredFrameRate = 144;
 	constexpr float desiredFrameDuration = 1000.f / desiredFrameRate;
 
 	while (doContinue)

@@ -40,7 +40,6 @@ namespace dae
 		template <class T>
 		bool HasComponent() const;
 
-
 		void SetParent(std::weak_ptr<GameObject> pParent);
 		std::weak_ptr<GameObject> GetParent() const { return m_pParent; }
 		void RemoveChild(std::weak_ptr<GameObject> pChild);

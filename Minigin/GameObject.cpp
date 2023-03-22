@@ -45,6 +45,12 @@ void dae::GameObject::PostUpdate()
 
 void dae::GameObject::SetParent(std::weak_ptr<GameObject> pParent)
 {
+	for (auto& pChild : m_pChildren)
+	{
+		if (pParent.lock() == pChild.lock())
+			return;
+	}
+
 	if (!m_pParent.expired())
 	{
 		auto pCurrentParent{ m_pParent.lock() };
