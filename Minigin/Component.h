@@ -18,6 +18,8 @@ namespace dae
 		virtual void Update() {};
 
 		virtual void FixedUpdate() {};
+
+		virtual void Render() const {};
 		
 		void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() { return m_ShouldDestroy; }
@@ -31,10 +33,10 @@ namespace dae
 		std::shared_ptr<T> GetComponent() const;
 
 	protected:
-		std::weak_ptr<GameObject> m_pOwner{};
+		GameObject* m_pOwner{};
 
 	private:
-		void SetOwner(std::weak_ptr<GameObject> pOwner) { m_pOwner = pOwner; }
+		void SetOwner(GameObject* pOwner) { m_pOwner = pOwner; }
 		
 		bool m_ShouldDestroy{false};
 	};
@@ -46,10 +48,10 @@ namespace dae
 		if (!std::is_base_of<Component, T>())
 			return nullptr;
 
-		if (m_pOwner.expired())
+		if (m_pOwner == nullptr)
 			return nullptr;
 
-		return m_pOwner.lock()->GetComponent<T>();
+		return m_pOwner->GetComponent<T>();
 	}
 }
 

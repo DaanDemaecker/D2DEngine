@@ -4,7 +4,7 @@
 
 void dae::Rotator::Update()
 {
-	auto pTransfom{m_pOwner.lock()->GetTransform()};
+	auto pTransfom{m_pOwner->GetTransform()};
 
 	if (!pTransfom)
 		return;

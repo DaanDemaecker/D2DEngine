@@ -8,11 +8,11 @@ namespace dae
 	class RenderComponent;
 	class Transform;
 
-	class GameObject final : public std::enable_shared_from_this<GameObject>
+	class GameObject final
 	{
 	public:
 		GameObject() = default;
-		~GameObject() = default;
+		virtual ~GameObject() {};
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -31,6 +31,8 @@ namespace dae
 		void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() const { return m_ShouldDestroy; }
 
+		GameObject* CreateNewObject();
+
 		template <class T>
 		std::shared_ptr<T> GetComponent() const;
 		template <class T>
@@ -40,21 +42,22 @@ namespace dae
 		template <class T>
 		bool HasComponent() const;
 
-		void SetParent(std::weak_ptr<GameObject> pParent);
-		std::weak_ptr<GameObject> GetParent() const { return m_pParent; }
-		void RemoveChild(std::weak_ptr<GameObject> pChild);
-		const std::vector<std::weak_ptr<GameObject>>& GetChildren() const { return m_pChildren; }
+		void SetParent(GameObject* pParent, bool worldPositionStays);
+		GameObject* GetParent() const { return m_pParent; }
+		void RemoveChild(GameObject* pChild);
+		const std::vector<std::unique_ptr<GameObject>>& GetChildren() const { return m_pChildren; }
+		bool ContainsChild(GameObject* pChild) const;
 
 		std::shared_ptr<Transform> GetTransform() { return m_pTransform; }
 
+
 	private:
-		std::weak_ptr<GameObject> m_pParent{};
-		std::vector<std::weak_ptr<GameObject>> m_pChildren{};
+		GameObject* m_pParent{};
+		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
 
 		std::shared_ptr<Transform> m_pTransform;
 
 		std::vector<std::shared_ptr<Component>> m_pComponents{};
-		std::vector<std::shared_ptr<RenderComponent>> m_pRenderComponents{};
 
 		bool m_ShouldDestroy{ false };
 
@@ -96,12 +99,7 @@ namespace dae
 
 		auto pComponent = std::make_shared<T>();
 
-		pComponent->SetOwner(weak_from_this());
-
-		if (std::is_base_of<RenderComponent, T>())
-		{
-			m_pRenderComponents.push_back(std::dynamic_pointer_cast<RenderComponent>(pComponent));
-		}
+		pComponent->SetOwner(this);
 
 		m_pComponents.push_back(pComponent);
 

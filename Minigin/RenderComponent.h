@@ -11,9 +11,14 @@ namespace dae
 	public:
 		RenderComponent() = default;
 
+		RenderComponent(const RenderComponent& other) = delete;
+		RenderComponent(RenderComponent&& other) = delete;
+		RenderComponent& operator=(const RenderComponent& other) = delete;
+		RenderComponent& operator=(RenderComponent&& other) = delete;
+
 		void SetTexture(std::shared_ptr<Texture2D> pTexture);
 
-		void Render() const;
+		virtual void Render() const override;
 
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};

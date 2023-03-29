@@ -5,60 +5,47 @@ using namespace dae;
 
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) : m_name(name)
+{
+	m_pSceneRoot = std::make_unique<GameObject>();
+	m_pSceneRoot->Init();
+}
 
 Scene::~Scene() = default;
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+GameObject* dae::Scene::CreateGameObject()
 {
-	m_objects.emplace_back(std::move(object));
+	return m_pSceneRoot->CreateNewObject();
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::Remove(GameObject* pObject)
 {
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	m_pSceneRoot->RemoveChild(pObject);
 }
 
 void Scene::RemoveAll()
 {
-	m_objects.clear();
+	
 }
 
 void Scene::Update()
 {
-	for(auto& object : m_objects)
-	{
-		object->Update();
-	}
+	m_pSceneRoot->Update();
 }
 
 void dae::Scene::FixedUpdate()
 {
-	for (auto& object : m_objects)
-	{
-		object->FixedUpdate();
-	}
+	m_pSceneRoot->FixedUpdate();
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
-	{
-		object->Render();
-	}
+	m_pSceneRoot->Render();
 }
 
 void dae::Scene::PostUpdate()
 {
-	for (auto& object : m_objects)
-	{
-		object->PostUpdate();
-	}
-
-	m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(), [](std::shared_ptr<GameObject> pObject)
-		{
-			return pObject->ShouldDestroy();
-		}), m_objects.end());
+	m_pSceneRoot->PostUpdate();
 }
 
 

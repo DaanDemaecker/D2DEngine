@@ -15,7 +15,7 @@ namespace dae
 		void SetWorldPosition(float x, float y);
 		void SetWorldPosition(const glm::vec2& pos);
 
-		void SetDirtyFlag() { m_HasChanged = true; }
+		void SetDirtyFlag();
 
 	private:
 		glm::vec2 m_LocalPosition{};
