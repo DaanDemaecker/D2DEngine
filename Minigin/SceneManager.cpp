@@ -11,9 +11,17 @@ void dae::SceneManager::Update()
 
 void dae::SceneManager::FixedUpdate()
 {
-	for (auto& scene : m_scenes)
+	for (const auto& scene : m_scenes)
 	{
 		scene->FixedUpdate();
+	}
+}
+
+void dae::SceneManager::OnGUI()
+{
+	for (const auto& scene : m_scenes)
+	{
+		scene->OnGUI();
 	}
 }
 

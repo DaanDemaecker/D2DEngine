@@ -19,6 +19,8 @@ namespace dae
 
 		void Render() const;
 
+		void OnGUI() const;
+
 		void PostUpdate();
 
 		~Scene();

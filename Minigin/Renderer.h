@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <memory>
 #include "Singleton.h"
-#include "TrashTheCache.h"
 
 namespace dae
 {
@@ -17,7 +16,6 @@ namespace dae
 		SDL_Color m_clearColor{};
 		bool m_showDemo{ false };
 		bool m_ShowTrashTheCache{ true };
-		std::unique_ptr<TrashTheCache> m_pTrashTheCache{};
 
 	public:
 		void Init(SDL_Window* window);

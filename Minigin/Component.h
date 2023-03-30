@@ -20,6 +20,8 @@ namespace dae
 		virtual void FixedUpdate() {};
 
 		virtual void Render() const {};
+
+		virtual void OnGUI() {};
 		
 		void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() { return m_ShouldDestroy; }

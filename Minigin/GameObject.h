@@ -26,6 +26,8 @@ namespace dae
 
 		void Render() const;
 
+		void OnGUI();
+
 		void PostUpdate();
 
 		void Destroy() { m_ShouldDestroy = true; }

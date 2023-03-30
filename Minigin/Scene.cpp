@@ -43,6 +43,11 @@ void Scene::Render() const
 	m_pSceneRoot->Render();
 }
 
+void dae::Scene::OnGUI() const
+{
+	m_pSceneRoot->OnGUI();
+}
+
 void dae::Scene::PostUpdate()
 {
 	m_pSceneRoot->PostUpdate();

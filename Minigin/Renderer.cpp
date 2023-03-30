@@ -35,8 +35,6 @@ void dae::Renderer::Init(SDL_Window* window)
 	ImGui::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
-
-	m_pTrashTheCache = std::make_unique<TrashTheCache>();
 }
 
 void dae::Renderer::Render()
@@ -54,8 +52,7 @@ void dae::Renderer::Render()
 	if (m_showDemo)
 		ImGui::ShowDemoWindow(&m_showDemo);
 
-	if (m_ShowTrashTheCache)
-		m_pTrashTheCache->Render();
+	SceneManager::GetInstance().OnGUI();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());

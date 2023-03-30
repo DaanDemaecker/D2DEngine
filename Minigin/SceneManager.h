@@ -15,6 +15,9 @@ namespace dae
 
 		void Update();
 		void FixedUpdate();
+
+		void OnGUI();
+
 		void Render();
 
 		void PostUpdate();

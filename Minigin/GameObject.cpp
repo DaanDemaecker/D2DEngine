@@ -51,6 +51,19 @@ void dae::GameObject::Render() const
 	}
 }
 
+void dae::GameObject::OnGUI()
+{
+	for (auto& pComponent : m_pComponents)
+	{
+		pComponent->OnGUI();
+	}
+
+	for (auto& pChild : m_pChildren)
+	{
+		pChild->OnGUI();
+	}
+}
+
 void dae::GameObject::PostUpdate()
 {
 	m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end(), [](std::shared_ptr<Component>& pComponent)
