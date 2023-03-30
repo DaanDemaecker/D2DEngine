@@ -78,9 +78,9 @@ void dae::GameObject::PostUpdate()
 	}
 }
 
-dae::GameObject* dae::GameObject::CreateNewObject()
+dae::GameObject* dae::GameObject::CreateNewObject(const std::string& name)
 {
-	auto pNewObject{ std::make_unique<GameObject>() };
+	auto pNewObject{ std::make_unique<GameObject>(name) };
 
 	pNewObject->Init();
 

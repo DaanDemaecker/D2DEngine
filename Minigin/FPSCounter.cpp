@@ -4,8 +4,11 @@
 
 void dae::FPSCounter::Update()
 {
-	m_AccumulatedTime += Time::GetInstance().GetDeltaTime();
-	if (++m_FramesSinceLastUpdate >= m_FramesToUpdate)
+	if (m_Timer >= 0)
+	{
+		m_Timer -= Time::GetInstance().GetDeltaTime();
+	}
+	else
 	{
 		if (m_pTextComponent.expired())
 		{
@@ -17,11 +20,8 @@ void dae::FPSCounter::Update()
 			}
 		}
 
-		int fps = static_cast<int>(m_FramesToUpdate / m_AccumulatedTime);
+		m_Timer = m_TimeToUpdate;
 
-		m_FramesSinceLastUpdate = 0;
-		m_AccumulatedTime = 0;
-
-		m_pTextComponent.lock()->SetText(std::to_string(fps) + " FPS");
+		m_pTextComponent.lock()->SetText(std::to_string(Time::GetInstance().GetFps()) + " FPS");
 	}
 }

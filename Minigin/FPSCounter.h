@@ -16,9 +16,8 @@ namespace dae
 	private:
 		std::weak_ptr<TextComponent> m_pTextComponent;
 
-		float m_AccumulatedTime{};
-		int m_FramesSinceLastUpdate{};
-		const int m_FramesToUpdate{ 60 };
+		float m_Timer{};
+		const float m_TimeToUpdate = 2.f;
 
 	};
 

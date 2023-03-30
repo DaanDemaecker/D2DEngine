@@ -15,7 +15,6 @@ namespace dae
 		SDL_Window* m_window{};
 		SDL_Color m_clearColor{};
 		bool m_showDemo{ false };
-		bool m_ShowTrashTheCache{ true };
 
 	public:
 		void Init(SDL_Window* window);

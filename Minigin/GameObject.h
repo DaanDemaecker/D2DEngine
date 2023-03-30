@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace dae
 {
@@ -11,7 +12,8 @@ namespace dae
 	class GameObject final
 	{
 	public:
-		GameObject() = default;
+		GameObject() : GameObject("UnNamed"){}
+		GameObject(const std::string& name) : m_Name{name}{}
 		virtual ~GameObject() {};
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -33,7 +35,7 @@ namespace dae
 		void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() const { return m_ShouldDestroy; }
 
-		GameObject* CreateNewObject();
+		GameObject* CreateNewObject(const std::string& name = "UnNamed");
 
 		template <class T>
 		std::shared_ptr<T> GetComponent() const;
@@ -52,8 +54,11 @@ namespace dae
 
 		std::shared_ptr<Transform> GetTransform() { return m_pTransform; }
 
+		const std::string& GetName() const { return m_Name; }
 
 	private:
+		const std::string m_Name;
+
 		GameObject* m_pParent{};
 		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
 

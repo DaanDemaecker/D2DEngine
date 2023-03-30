@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "GameObject.h"
+#include "ImGuiInfoComponent.h"
 
 using namespace dae;
 
@@ -7,15 +8,16 @@ unsigned int Scene::m_idCounter = 0;
 
 Scene::Scene(const std::string& name) : m_name(name)
 {
-	m_pSceneRoot = std::make_unique<GameObject>();
+	m_pSceneRoot = std::make_unique<GameObject>("Scene Root");
 	m_pSceneRoot->Init();
+	m_pSceneRoot->AddComponent<ImGuiInfoComponent>();
 }
 
 Scene::~Scene() = default;
 
-GameObject* dae::Scene::CreateGameObject()
+GameObject* dae::Scene::CreateGameObject(const std::string& name)
 {
-	return m_pSceneRoot->CreateNewObject();
+	return m_pSceneRoot->CreateNewObject(name);
 }
 
 void Scene::Remove(GameObject* pObject)

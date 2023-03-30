@@ -24,8 +24,8 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{bf957e20-9289-4306-ab9c-091403f01ba9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TrashTheCache">
-      <UniqueIdentifier>{7419c11b-e1ca-49d6-8fe7-2ea9f82e2b34}</UniqueIdentifier>
+    <Filter Include="Components\IMGui Components">
+      <UniqueIdentifier>{3ed75ef0-59c8-4d31-a85a-bd5123e9c24f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +92,6 @@
     <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="TrashTheCache.h">
-      <Filter>TrashTheCache</Filter>
-    </ClInclude>
     <ClInclude Include="Minigin.h">
       <Filter>Game Files</Filter>
     </ClInclude>
@@ -111,7 +108,10 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="TrashTheCacheComponent.h">
-      <Filter>TrashTheCache</Filter>
+      <Filter>Components\IMGui Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiInfoComponent.h">
+      <Filter>Components\IMGui Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -184,14 +184,14 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="TrashTheCache.cpp">
-      <Filter>TrashTheCache</Filter>
-    </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="TrashTheCacheComponent.cpp">
-      <Filter>TrashTheCache</Filter>
+      <Filter>Components\IMGui Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiInfoComponent.cpp">
+      <Filter>Components\IMGui Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
