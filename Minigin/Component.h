@@ -35,9 +35,11 @@ namespace dae
 		std::shared_ptr<T> GetComponent() const;
 
 	protected:
-		GameObject* m_pOwner{};
+		GameObject* GetOwner() const { return m_pOwner; }
 
 	private:
+		GameObject* m_pOwner{};
+
 		void SetOwner(GameObject* pOwner) { m_pOwner = pOwner; }
 		
 		bool m_ShouldDestroy{false};

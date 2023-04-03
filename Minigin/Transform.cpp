@@ -9,7 +9,7 @@ void dae::Transform::SetLocalPosition(const glm::vec2& pos)
 {
 	m_LocalPosition = pos;
 
-	const auto& pChildren{ m_pOwner->GetChildren() };
+	const auto& pChildren{ GetOwner()->GetChildren()};
 
 	for (auto& pChild : pChildren)
 	{
@@ -19,14 +19,14 @@ void dae::Transform::SetLocalPosition(const glm::vec2& pos)
 
 glm::vec2 dae::Transform::GetWorldPosition()
 {
-	if (m_pOwner == nullptr || m_pOwner->GetParent() == nullptr)
+	if (GetOwner() == nullptr || GetOwner()->GetParent() == nullptr)
 	{
 		m_ParentWorldPosition = glm::vec2{};
 		m_HasChanged = false;
 	}
 	else if (m_HasChanged)
 	{
-		m_ParentWorldPosition = m_pOwner->GetParent()->GetTransform()->GetWorldPosition();
+		m_ParentWorldPosition = GetOwner()->GetParent()->GetTransform()->GetWorldPosition();
 		m_HasChanged = false;
 	}
 
@@ -43,11 +43,21 @@ void dae::Transform::SetWorldPosition(const glm::vec2& pos)
 	SetLocalPosition(pos - (GetWorldPosition() - m_LocalPosition));
 }
 
+void dae::Transform::MoveLocalPosition(float x, float y)
+{
+	MoveLocalPosition(glm::vec2{ x, y });
+}
+
+void dae::Transform::MoveLocalPosition(const glm::vec2& pos)
+{
+	SetLocalPosition(m_LocalPosition + pos);
+}
+
 void dae::Transform::SetDirtyFlag()
 {
 	m_HasChanged = true;
 
-	for (auto& pChild : m_pOwner->GetChildren())
+	for (auto& pChild : GetOwner()->GetChildren())
 	{
 		pChild->GetTransform()->SetDirtyFlag();
 	}

@@ -17,7 +17,7 @@ void dae::ImGuiInfoComponent::CreateWindow()
         if (ImGui::TreeNodeEx("SceneGraph", flags))
         {
 
-            AddObjectToTree(m_pOwner);
+            AddObjectToTree(GetOwner());
 
             ImGui::TreePop();
         }

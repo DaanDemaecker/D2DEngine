@@ -15,6 +15,9 @@ namespace dae
 		void SetWorldPosition(float x, float y);
 		void SetWorldPosition(const glm::vec2& pos);
 
+		void MoveLocalPosition(float x, float y);
+		void MoveLocalPosition(const glm::vec2& pos);
+
 		void SetDirtyFlag();
 
 	private:

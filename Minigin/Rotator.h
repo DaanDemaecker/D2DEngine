@@ -12,7 +12,7 @@ namespace dae
 
 		virtual void Update() override;
 
-		void SetRotSpeed(float newSpeed) { m_RotSpeed = newSpeed/5; }
+		void SetRotSpeed(float newSpeed) { m_RotSpeed = newSpeed; }
 
 	private:
 		float m_Distance{ 40.f };

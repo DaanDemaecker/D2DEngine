@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "ImGuiInfoComponent.h"
+#include "InfoCommand.h"
+#include "InputManager.h"
 
 using namespace dae;
 
@@ -10,6 +12,9 @@ Scene::Scene(const std::string& name) : m_name(name)
 {
 	m_pSceneRoot = std::make_unique<GameObject>("Scene Root");
 	m_pSceneRoot->Init();
+
+	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::down, m_pSceneRoot.get(), std::make_unique<InfoCommand>());
+
 	m_pSceneRoot->AddComponent<ImGuiInfoComponent>();
 }
 

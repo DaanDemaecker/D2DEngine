@@ -17,10 +17,12 @@ namespace dae
 		ImGuiInfoComponent& operator=(const ImGuiInfoComponent& other) = delete;
 		ImGuiInfoComponent& operator=(ImGuiInfoComponent&& other) = delete;
 
+		void ToggleInfoWindow() { m_ShowInfoWindow = !m_ShowInfoWindow; }
+
 		virtual void OnGUI() override;
 
 	private:
-		bool m_ShowInfoWindow{ true };
+		bool m_ShowInfoWindow{ false };
 
 		void CreateWindow();
 

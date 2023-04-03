@@ -1,10 +1,12 @@
-#include <string>
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
 #include "Component.h"
-#include "RenderComponent.h"
 #include "Transform.h"
+#include "InputManager.h"
+
+dae::GameObject::~GameObject()
+{
+
+}
 
 void dae::GameObject::Init()
 {
