@@ -1,7 +1,7 @@
 #pragma once
 #include "Enums.h"
 #include <Windows.h>
-#include <Xinput.h>
+//#include <Xinput.h>
 
 namespace dae
 {
@@ -33,7 +33,7 @@ namespace dae
 		int m_GamepadIndex;
 		bool m_ShouldDelete{false};
 
-		XINPUT_STATE m_State;
+		int m_State;
 		int m_ButtonsDown;
 		int m_ButtonsUp;
 	};

@@ -4,12 +4,12 @@
 
 namespace dae
 {
-	class GameObject;
+	class MoveComponent;
 
 	class MoveCommand final : public Command
 	{
 	public:
-		MoveCommand(const glm::vec2& direction) : m_Direction{ direction }, Command() {}
+		MoveCommand(const glm::vec2& direction, MoveComponent* pMoveComponent) : m_Direction{ direction }, m_pMoveComponent{pMoveComponent}, Command() {}
 
 		virtual ~MoveCommand() = default;
 		MoveCommand(const MoveCommand& other) = delete;
@@ -17,9 +17,10 @@ namespace dae
 		MoveCommand& operator=(const MoveCommand& other) = delete;
 		MoveCommand& operator=(MoveCommand&& other) = delete;
 
-		virtual void Execute(const GameObject* Object) override;
+		virtual void Execute() override;
 
 	private:
 		const glm::vec2 m_Direction;
+		MoveComponent* m_pMoveComponent;
 	};
 }

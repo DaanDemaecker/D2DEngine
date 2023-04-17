@@ -13,9 +13,9 @@ Scene::Scene(const std::string& name) : m_name(name)
 	m_pSceneRoot = std::make_unique<GameObject>("Scene Root");
 	m_pSceneRoot->Init();
 
-	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::down, m_pSceneRoot.get(), std::make_unique<InfoCommand>());
+	auto pInfoComponent = m_pSceneRoot->AddComponent<ImGuiInfoComponent>().get();
 
-	m_pSceneRoot->AddComponent<ImGuiInfoComponent>();
+	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent));
 }
 
 Scene::~Scene() = default;

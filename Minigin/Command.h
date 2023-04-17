@@ -14,7 +14,7 @@ namespace dae
 		Command& operator=(Command&& other) = delete;
 
 
-		virtual void Execute(const GameObject* Object) = 0;
+		virtual void Execute() = 0;
 	};
 }
 

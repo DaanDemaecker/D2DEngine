@@ -15,22 +15,21 @@ namespace dae
 
 	struct KeyboardCommand
 	{
-		KeyboardCommand(SDL_Scancode keyCode, keyState keyState, GameObject* pObject, std::unique_ptr<Command> pCommand)
-			:key{ keyCode }, state{ keyState }, pObject{ pObject }, command{ std::move(pCommand) }
+		KeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand)
+			:key{ keyCode }, state{ keyState }, command{ std::move(pCommand) }
 		{}
 		~KeyboardCommand() {};
 
 		SDL_Scancode key;
 		keyState state;
 
-		GameObject* pObject;
 		std::unique_ptr<Command> command;
 	};
 
 	struct GamepadCommand
 	{
-		GamepadCommand(int index, GamepadButton button, keyState keyState, GameObject* pObject, std::unique_ptr<Command> pCommand)
-			:gamepadIndex{ index }, button {button}, state{ keyState }, pObject{ pObject }, command{ std::move(pCommand) }
+		GamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand)
+			:gamepadIndex{ index }, button {button}, state{ keyState }, command{ std::move(pCommand) }
 		{}
 		~GamepadCommand() {};
 
@@ -39,7 +38,6 @@ namespace dae
 		GamepadButton button;
 		keyState state;
 
-		GameObject* pObject;
 		std::unique_ptr<Command> command;
 	};
 
@@ -51,11 +49,9 @@ namespace dae
 
 		bool ProcessInput();
 
-		void AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, GameObject* pObject, std::unique_ptr<Command> pCommand);
-		void RemoveKeyboardCommands(GameObject* pObject);
+		void AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand);
 
-		void AddGamepadCommand(int index, GamepadButton button, keyState keyState, GameObject* pObject, std::unique_ptr<Command> pCommand);
-		void RemoveGamepadCommands(GameObject* pObject);
+		void AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand);
 		void RemoveGamepadCommands(int gamePadIdx);
 
 	private:

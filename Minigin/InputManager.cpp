@@ -53,31 +53,20 @@ namespace dae
 		return true;
 	}
 
-	void InputManager::AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, GameObject* pObject, std::unique_ptr<Command> pCommand)
+	void InputManager::AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand)
 	{
-		m_KeyboardCommands.push_back(std::make_unique<KeyboardCommand>(keyCode, keyState, pObject, std::move(pCommand)));
+		m_KeyboardCommands.push_back(std::make_unique<KeyboardCommand>(keyCode, keyState, std::move(pCommand)));
 	}
 
-	void InputManager::RemoveKeyboardCommands(GameObject* pObject)
-	{
-		m_KeyboardCommands.erase(std::remove_if(m_KeyboardCommands.begin(), m_KeyboardCommands.end(),
-			[pObject](const std::unique_ptr<KeyboardCommand>& command) {return command->pObject == pObject; }), m_KeyboardCommands.end());
-	}
-
-	void InputManager::AddGamepadCommand(int index, GamepadButton button, keyState keyState, GameObject* pObject, std::unique_ptr<Command> pCommand)
+	void InputManager::AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand)
 	{
 		if (CheckIndex(index))
 		{
 			m_GamepadCommands.push_back(std::make_unique<GamepadCommand>(
-				index, button, keyState, pObject, std::move(pCommand)));
+				index, button, keyState, std::move(pCommand)));
 		}
 	}
 
-	void InputManager::RemoveGamepadCommands(GameObject* pObject)
-	{
-		m_GamepadCommands.erase(std::remove_if(m_GamepadCommands.begin(), m_GamepadCommands.end(),
-			[pObject](const std::unique_ptr<GamepadCommand>& command) {return command->pObject == pObject; }), m_GamepadCommands.end());
-	}
 
 	void InputManager::RemoveGamepadCommands(int gamePadIdx)
 	{
@@ -91,17 +80,17 @@ namespace dae
 		{
 			switch (command->state)
 			{
-			case keyState::down:
+			case keyState::Down:
 				if (m_pKeyBoard->IsDown(command->key))
-					command->command->Execute(command->pObject);
+					command->command->Execute();
 				break;
-			case keyState::up:
+			case keyState::Up:
 				if (m_pKeyBoard->IsUp(command->key))
-					command->command->Execute(command->pObject);
+					command->command->Execute();
 				break;
 			case keyState::pressed:
 				if (m_pKeyBoard->IsPressed(command->key))
-					command->command->Execute(command->pObject);
+					command->command->Execute();
 				break;
 			default:
 				break;
@@ -115,17 +104,17 @@ namespace dae
 
 			switch (command->state)
 			{
-			case keyState::down:
+			case keyState::Down:
 				if (m_pGamePads[command->gamepadIndex]->IsDown(command->button))
-					command->command->Execute(command->pObject);
+					command->command->Execute();
 				break;
-			case keyState::up:
+			case keyState::Up:
 				if (m_pGamePads[command->gamepadIndex]->IsUp(command->button))
-					command->command->Execute(command->pObject);
+					command->command->Execute();
 				break;
 			case keyState::pressed:
 				if (m_pGamePads[command->gamepadIndex]->IsPressed(command->button))
-					command->command->Execute(command->pObject);
+					command->command->Execute();
 				break;
 			default:
 				break;
