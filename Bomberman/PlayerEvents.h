@@ -10,4 +10,10 @@ namespace D2D
 
 		int playerIndex{ 0 };
 	};
+
+	struct PickupItemEvent final : public Event
+	{
+	public:
+		PickupItemEvent() = default;
+	};
 }

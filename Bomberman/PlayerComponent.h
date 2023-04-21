@@ -17,9 +17,12 @@ namespace D2D
 		void SetPlayerIndex(int idx) { m_PlayerIndex = idx; m_PlayerDieEvent.playerIndex = idx; }
 
 		void KillPlayer();
+
+		void PickupItem();
 	
 	private:
 		int m_PlayerIndex{};
 		PlayerDieEvent m_PlayerDieEvent{};
+		PickupItemEvent m_PickupItemEvent{};
 	};
 }

@@ -8,26 +8,23 @@ namespace D2D
 	class TextComponent;
 	class PlayerComponent;
 
-	class LivesDisplayComponent : public Component, public Observer
+	class PointsDisplay : public Component, public Observer
 	{
 	public:
-		LivesDisplayComponent();
-		virtual ~LivesDisplayComponent() override = default;
+		PointsDisplay();
+		virtual ~PointsDisplay() override = default;
 
 		virtual void Notify(const Event& event);
 
 		virtual void Update() override;
 
-
 	private:
-		const int m_StartHealth{ 5 };
-		int m_PlayerHealth{};
+		int m_Score{};
 
 		TextComponent* m_pTextComponent{};
 
 		bool m_ShouldUpdateText{ true };
 
-		void UpdateLivesDisplay();
+		void UpdatePointsDisplay();
 	};
 }
-

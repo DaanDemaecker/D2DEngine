@@ -40,8 +40,3 @@ void D2D::LivesDisplayComponent::UpdateLivesDisplay()
 		m_pTextComponent->SetText("LEFT: " + std::to_string(m_PlayerHealth));
 	}
 }
-
-void D2D::LivesDisplayComponent::BindPlayer(PlayerComponent* pPlayer)
-{
-	m_pPlayer = pPlayer;
-}

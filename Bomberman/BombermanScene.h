@@ -17,6 +17,7 @@
 #include "PlayerComponent.h"
 
 #include "LivesDisplayComponent.h"
+#include "PointsDisplay.h"
 #include "DebugCommand.h"
 
 #include "Command.h"
@@ -40,6 +41,7 @@ namespace D2D
 
 		const auto pBomberManTexture{ pResourceManager.LoadTexture("sprites/Bomberman.png") };
 		const auto pBombTexture{ pResourceManager.LoadTexture("sprites/Bomb.png") };
+		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Enemy.png") };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
 
@@ -81,6 +83,16 @@ namespace D2D
 
 		pPlayerComponent->AddObserver(pLivesDisplayComponent.get());
 
+		const auto pPointsDisplay{ scene.CreateGameObject("Points Display") };
+		pPointsDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 400.0f, 0.f });
+		pPointsDisplay->AddComponent<D2D::RenderComponent>();
+		const auto pPointsText = pPointsDisplay->AddComponent<D2D::TextComponent>();
+		pPointsText->SetFont(pFont2);
+		pPointsText->SetColor(255, 255, 255);
+		const auto pPointsDisplayComponent = pPointsDisplay->AddComponent<D2D::PointsDisplay>();
+
+		pPlayerComponent->AddObserver(pPointsDisplayComponent.get());
+
 
 		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pBomberManMoveComponent));
 		input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, pBomberManMoveComponent));
@@ -88,5 +100,8 @@ namespace D2D
 		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pBomberManMoveComponent));
 
 		input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent)));
+		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::PickupItem, pPlayerComponent)));
+
+	
 	}
 }
