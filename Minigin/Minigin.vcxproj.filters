@@ -146,11 +146,17 @@
     <ClInclude Include="InfoCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="DemoScene.h">
       <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Base classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -247,8 +253,8 @@
     <ClCompile Include="InfoCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Game Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

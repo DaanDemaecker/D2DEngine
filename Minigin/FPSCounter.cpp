@@ -10,18 +10,14 @@ void dae::FPSCounter::Update()
 	}
 	else
 	{
-		if (m_pTextComponent.expired())
+		if (m_pTextComponent == nullptr)
 		{
-			m_pTextComponent = GetComponent<TextComponent>();
-
-			if (m_pTextComponent.expired())
-			{
-				return;
-			}
+			m_pTextComponent = GetComponent<TextComponent>().get();
 		}
+
 
 		m_Timer = m_TimeToUpdate;
 
-		m_pTextComponent.lock()->SetText(std::to_string(TimeManager::GetInstance().GetFps()) + " FPS");
+		m_pTextComponent->SetText(std::to_string(TimeManager::GetInstance().GetFps()) + " FPS");
 	}
 }

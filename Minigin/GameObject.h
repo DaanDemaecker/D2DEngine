@@ -92,7 +92,6 @@ namespace dae
 		return nullptr;
 	}
 
-
 	template<class T>
 	inline std::shared_ptr<T> GameObject::AddComponent()
 	{
@@ -113,7 +112,6 @@ namespace dae
 
 		return pComponent;
 	}
-
 
 	template<class T>
 	inline bool GameObject::RemoveComponent()
