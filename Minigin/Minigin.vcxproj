@@ -191,6 +191,7 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DemoScene.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSCounter.h" />
