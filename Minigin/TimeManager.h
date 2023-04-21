@@ -3,7 +3,7 @@
 
 namespace dae
 {
-	class Time final : public Singleton<Time>
+	class TimeManager final : public Singleton<TimeManager>
 	{
 	public:
 		void SetDeltaTime(float dt);

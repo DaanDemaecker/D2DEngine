@@ -41,7 +41,7 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="TimeManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -169,7 +169,7 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="TimeManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">

@@ -1,12 +1,12 @@
 #include "FPSCounter.h"
 #include "TextComponent.h"
-#include "Time.h"
+#include "TimeManager.h"
 
 void dae::FPSCounter::Update()
 {
 	if (m_Timer >= 0)
 	{
-		m_Timer -= Time::GetInstance().GetDeltaTime();
+		m_Timer -= TimeManager::GetInstance().GetDeltaTime();
 	}
 	else
 	{
@@ -22,6 +22,6 @@ void dae::FPSCounter::Update()
 
 		m_Timer = m_TimeToUpdate;
 
-		m_pTextComponent.lock()->SetText(std::to_string(Time::GetInstance().GetFps()) + " FPS");
+		m_pTextComponent.lock()->SetText(std::to_string(TimeManager::GetInstance().GetFps()) + " FPS");
 	}
 }

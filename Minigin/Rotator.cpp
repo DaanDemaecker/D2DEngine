@@ -1,5 +1,5 @@
 #include "Rotator.h"
-#include "Time.h"
+#include "TimeManager.h"
 #include "Transform.h"
 
 void dae::Rotator::Update()
@@ -9,7 +9,7 @@ void dae::Rotator::Update()
 	if (!pTransfom)
 		return;
 
-	m_CurrentAngle += m_RotSpeed * Time::GetInstance().GetDeltaTime();
+	m_CurrentAngle += m_RotSpeed * TimeManager::GetInstance().GetDeltaTime();
 	
 	while (m_CurrentAngle > glm::radians(360.f))
 	{

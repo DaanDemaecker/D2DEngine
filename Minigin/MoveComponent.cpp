@@ -1,6 +1,6 @@
 #include "MoveComponent.h"
 #include "Transform.h"
-#include "Time.h"
+#include "TimeManager.h"
 
 void dae::MoveComponent::Update()
 {
@@ -11,8 +11,8 @@ void dae::MoveComponent::Update()
 
 	m_Direction = glm::normalize(m_Direction);
 
-	pTransform->MoveLocalPosition( m_Direction.x * m_MoveSpeed * Time::GetInstance().GetDeltaTime(),
-		m_Direction.y * m_MoveSpeed * Time::GetInstance().GetDeltaTime());
+	pTransform->MoveLocalPosition( m_Direction.x * m_MoveSpeed * TimeManager::GetInstance().GetDeltaTime(),
+		m_Direction.y * m_MoveSpeed * TimeManager::GetInstance().GetDeltaTime());
 
 	m_Direction = glm::vec2{};
 
