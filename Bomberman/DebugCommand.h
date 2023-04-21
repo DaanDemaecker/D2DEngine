@@ -2,7 +2,7 @@
 #include "Command.h"
 #include <functional>
 
-namespace dae
+namespace D2D
 {
 	class DebugCommand final : public Command
 	{

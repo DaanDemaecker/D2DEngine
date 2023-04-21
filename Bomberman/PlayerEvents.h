@@ -1,7 +1,7 @@
 #pragma once
 #include "Event.h"
 
-namespace dae
+namespace D2D
 {
 	struct PlayerDieEvent final : public Event
 	{

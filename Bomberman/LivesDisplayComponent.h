@@ -3,7 +3,7 @@
 #include "PlayerComponent.h"
 #include "Observer.h"
 
-namespace dae
+namespace D2D
 {
 	class TextComponent;
 	class PlayerComponent;

@@ -4,13 +4,13 @@
 #include "TextComponent.h"
 #include "PlayerComponent.h"
 
-dae::LivesDisplayComponent::LivesDisplayComponent()
+D2D::LivesDisplayComponent::LivesDisplayComponent()
 	:Component()
 {
 	m_PlayerHealth = m_StartHealth;
 }
 
-void dae::LivesDisplayComponent::Notify(const Event& event)
+void D2D::LivesDisplayComponent::Notify(const Event& event)
 {
 	if (auto playerDieEvent{ dynamic_cast<const PlayerDieEvent*>(&event) })
 	{
@@ -19,7 +19,7 @@ void dae::LivesDisplayComponent::Notify(const Event& event)
 	}
 }
 
-void dae::LivesDisplayComponent::Update()
+void D2D::LivesDisplayComponent::Update()
 {
 	if (m_ShouldUpdateText)
 	{
@@ -28,7 +28,7 @@ void dae::LivesDisplayComponent::Update()
 	}
 }
 
-void dae::LivesDisplayComponent::UpdateLivesDisplay()
+void D2D::LivesDisplayComponent::UpdateLivesDisplay()
 {
 	if (m_pTextComponent == nullptr)
 	{
@@ -41,7 +41,7 @@ void dae::LivesDisplayComponent::UpdateLivesDisplay()
 	}
 }
 
-void dae::LivesDisplayComponent::BindPlayer(PlayerComponent* pPlayer)
+void D2D::LivesDisplayComponent::BindPlayer(PlayerComponent* pPlayer)
 {
 	m_pPlayer = pPlayer;
 }

@@ -6,7 +6,7 @@
 #endif
 #endif
 
-#include "Minigin.h"
+#include "D2DEngine.h"
 #include "SceneManager.h"
 #include "DemoScene.h"
 #include "BombermanScene.h"
@@ -14,15 +14,15 @@
 
 void load()
 {
-	//auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
-	//dae::LoadDemoScene(scene);
+	//auto& scene = D2D::SceneManager::GetInstance().CreateScene("Demo");
+	//D2D::LoadDemoScene(scene);
 
-	auto& bombermanScene = dae::SceneManager::GetInstance().CreateScene("Bomberman");
-	dae::LoadBombermanScene(bombermanScene);
+	auto& bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
+	D2D::LoadBombermanScene(bombermanScene);
 }
 
 int main(int, char* []) {
-	dae::Minigin engine("../Data/");
+	D2D::D2DEngine engine("../Data/");
 	engine.Run(load);
 	return 0;
 }

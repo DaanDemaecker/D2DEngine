@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "PlayerComponent.h"
 
-void dae::PlayerComponent::Update()
+void D2D::PlayerComponent::Update()
 {
 }
 
-void dae::PlayerComponent::KillPlayer()
+void D2D::PlayerComponent::KillPlayer()
 {
 	NotifyObservers(m_PlayerDieEvent);
 }

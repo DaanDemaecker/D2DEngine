@@ -14,19 +14,13 @@
 #include "Rotator.h"
 #include "TrashTheCacheComponent.h"
 #include "MoveComponent.h"
-#include "PlayerComponent.h"
-
-#include "LivesDisplayComponent.h"
-#include "DebugCommand.h"
 
 #include "Command.h"
 #include "MoveCommand.h"
 
-#include <functional>
-
 namespace D2D
 {
-	void LoadBombermanScene(Scene& scene)
+	void LoadDemoScene(Scene& scene)
 	{
 
 		auto& input = D2D::InputManager::GetInstance();
@@ -39,7 +33,7 @@ namespace D2D
 		const auto pLogoTexture{ pResourceManager.LoadTexture("logo.tga") };
 
 		const auto pBomberManTexture{ pResourceManager.LoadTexture("sprites/Bomberman.png") };
-		const auto pBombTexture{ pResourceManager.LoadTexture("sprites/Bomb.png") };
+		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Bomb.png") };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
 
@@ -66,20 +60,15 @@ namespace D2D
 
 		const auto pBomberMan{ scene.CreateGameObject("Bomber Man") };
 		pBomberMan->GetTransform()->SetLocalPosition(glm::vec2{ 300, 300 });
-		const auto pPlayerComponent = pBomberMan->AddComponent<D2D::PlayerComponent>();
 		auto pBomberManMoveComponent = pBomberMan->AddComponent<D2D::MoveComponent>().get();
 		pBomberManMoveComponent->SetMovementSpeed(50);
 		pBomberMan->AddComponent<D2D::RenderComponent>()->SetTexture(pBomberManTexture);
 
-		const auto pLivesDisplay{ scene.CreateGameObject("Lives Display") };
-		pLivesDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 500.f, 0.f });
-		pLivesDisplay->AddComponent<D2D::RenderComponent>();
-		const auto pLivesText = pLivesDisplay->AddComponent<D2D::TextComponent>();
-		pLivesText->SetFont(pFont2);
-		pLivesText->SetColor(255, 255, 255);
-		const auto pLivesDisplayComponent = pLivesDisplay->AddComponent<LivesDisplayComponent>();
-
-		pPlayerComponent->AddObserver(pLivesDisplayComponent.get());
+		auto pEnemy{ scene.CreateGameObject("Enemy") };
+		pEnemy->GetTransform()->SetLocalPosition(glm::vec2{ 250, 300 });
+		auto pEnemyMovementComponent = pEnemy->AddComponent<D2D::MoveComponent>().get();
+		pEnemyMovementComponent->SetMovementSpeed(100);
+		pEnemy->AddComponent<D2D::RenderComponent>()->SetTexture(pEnemyTexture);
 
 
 		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pBomberManMoveComponent));
@@ -87,6 +76,9 @@ namespace D2D
 		input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, pBomberManMoveComponent));
 		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pBomberManMoveComponent));
 
-		input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent)));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pEnemyMovementComponent));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, pEnemyMovementComponent));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, pEnemyMovementComponent));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pEnemyMovementComponent));
 	}
 }

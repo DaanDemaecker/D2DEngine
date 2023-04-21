@@ -3,7 +3,7 @@
 #include "Subject.h"
 #include "PlayerEvents.h"
 
-namespace dae
+namespace D2D
 {
 
 	class PlayerComponent final : public Component, public Subject
