@@ -45,6 +45,12 @@
     <ClCompile Include="PointsDisplay.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="BombManagerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaceBombCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -67,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="PointsDisplay.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BombManagerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaceBombCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

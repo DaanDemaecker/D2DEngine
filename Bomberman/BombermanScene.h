@@ -18,10 +18,12 @@
 
 #include "LivesDisplayComponent.h"
 #include "PointsDisplay.h"
-#include "DebugCommand.h"
+#include "BombManagerComponent.h"
 
+#include "DebugCommand.h"
 #include "Command.h"
 #include "MoveCommand.h"
+#include "PlaceBombCommand.h"
 
 #include <functional>
 
@@ -40,7 +42,6 @@ namespace D2D
 		const auto pLogoTexture{ pResourceManager.LoadTexture("logo.tga") };
 
 		const auto pBomberManTexture{ pResourceManager.LoadTexture("sprites/Bomberman.png") };
-		const auto pBombTexture{ pResourceManager.LoadTexture("sprites/Bomb.png") };
 		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Enemy.png") };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
@@ -95,6 +96,11 @@ namespace D2D
 
 		pPlayerComponent1->AddObserver(pPointsDisplayComponent1.get());
 
+		const auto pBombManager1{ scene.CreateGameObject("BombManager") };
+		const auto pBombmanagercomponent1 = pBombManager1->AddComponent<BombManagerComponent>();
+
+		pPlayerComponent1->AddObserver(pBombmanagercomponent1.get());
+
 
 		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pBomberManMoveComponent));
 		input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, pBomberManMoveComponent));
@@ -102,7 +108,7 @@ namespace D2D
 		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pBomberManMoveComponent));
 
 		input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent1)));
-		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::PickupItem, pPlayerComponent1)));
+		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent1.get()));
 #pragma endregion Player1
 
 

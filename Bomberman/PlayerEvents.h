@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#include "glm/glm.hpp"
 
 namespace D2D
 {
@@ -15,5 +16,13 @@ namespace D2D
 	{
 	public:
 		PickupItemEvent() = default;
+	};
+
+	struct PlaceBombEvent final : public Event
+	{
+	public:
+		PlaceBombEvent() = default;
+
+		glm::vec2 position{};
 	};
 }

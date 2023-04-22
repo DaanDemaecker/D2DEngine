@@ -5,6 +5,7 @@
 
 namespace D2D
 {
+	class Transform;
 
 	class PlayerComponent final : public Component, public Subject
 	{
@@ -16,13 +17,18 @@ namespace D2D
 
 		void SetPlayerIndex(int idx) { m_PlayerIndex = idx; m_PlayerDieEvent.playerIndex = idx; }
 
+		void PlaceBomb();
+
 		void KillPlayer();
 
 		void PickupItem();
 	
 	private:
+		Transform* m_pTransform{};
+
 		int m_PlayerIndex{};
 		PlayerDieEvent m_PlayerDieEvent{};
 		PickupItemEvent m_PickupItemEvent{};
+		PlaceBombEvent m_PlaceBombEvent{};
 	};
 }

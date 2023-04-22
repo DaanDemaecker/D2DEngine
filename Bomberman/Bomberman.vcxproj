@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp" />
+    <ClCompile Include="BombManagerComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="pch.cpp">
@@ -160,14 +161,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PlaceBombCommand.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h" />
+    <ClInclude Include="BombManagerComponent.h" />
     <ClInclude Include="DebugCommand.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlaceBombCommand.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerEvents.h" />
     <ClInclude Include="PointsDisplay.h" />
