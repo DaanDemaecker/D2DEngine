@@ -119,6 +119,8 @@ void D2D::D2DEngine::Run(const std::function<void()>& load)
 
 		sceneManager.Update();
 
+		sceneManager.LateUpdate();
+
 		sceneManager.PostUpdate();
 
 		renderer.Render();

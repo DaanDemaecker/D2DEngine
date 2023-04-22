@@ -45,6 +45,11 @@ void D2D::Scene::FixedUpdate()
 	m_pSceneRoot->FixedUpdate();
 }
 
+void D2D::Scene::LateUpdate()
+{
+	m_pSceneRoot->LateUpdate();
+}
+
 void Scene::Render() const
 {
 	m_pSceneRoot->Render();

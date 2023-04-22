@@ -16,6 +16,8 @@ namespace D2D
 
 		void FixedUpdate();
 
+		void LateUpdate();
+
 		void Render() const;
 
 		void OnGUI() const;

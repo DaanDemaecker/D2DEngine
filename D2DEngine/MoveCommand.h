@@ -4,12 +4,12 @@
 
 namespace D2D
 {
-	class MoveComponent;
+	class RigidBodyComponent;
 
 	class MoveCommand final : public Command
 	{
 	public:
-		MoveCommand(const glm::vec2& direction, MoveComponent* pMoveComponent) : m_Direction{ direction }, m_pMoveComponent{pMoveComponent}, Command() {}
+		MoveCommand(const glm::vec2& direction, RigidBodyComponent* pMoveComponent) : m_Direction{ direction }, m_pRigidBody{pMoveComponent}, Command() {}
 
 		virtual ~MoveCommand() = default;
 		MoveCommand(const MoveCommand& other) = delete;
@@ -21,6 +21,6 @@ namespace D2D
 
 	private:
 		const glm::vec2 m_Direction;
-		MoveComponent* m_pMoveComponent;
+		RigidBodyComponent* m_pRigidBody;
 	};
 }

@@ -13,7 +13,7 @@
 #include "FPSCounter.h"
 #include "Rotator.h"
 #include "TrashTheCacheComponent.h"
-#include "MoveComponent.h"
+#include "RigidBodyComponent.h"
 
 #include "Command.h"
 #include "MoveCommand.h"
@@ -60,13 +60,13 @@ namespace D2D
 
 		const auto pBomberMan{ scene.CreateGameObject("Bomber Man") };
 		pBomberMan->GetTransform()->SetLocalPosition(glm::vec2{ 300, 300 });
-		auto pBomberManMoveComponent = pBomberMan->AddComponent<D2D::MoveComponent>().get();
+		auto pBomberManMoveComponent = pBomberMan->AddComponent<D2D::RigidBodyComponent>().get();
 		pBomberManMoveComponent->SetMovementSpeed(50);
 		pBomberMan->AddComponent<D2D::RenderComponent>()->SetTexture(pBomberManTexture);
 
 		auto pEnemy{ scene.CreateGameObject("Enemy") };
 		pEnemy->GetTransform()->SetLocalPosition(glm::vec2{ 250, 300 });
-		auto pEnemyMovementComponent = pEnemy->AddComponent<D2D::MoveComponent>().get();
+		auto pEnemyMovementComponent = pEnemy->AddComponent<D2D::RigidBodyComponent>().get();
 		pEnemyMovementComponent->SetMovementSpeed(100);
 		pEnemy->AddComponent<D2D::RenderComponent>()->SetTexture(pEnemyTexture);
 

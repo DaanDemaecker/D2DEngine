@@ -39,6 +39,20 @@ void D2D::GameObject::FixedUpdate()
 	}
 }
 
+void D2D::GameObject::LateUpdate()
+{
+	for (auto& pComponent : m_pComponents)
+	{
+		pComponent->LateUpdate();
+	}
+
+	for (auto& pChild : m_pChildren)
+	{
+		pChild->LateUpdate();
+	}
+
+}
+
 void D2D::GameObject::Render() const
 {
 	for (auto& pComponent : m_pComponents)

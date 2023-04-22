@@ -17,6 +17,14 @@ void D2D::SceneManager::FixedUpdate()
 	}
 }
 
+void D2D::SceneManager::LateUpdate()
+{
+	for (const auto& scene : m_scenes)
+	{
+		scene->LateUpdate();
+	}
+}
+
 void D2D::SceneManager::OnGUI()
 {
 	for (const auto& scene : m_scenes)

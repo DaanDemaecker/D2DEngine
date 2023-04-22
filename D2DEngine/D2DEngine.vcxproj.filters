@@ -61,7 +61,7 @@
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="MoveComponent.cpp">
+    <ClCompile Include="RigidBodyComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
@@ -96,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>EngineFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +180,7 @@
     <ClInclude Include="RenderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="MoveComponent.h">
+    <ClInclude Include="RigidBodyComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="FPSCounter.h">
@@ -220,6 +223,9 @@
       <Filter>EngineFiles</Filter>
     </ClInclude>
     <ClInclude Include="DemoScene.h" />
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BaseClasses">
