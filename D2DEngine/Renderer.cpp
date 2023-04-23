@@ -91,4 +91,24 @@ void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
+void D2D::Renderer::DrawRect(float x, float y, float width, float height, const SDL_Color& color)
+{
+	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+
+	SDL_Rect rect;
+	rect.x = static_cast<int>(x);
+	rect.y = static_cast<int>(y);
+	rect.w = static_cast<int>(width);
+	rect.h = static_cast<int>(height);
+
+	SDL_RenderDrawRect(m_renderer, &rect);
+}
+
+void D2D::Renderer::DrawLine(float x1, float y1, float x2, float y2, const SDL_Color& color)
+{
+	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+
+	SDL_RenderDrawLine(m_renderer, static_cast<int>(x1), static_cast<int>(y1), static_cast<int>(x2), static_cast<int>(y2));
+}
+
 inline SDL_Renderer* D2D::Renderer::GetSDLRenderer() const { return m_renderer; }

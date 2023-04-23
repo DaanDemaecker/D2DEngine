@@ -1,10 +1,11 @@
 #include "MoveCommand.h"
-#include "RigidBodyComponent.h"
+#include "Transform.h"
+#include "TimeManager.h"
 
 void D2D::MoveCommand::Execute()
 {
-	if (m_pRigidBody != nullptr)
+	if (m_pTransform != nullptr)
 	{
-		m_pRigidBody->AddForce(m_Direction * m_pRigidBody->GetMoveSpeed());
+		m_pTransform->MoveLocalPosition(m_Direction * m_Speed * TimeManager::GetInstance().GetDeltaTime());
 	}
 }

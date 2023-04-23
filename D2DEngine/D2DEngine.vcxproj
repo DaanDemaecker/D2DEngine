@@ -206,6 +206,7 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DemoScene.h" />
@@ -223,7 +224,6 @@
     <ClInclude Include="KeyBoardImpl.h" />
     <ClInclude Include="D2DEngine.h" />
     <ClInclude Include="MoveCommand.h" />
-    <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RenderComponent.h" />
@@ -233,6 +233,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Structs.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -260,7 +262,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="D2DEngine.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
-    <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />

@@ -13,7 +13,6 @@
 #include "FPSCounter.h"
 #include "Rotator.h"
 #include "TrashTheCacheComponent.h"
-#include "RigidBodyComponent.h"
 
 #include "Command.h"
 #include "MoveCommand.h"
@@ -58,27 +57,29 @@ namespace D2D
 		pText->SetFont(pFont2);
 		pText->SetColor(255, 255, 0);
 
+
 		const auto pBomberMan{ scene.CreateGameObject("Bomber Man") };
-		pBomberMan->GetTransform()->SetLocalPosition(glm::vec2{ 300, 300 });
-		auto pBomberManMoveComponent = pBomberMan->AddComponent<D2D::RigidBodyComponent>().get();
-		pBomberManMoveComponent->SetMovementSpeed(50);
+		auto pBombermanTransform = pBomberMan->GetTransform().get();
+		pBombermanTransform->SetLocalPosition(glm::vec2{ 300, 300 });
 		pBomberMan->AddComponent<D2D::RenderComponent>()->SetTexture(pBomberManTexture);
 
+
+
 		auto pEnemy{ scene.CreateGameObject("Enemy") };
-		pEnemy->GetTransform()->SetLocalPosition(glm::vec2{ 250, 300 });
-		auto pEnemyMovementComponent = pEnemy->AddComponent<D2D::RigidBodyComponent>().get();
-		pEnemyMovementComponent->SetMovementSpeed(100);
+		auto pEnemyTransform = pEnemy->GetTransform().get();
+		pEnemyTransform->SetLocalPosition(glm::vec2{ 250, 300 });
 		pEnemy->AddComponent<D2D::RenderComponent>()->SetTexture(pEnemyTexture);
 
+		const float playerSpeed{ 50.0f };
 
-		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pBomberManMoveComponent));
-		input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, pBomberManMoveComponent));
-		input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, pBomberManMoveComponent));
-		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pBomberManMoveComponent));
+		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, playerSpeed, pBombermanTransform));
+		input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, playerSpeed, pBombermanTransform));
+		input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, playerSpeed, pBombermanTransform));
+		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, playerSpeed, pBombermanTransform));
 
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pEnemyMovementComponent));
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, pEnemyMovementComponent));
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, pEnemyMovementComponent));
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pEnemyMovementComponent));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, 2* playerSpeed, pEnemyTransform));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, 2* playerSpeed, pEnemyTransform));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, 2* playerSpeed, pEnemyTransform));
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, 2* playerSpeed, pEnemyTransform));
 	}
 }

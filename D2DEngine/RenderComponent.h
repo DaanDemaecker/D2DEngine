@@ -18,10 +18,15 @@ namespace D2D
 
 		void SetTexture(std::shared_ptr<Texture2D> pTexture);
 
+		void SetOffset(float offsetX, float offSetY);
+
 		virtual void Render() const override;
 
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};
+
+		float m_OffsetX{};
+		float m_Offsety{};
 	};
 }
 

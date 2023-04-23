@@ -1,4 +1,12 @@
 #include "Transform.h"
+#include "Renderer.h"
+#include "BoxCollider.h"
+#include "PhysicsManager.h"
+
+void D2D::Transform::SetCollider(BoxCollider* pCollider)
+{
+	m_pCollider = pCollider;
+}
 
 void D2D::Transform::SetLocalPosition(const float x, const float y)
 {
@@ -48,9 +56,20 @@ void D2D::Transform::MoveLocalPosition(float x, float y)
 	MoveLocalPosition(glm::vec2{ x, y });
 }
 
-void D2D::Transform::MoveLocalPosition(const glm::vec2& pos)
+void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 {
-	SetLocalPosition(m_LocalPosition + pos);
+	if (m_pCollider == nullptr)
+	{
+		SetLocalPosition(m_LocalPosition + dir);
+	}
+	else
+	{
+		if (PhysicsManager::GetInstance().CanMove(m_pCollider, dir))
+		{
+			SetLocalPosition(m_LocalPosition + dir);
+		}
+	}
+
 }
 
 void D2D::Transform::SetDirtyFlag()
@@ -62,4 +81,11 @@ void D2D::Transform::SetDirtyFlag()
 		pChild->GetTransform()->SetDirtyFlag();
 	}
 
+}
+
+void D2D::Transform::Render() const
+{
+	auto pos{ m_ParentWorldPosition + m_LocalPosition };
+
+	Renderer::GetInstance().DrawRect(pos.x, pos.y, 2.f, 2.f);
 }

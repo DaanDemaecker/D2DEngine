@@ -23,8 +23,6 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBombtexture{};
 
 
-
-
 		void SpawnBomb(const glm::vec2& pos);
 	};
 }
