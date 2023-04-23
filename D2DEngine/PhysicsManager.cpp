@@ -19,11 +19,8 @@ void D2D::PhysicsManager::RemoveCollider(BoxCollider* pCollider)
 bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, const glm::vec2 direction)
 {
     const auto rect{ Rect{pCollider->GetBounds()} };
-    const auto halfWidth{ rect.w / 2.f };
-    const auto halfHeight{ rect.h / 2.f };
-    const auto middle{ glm::vec2{rect.x + halfWidth, rect.y + halfHeight} };
 
-    constexpr float epsilon{ 0.001f };
+    const auto movedRect{ Rect{rect.x + direction.x, rect.y + direction.y, rect.w, rect.h} };
 
 	for (const auto& box : m_pBoxColliders)
 	{
@@ -31,39 +28,11 @@ bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, const glm::vec2 direct
 		
         auto otherRect = D2D::Rect{ box->GetBounds() };
 
-		if (otherRect.IsPointInBounds(middle))continue;
+        if(RectOverlap(rect, otherRect))
+            continue;
 
-        if (abs(direction.x) > epsilon)
-        {
-            float sign{ std::copysign(1.f, direction.x)};
-
-            glm::vec2 startPos{middle.x + ((halfWidth - epsilon) * sign), middle.y};
-
-            if (Raycast(otherRect, startPos, startPos + glm::vec2{ direction.x, 0 }))
-                return false;
-
-            if (Raycast(otherRect, startPos + +glm::vec2{ 0, halfHeight - epsilon }, startPos + glm::vec2{ direction.x, 0 }))
-                return false;
-
-            if (Raycast(otherRect, startPos + glm::vec2{ 0, -halfHeight + epsilon }, startPos + glm::vec2{ direction.x, 0 }))
-                return false;
-        }
-
-        if (abs(direction.y) > epsilon)
-        {
-            float sign{ std::copysign(1.f, direction.y) };
-
-            glm::vec2 startPos{ middle.x, middle.y + ((halfHeight - epsilon) * sign) };
-
-            if (Raycast(otherRect, startPos, startPos + glm::vec2{ 0, direction.y}))
-                return false;
-
-            if (Raycast(otherRect, startPos + +glm::vec2{ halfWidth - epsilon, 0 }, startPos + glm::vec2{ 0, direction.y }))
-                return false;
-
-            if (Raycast(otherRect, startPos + glm::vec2{ -halfWidth + epsilon, 0 }, startPos + glm::vec2{ 0, direction.y }))
-                return false;
-        }
+        if (RectOverlap(movedRect, otherRect))
+            return false;
 	}
 
 	return true;
@@ -107,4 +76,11 @@ bool D2D::PhysicsManager::Raycast(const Rect& rect, const glm::vec2 startPos, co
     if (x >= left && x <= right) return true;
 
     return false;
+}
+
+bool D2D::PhysicsManager::RectOverlap(const Rect& r1, const Rect& r2)
+{
+    if (r1.x + r1.w < r2.x || r1.x > r2.x + r2.w) return false; // check x-axis overlap
+    if (r1.y + r1.h < r2.y || r1.y > r2.y + r2.h) return false; // check y-axis overlap
+    return true;
 }

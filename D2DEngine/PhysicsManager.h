@@ -19,6 +19,8 @@ namespace D2D
 
 		bool Raycast(const Rect& rect, const glm::vec2 startPos, const glm::vec2 endPos);
 
+		bool RectOverlap(const Rect& r1, const Rect& r2);
+
 	private:
 		std::vector<BoxCollider*> m_pBoxColliders{};
 	};

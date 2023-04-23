@@ -32,6 +32,14 @@ namespace D2D
 	struct Rect
 	{
 		Rect() = default;
+		Rect(float xValue, float yValue, float wValue, float hValue)
+		{
+			x = xValue;
+			y = yValue;
+			w = wValue;
+			h = hValue;
+		}
+
 		Rect(const BoxColliderBounds& bounds)
 		{
 			x = bounds.x + bounds.offsetX;
