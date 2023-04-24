@@ -34,9 +34,6 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiInfoComponent.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
@@ -100,6 +97,9 @@
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ImGuiInfoComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -136,9 +136,6 @@
       <Filter>Imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiInfoComponent.h">
       <Filter>Imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h">
@@ -228,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="Structs.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiInfoComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

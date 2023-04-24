@@ -41,12 +41,8 @@ void D2D::BoxCollider::Render() const
 {
 	if (m_pTransform != nullptr)
 	{
-		const auto pos{ m_pTransform->GetWorldPosition() };
-
-
 		const auto rect{ Rect{m_Bounds} };
 
-		//Renderer::GetInstance().DrawRect(pos.x + m_Bounds.offsetX, pos.y + m_Bounds.offsetY, m_Bounds.width, m_Bounds.height);
 		Renderer::GetInstance().DrawRect(rect.x, rect.y, rect.w, rect.h);
 	}
 }
