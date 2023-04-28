@@ -24,8 +24,9 @@ namespace D2D
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
 
-		void DrawRect(float x, float y, float width, float height, const SDL_Color& color = SDL_Color{ 0, 255, 0, 255 });
-		void DrawLine(float x1, float y1, float x2, float y2, const SDL_Color& color = SDL_Color{ 0, 255, 0, 255 });
+		void DrawRect(float x, float y, float width, float height, const SDL_Color& color = SDL_Color{ 0, 255, 0, 255 }) const;
+		void DrawLine(float x1, float y1, float x2, float y2, const SDL_Color& color = SDL_Color{ 0, 255, 0, 255 }) const;
+		void DrawMarker(float x, float y, float size, const SDL_Color& color = SDL_Color{ 0, 255, 0, 255 }) const;
 		
 		SDL_Renderer* GetSDLRenderer() const;
 

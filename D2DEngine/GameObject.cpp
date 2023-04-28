@@ -60,7 +60,6 @@ void D2D::GameObject::Render() const
 		pComponent->Render();
 	}
 
-
 	for (auto& pChild : m_pChildren)
 	{
 		pChild->Render();

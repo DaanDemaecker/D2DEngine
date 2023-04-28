@@ -8,6 +8,7 @@
 namespace D2D
 {
 	class Texture2D;
+	class GridComponent;
 
 	class BombManagerComponent : public Component, public Observer
 	{
@@ -17,11 +18,15 @@ namespace D2D
 
 		virtual void Notify(const Event& event);
 
-		//virtual void Update() override;
+		void SetGrid(GridComponent* grid);
+
+		void SetBombSize(float size) { m_BombTextureSize = size; }
 
 	private:
 		std::shared_ptr<Texture2D> m_pBombtexture{};
+		float m_BombTextureSize{};
 
+		GridComponent* m_pGrid;
 
 		void SpawnBomb(const glm::vec2& pos);
 	};

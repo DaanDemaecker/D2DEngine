@@ -1,6 +1,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include <iostream>
+
 void D2D::SceneManager::Update()
 {
 	for(auto& scene : m_scenes)

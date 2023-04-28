@@ -168,6 +168,7 @@
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="BombManagerComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
+    <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -183,6 +184,7 @@
     <ClInclude Include="BombermanScene.h" />
     <ClInclude Include="BombManagerComponent.h" />
     <ClInclude Include="DebugCommand.h" />
+    <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlaceBombCommand.h" />

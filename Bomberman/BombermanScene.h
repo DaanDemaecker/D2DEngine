@@ -25,12 +25,14 @@
 #include "MoveCommand.h"
 #include "PlaceBombCommand.h"
 
+#include "GridComponent.h"
+
 
 #include <functional>
 
 namespace D2D
 {
-	GameObject* SetupPlayer(Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx);
+	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx, float gridSize);
 
 	void LoadBombermanScene(Scene& scene)
 	{
@@ -45,6 +47,8 @@ namespace D2D
 
 		const auto pBomberManTexture{ pResourceManager.LoadTexture("sprites/Bomberman.png") };
 		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Enemy.png") };
+
+		const int gridSize{ 34 };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
 
@@ -69,58 +73,22 @@ namespace D2D
 		pText->SetFont(pFont2);
 		pText->SetColor(255, 255, 0);
 
-		auto pPlayer1 = SetupPlayer(scene, input, pBomberManTexture, pFont2, 0);
+		const auto pWorld{ scene.CreateGameObject("Playfield") };
+		pWorld->GetTransform()->SetWorldPosition(0, 50);
+		pWorld->AddComponent<GridComponent>()->SetGrid("../Data/TextFiles/Level.txt", gridSize);//->SetGrid(13, 31, gridSize);
+		
 
-//
-//#pragma region player1
-//		const auto pEnemy{ scene.CreateGameObject("Enemy") };
-//		pEnemy->GetTransform()->SetLocalPosition(glm::vec2{ 300, 300 });
-//		const auto pPlayerComponent2 = pEnemy->AddComponent<D2D::PlayerComponent>();
-//		auto pEnemyMoveComponent = pEnemy->AddComponent<D2D::RigidBodyComponent>().get();
-//		pEnemyMoveComponent->SetMovementSpeed(50);
-//		pEnemy->AddComponent<D2D::RenderComponent>()->SetTexture(pEnemyTexture);
-//
-//		const auto pLivesDisplay{ scene.CreateGameObject("Lives Display") };
-//		pLivesDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 300.f, 0.f });
-//		pLivesDisplay->AddComponent<D2D::RenderComponent>();
-//		const auto pLivesText = pLivesDisplay->AddComponent<D2D::TextComponent>();
-//		pLivesText->SetFont(pFont2);
-//		pLivesText->SetColor(255, 255, 255);
-//		const auto pLivesDisplayComponent2 = pLivesDisplay->AddComponent<LivesDisplayComponent>();
-//
-//		pPlayerComponent2->AddObserver(pLivesDisplayComponent2
-//			.get());
-//
-//		const auto pPointsDisplay2{ scene.CreateGameObject("Points Display") };
-//		pPointsDisplay2->GetTransform()->SetWorldPosition(glm::vec2{ 200.0f, 0.f });
-//		pPointsDisplay2->AddComponent<D2D::RenderComponent>();
-//		const auto pPointsText2 = pPointsDisplay2->AddComponent<D2D::TextComponent>();
-//		pPointsText2->SetFont(pFont2);
-//		pPointsText2->SetColor(255, 255, 255);
-//		const auto pPointsDisplayComponent2 = pPointsDisplay2->AddComponent<D2D::PointsDisplay>();
-//
-//		pPlayerComponent2->AddObserver(pPointsDisplayComponent2.get());
-//
-//
-//		input.AddGamepadCommand(0, D2D::GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, pEnemyMoveComponent));
-//		input.AddGamepadCommand(0, D2D::GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, pEnemyMoveComponent));
-//		input.AddGamepadCommand(0, D2D::GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, pEnemyMoveComponent));
-//		input.AddGamepadCommand(0, D2D::GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, pEnemyMoveComponent));
-//
-//		input.AddKeyboardCommand(SDL_SCANCODE_O, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent2)));
-//		input.AddKeyboardCommand(SDL_SCANCODE_P, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::PickupItem, pPlayerComponent2)));
-//#pragma endregion Player1
-//	
+		auto pPlayer1 = SetupPlayer(pWorld, scene, input, pBomberManTexture, pFont2, 0, gridSize);
 	}
 
-	GameObject* SetupPlayer(Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx)
+	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx, float gridSize)
 	{
-		const auto pBombManager{ scene.CreateGameObject("BombManager") };
+		const auto pBombManager{ pWorld->CreateNewObject("BombManager") };
 
-		const auto pPlayer{ scene.CreateGameObject("Bomber Man" + std::to_string(idx)) };
+		const auto pPlayer{ pWorld->CreateNewObject("Bomber Man " + std::to_string(idx)) };
 
 		auto pPlayerTransform = pPlayer->GetTransform().get();
-		pPlayerTransform->SetLocalPosition(glm::vec2{ 300, 300 }); 
+		pPlayerTransform->SetLocalPosition(glm::vec2{ 100, 100 }); 
 
 		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>();
 		auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
@@ -159,6 +127,8 @@ namespace D2D
 
 
 		const auto pBombmanagercomponent = pBombManager->AddComponent<BombManagerComponent>();
+		pBombmanagercomponent->SetGrid(pWorld->GetComponent<GridComponent>().get());
+		pBombmanagercomponent->SetBombSize(gridSize);
 
 		pPlayerComponent->AddObserver(pBombmanagercomponent.get());
 
@@ -173,6 +143,13 @@ namespace D2D
 
 			input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent)));
 			input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent.get()));
+		}
+		else if (idx == 1)
+		{
+			input.AddGamepadCommand(0, GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, playerSpeed, pPlayerTransform));
+			input.AddGamepadCommand(0, GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, playerSpeed, pPlayerTransform));
+			input.AddGamepadCommand(0, GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, playerSpeed, pPlayerTransform));
+			input.AddGamepadCommand(0, GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, playerSpeed, pPlayerTransform));
 		}
 
 		return pPlayer;

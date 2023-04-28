@@ -4,6 +4,8 @@
 #include "InfoCommand.h"
 #include "InputManager.h"
 
+#include <iostream>
+
 using namespace D2D;
 
 unsigned int Scene::m_idCounter = 0;
@@ -16,6 +18,8 @@ Scene::Scene(const std::string& name) : m_name(name)
 	auto pInfoComponent = m_pSceneRoot->AddComponent<ImGuiInfoComponent>().get();
 
 	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent));
+
+	std::cout << "\n Pres Tab to toggle the info window \n \n";
 }
 
 Scene::~Scene() = default;

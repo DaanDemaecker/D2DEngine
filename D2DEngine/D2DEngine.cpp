@@ -95,7 +95,7 @@ void D2D::D2DEngine::Run(const std::function<void()>& load)
 
 	time.SetFixedTime(fixedTimeStep);
 
-	constexpr float desiredFrameRate = 144;
+	constexpr float desiredFrameRate = 144 ;
 	constexpr float desiredFrameDuration = 1000.f / desiredFrameRate;
 
 	while (doContinue)

@@ -1,4 +1,5 @@
 #include "ImGuiInfoComponent.h"
+#include "TimeManager.h"
 
 
 void D2D::ImGuiInfoComponent::OnGUI()
@@ -12,9 +13,29 @@ void D2D::ImGuiInfoComponent::CreateWindow()
     {
         ImGui::Begin("Info", &m_ShowInfoWindow);
 
-        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Framed;
+        ImGuiTreeNodeFlags mainFlags = ImGuiTreeNodeFlags_Framed;
 
-        if (ImGui::TreeNodeEx("SceneGraph", flags))
+        if (ImGui::TreeNodeEx("General Info", mainFlags))
+        {
+            std::string text = "FPS: " + std::to_string(TimeManager::GetInstance().GetFps());
+
+            ImGui::Text(text.c_str());
+
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNodeEx("Controls", mainFlags))
+        {
+            ImGui::Text("KeyBoard :");
+            ImGui::Text("-Move         WASD/ZQSD");
+            ImGui::Text("-Place Bomb   SPACE");
+            ImGui::Text("-Kill Player  BACKSPACE");
+
+            ImGui::TreePop();
+        }
+
+
+        if (ImGui::TreeNodeEx("SceneGraph", mainFlags))
         {
 
             AddObjectToTree(GetOwner());

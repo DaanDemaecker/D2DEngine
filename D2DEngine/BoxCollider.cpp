@@ -4,6 +4,8 @@
 #include "Renderer.h"
 #include "Structs.h"
 
+#include <iostream>
+
 D2D::BoxCollider::BoxCollider()
 {
 	PhysicsManager::GetInstance().AddBoxCollider(this);

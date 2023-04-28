@@ -51,6 +51,9 @@
     <ClCompile Include="PlaceBombCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="GridComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="PlaceBombCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GridComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

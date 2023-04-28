@@ -20,13 +20,18 @@ namespace D2D
 
 		void SetOffset(float offsetX, float offSetY);
 
+		void SetDestRectBounds(float width, float height);
+
 		virtual void Render() const override;
 
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};
 
 		float m_OffsetX{};
-		float m_Offsety{};
+		float m_OffsetY{};
+
+		float m_DestRectWidth{};
+		float m_DestRectHeight{};
 	};
 }
 

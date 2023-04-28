@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
+#include <iostream>
 
 void D2D::Transform::SetCollider(BoxCollider* pCollider)
 {
@@ -85,7 +86,7 @@ void D2D::Transform::SetDirtyFlag()
 
 void D2D::Transform::Render() const
 {
-	auto pos{ m_ParentWorldPosition + m_LocalPosition };
+	/*auto pos = m_ParentWorldPosition + m_LocalPosition;
 
-	Renderer::GetInstance().DrawRect(pos.x, pos.y, 2.f, 2.f);
+	Renderer::GetInstance().DrawMarker(pos.x, pos.y, 20, SDL_Color(255, 0, 0));*/
 }

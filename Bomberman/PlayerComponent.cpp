@@ -15,7 +15,7 @@ void D2D::PlayerComponent::PlaceBomb()
 
 	if (m_pTransform != nullptr)
 	{
-		m_PlaceBombEvent.position = m_pTransform->GetWorldPosition();
+		m_PlaceBombEvent.position = m_pTransform->GetLocalPosition();
 		NotifyObservers(m_PlaceBombEvent);
 	}
 }

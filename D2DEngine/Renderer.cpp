@@ -7,6 +7,8 @@
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_opengl2.h>
 
+#include <iostream>
+
 int GetOpenGLDriverIndex()
 {
 	auto openglIndex = -1;
@@ -55,6 +57,7 @@ void D2D::Renderer::Render()
 
 	ImGui::Render();
 
+
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	ImGui::EndFrame();
 
@@ -94,24 +97,29 @@ void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-void D2D::Renderer::DrawRect(float x, float y, float width, float height, const SDL_Color& color)
+void D2D::Renderer::DrawRect(float x, float y, float width, float height, const SDL_Color& color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 
-	SDL_FRect rect{};
-	rect.x = x;
-	rect.y = y;
-	rect.w = width;
-	rect.h = height;
-
-	//SDL_RenderDrawRectF(m_renderer, &rect);
+	DrawLine(x, y, x + width, y, color);
+	DrawLine(x + width, y, x + width, y + height, color);
+	DrawLine(x + width, y + height, x, y + height, color);
+	DrawLine(x, y + height, x, y, color);
 }
 
-void D2D::Renderer::DrawLine(float /*x1*/, float /*y1*/, float /*x2*/, float /*y2*/, const SDL_Color& color)
+void D2D::Renderer::DrawLine(float x1, float y1, float x2, float y2, const SDL_Color& color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 
-	//SDL_RenderDrawLineF(m_renderer, x1, y1, x2, y2);
+	SDL_RenderDrawLineF(m_renderer, x1, y1, x2, y2);
+}
+
+void D2D::Renderer::DrawMarker(float x, float y, float size, const SDL_Color& color) const
+{
+	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+
+	DrawLine(x - size, y, x + size, y, color);
+	DrawLine(x, y - size, x, y + size, color);
 }
 
 inline SDL_Renderer* D2D::Renderer::GetSDLRenderer() const { return m_renderer; }
