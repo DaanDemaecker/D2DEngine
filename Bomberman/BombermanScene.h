@@ -43,8 +43,7 @@ namespace D2D
 
 		const auto pFont{ pResourceManager.LoadFont("Lingua.otf", 36) };
 		const auto pFont2{ pResourceManager.LoadFont("Lingua.otf", 15) };
-		const auto pBackgroundTexture{ pResourceManager.LoadTexture("background.tga") };
-		const auto pLogoTexture{ pResourceManager.LoadTexture("logo.tga") };
+		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
 		const auto pBomberManTexture{ pResourceManager.LoadTexture("sprites/Bomberman.png") };
 		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Enemy.png") };
@@ -55,18 +54,7 @@ namespace D2D
 
 		pBackground->AddComponent<D2D::RenderComponent>()->SetTexture(pBackgroundTexture);
 
-		const auto pLogo{ scene.CreateGameObject("Logo") };
-		pLogo->GetTransform()->SetWorldPosition(216.f, 180.f);
-		pLogo->AddComponent<D2D::RenderComponent>()->SetTexture(pLogoTexture);
-
-		const auto pHeader{ scene.CreateGameObject("Header") };
-		pHeader->GetTransform()->SetWorldPosition(80.f, 20.f);
-		pHeader->AddComponent<D2D::RenderComponent>();
-		const auto pHeaderText{ pHeader->AddComponent<D2D::TextComponent>() };
-		pHeaderText->SetFont(pFont);
-		pHeaderText->SetText("Programming 4 Assignment");
-
-		const auto pFPSCounter{ scene.CreateGameObject("Fps Counter") };
+		const auto pFPSCounter{ scene.CreateCanvasObject("Fps Counter") };
 		pFPSCounter->GetTransform()->SetWorldPosition(0.0f, 0.0f);
 		pFPSCounter->AddComponent<D2D::RenderComponent>();
 		pFPSCounter->AddComponent<D2D::FPSCounter>();
@@ -105,7 +93,7 @@ namespace D2D
 		pPlayerCollider->SetVariables(playerHeight, playerRadius);
 
 
-		const auto pLivesDisplay{ scene.CreateGameObject("Lives Display") };
+		const auto pLivesDisplay{ scene.CreateCanvasObject("Lives Display") };
 		pLivesDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 500.f, 0.f });
 		pLivesDisplay->AddComponent<D2D::RenderComponent>();
 
@@ -119,7 +107,7 @@ namespace D2D
 
 
 
-		const auto pPointsDisplay{ scene.CreateGameObject("Points Display") };
+		const auto pPointsDisplay{ scene.CreateCanvasObject("Points Display") };
 		pPointsDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 400.0f, 0.f });
 		pPointsDisplay->AddComponent<D2D::RenderComponent>();
 

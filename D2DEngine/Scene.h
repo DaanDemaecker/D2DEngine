@@ -8,6 +8,7 @@ namespace D2D
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		GameObject* CreateGameObject(const std::string& name = "UnNamed");
+		GameObject* CreateCanvasObject(const std::string& name = "UnNamed");
 		
 		void Remove(GameObject* object);
 		void RemoveAll();
@@ -34,6 +35,7 @@ namespace D2D
 		explicit Scene(const std::string& name);
 
 		std::unique_ptr<GameObject> m_pSceneRoot{};
+		std::unique_ptr<GameObject> m_pCanvas{};
 
 		std::string m_name;
 

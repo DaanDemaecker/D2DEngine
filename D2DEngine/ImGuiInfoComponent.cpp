@@ -2,6 +2,11 @@
 #include "TimeManager.h"
 
 
+void D2D::ImGuiInfoComponent::SetCanvas(GameObject* pCanvas)
+{
+    m_pCanvas = pCanvas;
+}
+
 void D2D::ImGuiInfoComponent::OnGUI()
 {
 	CreateWindow();
@@ -37,10 +42,12 @@ void D2D::ImGuiInfoComponent::CreateWindow()
 
         if (ImGui::TreeNodeEx("SceneGraph", mainFlags))
         {
-
             AddObjectToTree(GetOwner());
-
-            ImGui::TreePop();
+            if (m_pCanvas != nullptr)
+            {
+                AddObjectToTree(m_pCanvas);
+            }
+                ImGui::TreePop();
         }
 
         ImGui::End();

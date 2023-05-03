@@ -19,10 +19,14 @@ namespace D2D
 
 		void ToggleInfoWindow() { m_ShowInfoWindow = !m_ShowInfoWindow; }
 
+		void SetCanvas(GameObject* pCanvas);
+
 		virtual void OnGUI() override;
 
 	private:
 		bool m_ShowInfoWindow{ false };
+
+		GameObject* m_pCanvas{ nullptr };
 
 		void CreateWindow();
 
