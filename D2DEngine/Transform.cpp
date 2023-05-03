@@ -6,7 +6,12 @@
 
 void D2D::Transform::SetCollider(BoxCollider* pCollider)
 {
-	m_pCollider = pCollider;
+	m_pBoxCollider = pCollider;
+}
+
+void D2D::Transform::SetCollider(CapsuleCollider* pCollider)
+{
+	m_pCapsuleCollider = pCollider;
 }
 
 void D2D::Transform::SetLocalPosition(const float x, const float y)
@@ -59,16 +64,26 @@ void D2D::Transform::MoveLocalPosition(float x, float y)
 
 void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 {
-	if (m_pCollider == nullptr)
+	if (m_pBoxCollider != nullptr)
 	{
-		SetLocalPosition(m_LocalPosition + dir);
+		glm::vec2 direction{ dir };
+		if (PhysicsManager::GetInstance().CanMove(m_pBoxCollider, direction))
+		{
+			SetLocalPosition(m_LocalPosition + direction);
+		}
+
+	}
+	else if (m_pCapsuleCollider != nullptr)
+	{
+		glm::vec2 direction{ dir };
+		if (PhysicsManager::GetInstance().CanMove(m_pCapsuleCollider, direction))
+		{
+			SetLocalPosition(m_LocalPosition + direction);
+		}
 	}
 	else
 	{
-		if (PhysicsManager::GetInstance().CanMove(m_pCollider, dir))
-		{
-			SetLocalPosition(m_LocalPosition + dir);
-		}
+		SetLocalPosition(m_LocalPosition + dir);
 	}
 
 }
@@ -81,12 +96,11 @@ void D2D::Transform::SetDirtyFlag()
 	{
 		pChild->GetTransform()->SetDirtyFlag();
 	}
-
 }
 
 void D2D::Transform::Render() const
 {
-	/*auto pos = m_ParentWorldPosition + m_LocalPosition;
+	//auto pos = m_ParentWorldPosition + m_LocalPosition;
 
-	Renderer::GetInstance().DrawMarker(pos.x, pos.y, 20, SDL_Color(255, 0, 0));*/
+	//Renderer::GetInstance().DrawMarker(pos.x, pos.y, 20, SDL_Color(255, 0, 0));
 }

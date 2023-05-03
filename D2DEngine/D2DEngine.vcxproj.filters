@@ -94,11 +94,14 @@
     <ClCompile Include="PhysicsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="ImGuiInfoComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="CapsuleCollider.cpp">
+      <Filter>Components\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,14 +223,17 @@
     <ClInclude Include="PhysicsManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Structs.h">
       <Filter>Misc</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiInfoComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Components\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="CapsuleCollider.h">
+      <Filter>Components\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +260,9 @@
     </Filter>
     <Filter Include="Misc">
       <UniqueIdentifier>{d67a5d3c-5629-4bec-b4a9-3b298189a3d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Colliders">
+      <UniqueIdentifier>{b979d5d9-08b1-4548-9e4a-e2a2f812b0ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

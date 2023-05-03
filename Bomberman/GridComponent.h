@@ -40,6 +40,8 @@ namespace D2D
 
 		void SetBomb(const glm::vec2 position, PlaceBombResponse& response);
 
+		glm::vec2 GetPlayerPosition(int index);
+
 	private:
 		int m_Rows{};
 		int m_Columns{};
@@ -49,6 +51,7 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
 
 		std::vector<GridType> m_Grid{};
+		std::vector<int> m_PlayerSpawns{};
 
 		glm::vec2 WorldToGridPos(const glm::vec2& pos);
 		int GetGridNumber(const glm::vec2& pos);

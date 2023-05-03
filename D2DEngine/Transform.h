@@ -5,11 +5,13 @@
 namespace D2D
 {
 	class BoxCollider;
+	class CapsuleCollider;
 
 	class Transform final : public Component
 	{
 	public:
 		void SetCollider(BoxCollider* pCollider);
+		void SetCollider(CapsuleCollider* pCollider);
 
 		const glm::vec2& GetLocalPosition() const { return m_LocalPosition; }
 		void SetLocalPosition(float x, float y);
@@ -32,6 +34,7 @@ namespace D2D
 
 		bool m_HasChanged{ true };
 
-		BoxCollider* m_pCollider{ nullptr };
+		BoxCollider* m_pBoxCollider{ nullptr };
+		CapsuleCollider* m_pCapsuleCollider{ nullptr };
 	};
 }

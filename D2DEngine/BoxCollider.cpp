@@ -8,7 +8,7 @@
 
 D2D::BoxCollider::BoxCollider()
 {
-	PhysicsManager::GetInstance().AddBoxCollider(this);
+	PhysicsManager::GetInstance().AddCollider(this);
 }
 
 D2D::BoxCollider::~BoxCollider()
@@ -30,15 +30,6 @@ void D2D::BoxCollider::SetVariables(float width, float height, float offsetX, fl
 	}
 }
 
-void D2D::BoxCollider::Update()
-{
-	if (m_pTransform == nullptr)
-	{
-		m_pTransform = GetOwner()->GetTransform().get();
-		m_pTransform->SetCollider(this);
-	}
-}
-
 void D2D::BoxCollider::Render() const
 {
 	if (m_pTransform != nullptr)
@@ -49,7 +40,7 @@ void D2D::BoxCollider::Render() const
 	}
 }
 
-D2D::BoxColliderBounds D2D::BoxCollider::GetBounds()
+D2D::BoxColliderBounds& D2D::BoxCollider::GetBounds()
 {
 
 	if (m_pTransform == nullptr)

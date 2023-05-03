@@ -36,6 +36,7 @@ void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
 	m_SquareSize = cubeSize;
 
 	int brickChance = 25; //Chance of brick wall spawning in possible place in percentage
+	int currentIndex{};
 
 	std::string line;
 	while (std::getline(file, line)) {
@@ -58,10 +59,13 @@ void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
 				}
 			}
 				break;
+			case 'p':
+				m_PlayerSpawns.push_back(currentIndex);
 			case 'e':
 				m_Grid.push_back(D2D::Empty);
 				break;
 			}
+			++currentIndex;
 			if (m_Rows == 0)
 				++m_Columns;
 		}
@@ -106,6 +110,11 @@ void D2D::GridComponent::SetBomb(const glm::vec2 position, D2D::PlaceBombRespons
 	{
 		return;
 	}
+}
+
+glm::vec2 D2D::GridComponent::GetPlayerPosition(int index)
+{
+	return GetGridPos(m_PlayerSpawns[index]);
 }
 
 glm::vec2 D2D::GridComponent::WorldToGridPos(const glm::vec2& pos)
@@ -173,7 +182,7 @@ void D2D::GridComponent::SetGridWalls()
 		pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
 		pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
 
-		//auto pCollider = pWall->AddComponent<BoxCollider>();
-		//pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
+		auto pCollider = pWall->AddComponent<BoxCollider>();
+		pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
 	}
 }

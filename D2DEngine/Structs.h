@@ -48,11 +48,60 @@ namespace D2D
 			h = bounds.height;
 		}
 
-		bool IsPointInBounds(const glm::vec2& point)
+		bool IsPointInBox(const glm::vec2& point)
 		{
 			return point.x > x && point.x < x + w && point.y > y && point.y < y + h;
 		}
 
 		float x, y, w, h;
+	};
+
+	struct Capsule
+	{
+	public:
+		Capsule() = default;
+		Capsule(const glm::vec2& centerValue, const glm::vec2& offsetValue, float heightValue, float radiusValue)
+		{
+			center = centerValue;
+			offset = offsetValue;
+			height = heightValue;
+			radius = radiusValue;
+		}
+
+		Rect& GetRect()
+		{
+			rect.x = center.x - radius;
+			rect.y = center.y - height / 2 + radius;
+			rect.w = 2 * radius;
+			rect.h = height - 2 * radius;
+
+			return rect;
+		}
+
+		glm::vec2& GetTopCenter()
+		{
+			topCenter.x = center.x;
+			topCenter.y = center.y - height / 2 + radius;
+
+			return topCenter;
+		}
+
+		glm::vec2& GetBotCenter()
+		{
+			botCenter.x = center.x;
+			botCenter.y = center.y + height / 2 - radius;
+
+			return botCenter;
+		}
+
+		glm::vec2 center{};
+		glm::vec2 offset{};
+		float height{};
+		float radius{};
+
+	private:
+		Rect rect{};
+		glm::vec2 topCenter{};
+		glm::vec2 botCenter{};
 	};
 }

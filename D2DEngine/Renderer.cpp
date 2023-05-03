@@ -101,10 +101,13 @@ void D2D::Renderer::DrawRect(float x, float y, float width, float height, const 
 {
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 
-	DrawLine(x, y, x + width, y, color);
-	DrawLine(x + width, y, x + width, y + height, color);
-	DrawLine(x + width, y + height, x, y + height, color);
-	DrawLine(x, y + height, x, y, color);
+	SDL_FRect rect{};
+	rect.x = x;
+	rect.y = y;
+	rect.w = width;
+	rect.h = height;
+
+	SDL_RenderDrawRectF(m_renderer, &rect);
 }
 
 void D2D::Renderer::DrawLine(float x1, float y1, float x2, float y2, const SDL_Color& color) const
@@ -120,6 +123,23 @@ void D2D::Renderer::DrawMarker(float x, float y, float size, const SDL_Color& co
 
 	DrawLine(x - size, y, x + size, y, color);
 	DrawLine(x, y - size, x, y + size, color);
+}
+
+void D2D::Renderer::DrawCircle(float x, float y, float radius, const SDL_Color& color) const
+{
+	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+	float thickness = 1.f;
+
+	for (float i = -radius; i <= radius; i++)
+	{
+		for (float j = -radius; j <= radius; j++)
+		{
+			if (i * i + j * j >= (radius - thickness) * (radius - thickness) && i * i + j * j <= (radius + thickness) * (radius + thickness))
+			{
+				SDL_RenderDrawPointF(m_renderer, x + i, y + j);
+			}
+		}
+	}
 }
 
 inline SDL_Renderer* D2D::Renderer::GetSDLRenderer() const { return m_renderer; }

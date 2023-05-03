@@ -14,12 +14,9 @@ namespace D2D
 
 		void SetVariables(float width, float height, float offsetX = 0, float offsetY = 0);
 
-
-		virtual void Update() override;
-
 		virtual void Render() const override;
 
-		BoxColliderBounds GetBounds();
+		BoxColliderBounds& GetBounds();
 
 	private:
 		BoxColliderBounds m_Bounds{};

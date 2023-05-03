@@ -15,6 +15,7 @@
 #include "TrashTheCacheComponent.h"
 #include "PlayerComponent.h"
 #include "BoxCollider.h"
+#include "CapsuleCollider.h"
 
 #include "LivesDisplayComponent.h"
 #include "PointsDisplay.h"
@@ -83,20 +84,25 @@ namespace D2D
 
 	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx, float gridSize)
 	{
+		const float playerHeight{ gridSize * .9f };
+		const float playerRadius{ gridSize / 2.f * 0.8f};
+
 		const auto pBombManager{ pWorld->CreateNewObject("BombManager") };
+
+		const auto pGridComponent{ pWorld->GetComponent<GridComponent>().get() };
 
 		const auto pPlayer{ pWorld->CreateNewObject("Bomber Man " + std::to_string(idx)) };
 
 		auto pPlayerTransform = pPlayer->GetTransform().get();
-		pPlayerTransform->SetLocalPosition(glm::vec2{ 100, 100 }); 
+		pPlayerTransform->SetWorldPosition(pGridComponent->GetPlayerPosition(idx)); 
 
 		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>();
-		auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
+		/*auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
 		pPlayerRenderComponent->SetTexture(pTexture);
-		pPlayerRenderComponent->SetOffset(-14.f, -18.f);
+		pPlayerRenderComponent->SetOffset(-playerRadius, -playerHeight);*/
 
-		auto pPlayerCollider = pPlayer->AddComponent<BoxCollider>();
-		pPlayerCollider->SetVariables(30, 40, -14.f, -18.f);
+		auto pPlayerCollider = pPlayer->AddComponent<CapsuleCollider>();
+		pPlayerCollider->SetVariables(playerHeight, playerRadius);
 
 
 		const auto pLivesDisplay{ scene.CreateGameObject("Lives Display") };
@@ -127,7 +133,7 @@ namespace D2D
 
 
 		const auto pBombmanagercomponent = pBombManager->AddComponent<BombManagerComponent>();
-		pBombmanagercomponent->SetGrid(pWorld->GetComponent<GridComponent>().get());
+		pBombmanagercomponent->SetGrid(pGridComponent);
 		pBombmanagercomponent->SetBombSize(gridSize);
 
 		pPlayerComponent->AddObserver(pBombmanagercomponent.get());
