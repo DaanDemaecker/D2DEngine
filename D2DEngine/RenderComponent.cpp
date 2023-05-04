@@ -5,6 +5,15 @@
 void D2D::RenderComponent::SetTexture(std::shared_ptr<Texture2D> pTexture)
 {
 	m_pTexture = pTexture;
+	
+	auto size = pTexture->GetSize();
+
+	m_SrcRect = Rect{0, 0, static_cast<float>(size.x), static_cast<float>(size.y)};
+}
+
+void D2D::RenderComponent::SetSourceRect(const Rect& srcRect)
+{
+	m_SrcRect = srcRect;
 }
 
 void D2D::RenderComponent::SetOffset(float offsetX, float offSetY)
@@ -30,10 +39,10 @@ void D2D::RenderComponent::Render() const
 
 	if (m_DestRectWidth == 0 || m_DestRectHeight == 0)
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX, pos.y + m_OffsetY);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX, pos.y + m_OffsetY, m_SrcRect);
 	}
 	else
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX, pos.y + m_OffsetY, m_DestRectWidth, m_DestRectHeight);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX, pos.y + m_OffsetY, m_DestRectWidth, m_DestRectHeight, m_SrcRect);
 	}
 }

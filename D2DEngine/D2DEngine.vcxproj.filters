@@ -103,6 +103,12 @@
     <ClCompile Include="CapsuleCollider.cpp">
       <Filter>Components\Colliders</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -235,6 +241,12 @@
     <ClInclude Include="CapsuleCollider.h">
       <Filter>Components\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationClip.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BaseClasses">
@@ -263,6 +275,9 @@
     </Filter>
     <Filter Include="Components\Colliders">
       <UniqueIdentifier>{b979d5d9-08b1-4548-9e4a-e2a2f812b0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{19245858-5d68-435b-abbc-8ca57771b56c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

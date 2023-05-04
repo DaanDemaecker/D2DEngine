@@ -20,11 +20,11 @@ namespace D2D
 
 		void SetGrid(GridComponent* grid);
 
-		void SetBombSize(float size) { m_BombTextureSize = size; }
+		void SetBombSize(float size) { m_BombSize = size; }
 
 	private:
 		std::shared_ptr<Texture2D> m_pBombtexture{};
-		float m_BombTextureSize{};
+		float m_BombSize{};
 
 		GridComponent* m_pGrid;
 

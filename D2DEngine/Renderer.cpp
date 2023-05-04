@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#include "Structs.h"
+
 int GetOpenGLDriverIndex()
 {
 	auto openglIndex = -1;
@@ -77,16 +79,23 @@ void D2D::Renderer::Destroy()
 	}
 }
 
-void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const Rect& srcRect) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
+
+	SDL_Rect src{};
+	src.x = static_cast<int>(srcRect.x);
+	src.y = static_cast<int>(srcRect.y);
+	src.w = static_cast<int>(srcRect.w);
+	src.h = static_cast<int>(srcRect.h);
+
 	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
 
-void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height, const Rect& srcRect) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -94,7 +103,13 @@ void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+	SDL_Rect src{};
+	src.x = static_cast<int>(srcRect.x);
+	src.y = static_cast<int>(srcRect.y);
+	src.w = static_cast<int>(srcRect.w);
+	src.h = static_cast<int>(srcRect.h);
+
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
 
 void D2D::Renderer::DrawRect(float x, float y, float width, float height, const SDL_Color& color) const

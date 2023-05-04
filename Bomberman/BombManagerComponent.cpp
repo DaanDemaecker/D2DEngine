@@ -6,12 +6,14 @@
 #include "RenderComponent.h"
 #include "BoxCollider.h"
 #include "GridComponent.h"
+#include "BombAnimator.h"
+#include "AnimationClip.h"
 
 D2D::BombManagerComponent::BombManagerComponent()
 {
 	const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
-	m_pBombtexture = pResourceManager.LoadTexture("sprites/Bomb.png");
+	m_pBombtexture = pResourceManager.LoadTexture("sprites/SpriteSheets/Bomb.png");
 }
 
 void D2D::BombManagerComponent::Notify(const Event& event)
@@ -44,10 +46,12 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 	pBomb->GetTransform()->SetWorldPosition(response.position);
 
 	auto pRenderComponent = pBomb->AddComponent<RenderComponent>();
-	pRenderComponent->SetTexture(m_pBombtexture);
-	pRenderComponent->SetOffset(-m_BombTextureSize/2, -m_BombTextureSize/2);
-	pRenderComponent->SetDestRectBounds(m_BombTextureSize, m_BombTextureSize);
+	pRenderComponent->SetOffset(-m_BombSize/2, -m_BombSize/2);
+	pRenderComponent->SetDestRectBounds(m_BombSize, m_BombSize);
+
+	auto pAnimator = pBomb->AddComponent<BombAnimator>();
+	pAnimator->Init(pRenderComponent.get(), m_pBombtexture);
 
 	auto pCollider = pBomb->AddComponent<BoxCollider>();
-	pCollider->SetVariables(m_BombTextureSize, m_BombTextureSize, -m_BombTextureSize/2, -m_BombTextureSize/2);
+	pCollider->SetVariables(m_BombSize, m_BombSize, -m_BombSize/2, -m_BombSize/2);
 }

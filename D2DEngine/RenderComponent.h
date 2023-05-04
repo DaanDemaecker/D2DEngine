@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Texture2D.h"
+#include "Structs.h"
 
 namespace D2D
 {
@@ -17,6 +18,7 @@ namespace D2D
 		RenderComponent& operator=(RenderComponent&& other) = delete;
 
 		void SetTexture(std::shared_ptr<Texture2D> pTexture);
+		void SetSourceRect(const Rect& srcRect);
 
 		void SetOffset(float offsetX, float offSetY);
 
@@ -32,6 +34,8 @@ namespace D2D
 
 		float m_DestRectWidth{};
 		float m_DestRectHeight{};
+
+		Rect m_SrcRect{};
 	};
 }
 
