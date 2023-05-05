@@ -23,7 +23,7 @@
 
 #include "DebugCommand.h"
 #include "Command.h"
-#include "MoveCommand.h"
+#include "PlayerMovementCommand.h"
 #include "PlaceBombCommand.h"
 
 #include "GridComponent.h"
@@ -33,7 +33,7 @@
 
 namespace D2D
 {
-	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx, float gridSize);
+	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize);
 
 	void LoadBombermanScene(Scene& scene)
 	{
@@ -45,7 +45,6 @@ namespace D2D
 		const auto pFont2{ pResourceManager.LoadFont("Lingua.otf", 15) };
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
-		const auto pBomberManTexture{ pResourceManager.LoadTexture("sprites/Bomberman.png") };
 		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Enemy.png") };
 
 		const int gridSize{ 34 };
@@ -67,11 +66,13 @@ namespace D2D
 		pWorld->AddComponent<GridComponent>()->SetGrid("../Data/TextFiles/Level.txt", gridSize);//->SetGrid(13, 31, gridSize);
 		
 
-		auto pPlayer1 = SetupPlayer(pWorld, scene, input, pBomberManTexture, pFont2, 0, gridSize);
+		auto pPlayer1 = SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
 	}
 
-	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Texture2D> pTexture, std::shared_ptr<Font> font, int idx, float gridSize)
+	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize)
 	{
+		constexpr float playerSpeed{ 50.0f };
+
 		const float playerHeight{ gridSize * .9f };
 		const float playerRadius{ gridSize / 2.f * 0.8f};
 
@@ -84,10 +85,13 @@ namespace D2D
 		auto pPlayerTransform = pPlayer->GetTransform().get();
 		pPlayerTransform->SetWorldPosition(pGridComponent->GetPlayerPosition(idx)); 
 
-		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>();
+		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>().get();
+		pPlayerComponent->SetSpeed(playerSpeed);
+
 		/*auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
-		pPlayerRenderComponent->SetTexture(pTexture);
 		pPlayerRenderComponent->SetOffset(-playerRadius, -playerHeight);*/
+	
+
 
 		auto pPlayerCollider = pPlayer->AddComponent<CapsuleCollider>();
 		pPlayerCollider->SetVariables(playerHeight, playerRadius);
@@ -126,24 +130,24 @@ namespace D2D
 
 		pPlayerComponent->AddObserver(pBombmanagercomponent.get());
 
-		const float playerSpeed{ 50.0f };
+		
 
 		if (idx == 0)
 		{
-			input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, playerSpeed, pPlayerTransform));
-			input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, playerSpeed, pPlayerTransform));
-			input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, playerSpeed, pPlayerTransform));
-			input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, playerSpeed, pPlayerTransform));
+			input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent));
+			input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent));
+			input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, 1 }, pPlayerComponent));
+			input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 1, 0 }, pPlayerComponent));
 
 			input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent)));
-			input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent.get()));
+			input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent));
 		}
 		else if (idx == 1)
 		{
-			input.AddGamepadCommand(0, GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, playerSpeed, pPlayerTransform));
-			input.AddGamepadCommand(0, GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, playerSpeed, pPlayerTransform));
-			input.AddGamepadCommand(0, GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, playerSpeed, pPlayerTransform));
-			input.AddGamepadCommand(0, GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, playerSpeed, pPlayerTransform));
+			input.AddGamepadCommand(0, GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent));
+			input.AddGamepadCommand(0, GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent));
+			input.AddGamepadCommand(0, GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, 1 }, pPlayerComponent));
+			input.AddGamepadCommand(0, GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 1, 0 }, pPlayerComponent));
 		}
 
 		return pPlayer;

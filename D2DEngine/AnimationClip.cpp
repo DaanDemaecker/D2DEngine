@@ -1,6 +1,7 @@
 #include "AnimationClip.h"
 #include "TimeManager.h"
 #include "RenderComponent.h"
+#include "Texture2D.h"
 
 D2D::AnimationClip::AnimationClip(RenderComponent* pRenderComponent)
 {

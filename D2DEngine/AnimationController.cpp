@@ -17,12 +17,14 @@ void D2D::AnimationController::Update()
 			if (transition->predicate)
 			{
 				m_CurrentClip = transition->toClip;
-				m_pClips[m_CurrentClip]->SetCurrentSprite();
+				if(m_CurrentClip < static_cast<int>(m_pClips.size()))
+					m_pClips[m_CurrentClip]->SetCurrentSprite();
+				break;
 			}
 		}
 	}
 
-	if (m_ShouldAnimate && m_CurrentClip < m_pClips.size())
+	if (m_ShouldAnimate && m_CurrentClip < static_cast<int>(m_pClips.size()))
 	{
 		m_pClips[m_CurrentClip]->Update();
 	}

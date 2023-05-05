@@ -7,10 +7,12 @@ namespace D2D
 	class Texture2D;
 	class RenderComponent;
 
-	class AnimationClip
+	class AnimationClip final
 	{
 	public:
 		AnimationClip(RenderComponent* pRenderComponent);
+
+		~AnimationClip() = default;
 
 		AnimationClip(const AnimationClip& other) = delete;
 		AnimationClip(AnimationClip&& other) = delete;
