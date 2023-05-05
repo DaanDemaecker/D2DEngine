@@ -23,6 +23,7 @@ namespace D2D
 
 		struct Transition
 		{
+			//Set to -1 for any clip
 			int fromClip{};
 			int toClip{};
 			std::function<bool()> predicate{};
@@ -31,7 +32,7 @@ namespace D2D
 		std::vector<std::unique_ptr<AnimationClip>> m_pClips{};
 		int m_CurrentClip{};
 
-		std::vector<std::unique_ptr<Transition>> m_pTransitions{};
+		std::vector<Transition> m_pTransitions{};
 	};
 }
 

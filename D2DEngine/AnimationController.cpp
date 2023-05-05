@@ -10,13 +10,13 @@ void D2D::AnimationController::Update()
 {
 	for (auto& transition : m_pTransitions)
 	{
-		if (transition->fromClip != m_CurrentClip)
+		if (transition.fromClip != -1 && transition.fromClip != m_CurrentClip && transition.toClip == m_CurrentClip)
 			continue;
 		else
 		{
-			if (transition->predicate)
+			if (transition.predicate())
 			{
-				m_CurrentClip = transition->toClip;
+				m_CurrentClip = transition.toClip;
 				if(m_CurrentClip < static_cast<int>(m_pClips.size()))
 					m_pClips[m_CurrentClip]->SetCurrentSprite();
 				break;

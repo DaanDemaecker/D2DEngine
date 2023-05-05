@@ -2,12 +2,24 @@
 #include "PlayerComponent.h"
 #include "Transform.h"
 #include "TimeManager.h"
+#include "PlayerAnimator.h"
 
 void D2D::PlayerComponent::Update()
 {
 	if (m_pTransform == nullptr)
 	{
 		m_pTransform = GetOwner()->GetTransform().get();
+	}
+
+	if (m_pAnimator == nullptr)
+	{
+		m_pAnimator = GetComponent<PlayerAnimator>().get();
+	}
+
+	if (m_pAnimator != nullptr)
+	{
+		m_pAnimator->SetShouldAnimate(m_Movement != glm::vec2{});
+		m_pAnimator->SetDirection(m_Movement);
 	}
 
 	if (m_pTransform != nullptr && m_Movement != glm::vec2{})

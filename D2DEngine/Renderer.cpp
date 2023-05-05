@@ -84,6 +84,8 @@ void D2D::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
+	dst.w = static_cast<int>(srcRect.w);
+	dst.h = static_cast<int>(srcRect.h);
 
 	SDL_Rect src{};
 	src.x = static_cast<int>(srcRect.x);

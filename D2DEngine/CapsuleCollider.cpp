@@ -38,11 +38,11 @@ void D2D::CapsuleCollider::LateUpdate()
 
 void D2D::CapsuleCollider::Render() const
 {
-	Renderer::GetInstance().DrawCircle(m_Bounds.center.x, m_Bounds.center.y + m_Bounds.height / 2 - m_Bounds.radius, m_Bounds.radius);
+	/*Renderer::GetInstance().DrawCircle(m_Bounds.center.x, m_Bounds.center.y + m_Bounds.height / 2 - m_Bounds.radius, m_Bounds.radius);
 	Renderer::GetInstance().DrawCircle(m_Bounds.center.x, m_Bounds.center.y - m_Bounds.height / 2 + m_Bounds.radius, m_Bounds.radius);
 	Renderer::GetInstance().DrawRect(m_Bounds.center.x - m_Bounds.radius, m_Bounds.center.y - m_Bounds.height / 2 + m_Bounds.radius,
 		2 * m_Bounds.radius, m_Bounds.height - 2 * m_Bounds.radius,
-		SDL_Color{255, 0, 0, 255});
+		SDL_Color{255, 0, 0, 255});*/
 }
 
 D2D::Capsule& D2D::CapsuleCollider::GetBounds()

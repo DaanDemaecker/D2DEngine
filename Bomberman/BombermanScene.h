@@ -20,11 +20,13 @@
 #include "LivesDisplayComponent.h"
 #include "PointsDisplay.h"
 #include "BombManagerComponent.h"
+#include "PlayerAnimator.h"
 
 #include "DebugCommand.h"
 #include "Command.h"
 #include "PlayerMovementCommand.h"
 #include "PlaceBombCommand.h"
+#include "AnimationClip.h"
 
 #include "GridComponent.h"
 
@@ -63,7 +65,7 @@ namespace D2D
 
 		const auto pWorld{ scene.CreateGameObject("Playfield") };
 		pWorld->GetTransform()->SetWorldPosition(0, 50);
-		pWorld->AddComponent<GridComponent>()->SetGrid("../Data/TextFiles/Level.txt", gridSize);//->SetGrid(13, 31, gridSize);
+		pWorld->AddComponent<GridComponent>()->SetGrid("../Data/TextFiles/Level.txt", gridSize);
 		
 
 		auto pPlayer1 = SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
@@ -88,8 +90,12 @@ namespace D2D
 		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>().get();
 		pPlayerComponent->SetSpeed(playerSpeed);
 
-		/*auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
-		pPlayerRenderComponent->SetOffset(-playerRadius, -playerHeight);*/
+		auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
+		pPlayerRenderComponent->SetOffset(-playerRadius, -playerHeight/2);
+		pPlayerRenderComponent->SetDestRectBounds(2 * playerRadius, playerHeight);
+
+		auto pPlayerAnimator = pPlayer->AddComponent<D2D::PlayerAnimator>();
+		pPlayerAnimator->Init(pPlayerRenderComponent.get());
 	
 
 

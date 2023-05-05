@@ -37,7 +37,7 @@ namespace D2D
 
 		Rect m_SrcRect{};
 
-		const float m_FrameDuration{ 1 / 3.f };
+		const float m_FrameDuration{ 1 / 15.f };
 		float m_FrameTimer{};
 
 		void SetFrame();

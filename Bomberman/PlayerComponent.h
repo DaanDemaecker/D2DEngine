@@ -6,6 +6,7 @@
 namespace D2D
 {
 	class Transform;
+	class PlayerAnimator;
 
 	class PlayerComponent final : public Component, public Subject
 	{
@@ -29,6 +30,7 @@ namespace D2D
 	
 	private:
 		Transform* m_pTransform{};
+		PlayerAnimator* m_pAnimator{};
 
 		glm::vec2 m_Movement{};
 		float m_Speed{ 20 };
