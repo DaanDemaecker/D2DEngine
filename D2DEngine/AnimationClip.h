@@ -1,13 +1,17 @@
 #pragma once
 #include "Structs.h"
+#include "GameObject.h"
+#include "Subject.h"
 #include <memory>
+#include <map>
 
 namespace D2D
 {
 	class Texture2D;
 	class RenderComponent;
+	struct Event;
 
-	class AnimationClip final
+	class AnimationClip final : public Subject
 	{
 	public:
 		AnimationClip(RenderComponent* pRenderComponent);
@@ -21,6 +25,8 @@ namespace D2D
 
 		void SetClip(std::shared_ptr<Texture2D> pTexture, int cols, int rows, int frames);
 
+		void AddAnimationEvent(int clip, std::unique_ptr<Event> event);
+
 		void SetCurrentSprite();
 
 		void Update();
@@ -28,6 +34,8 @@ namespace D2D
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};
 		RenderComponent* m_pRenderComponent{};
+
+		std::multimap<int, std::unique_ptr<Event>> m_AnimationEvents{};
 
 		int m_Cols{};
 		int m_Rows{};

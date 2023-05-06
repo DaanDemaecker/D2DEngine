@@ -57,14 +57,20 @@
     <ClCompile Include="GridComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="BombAnimator.cpp">
-      <Filter>Components\AnimatorControllers</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMovementCommand.cpp">
       <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="BombComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleClipAnimator.cpp">
+      <Filter>Components\AnimatorControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionAnimator.cpp">
+      <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,14 +104,23 @@
     <ClInclude Include="GridComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="BombAnimator.h">
-      <Filter>Components\AnimatorControllers</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMovementCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="BombComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldEvents.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleClipAnimator.h">
+      <Filter>Components\AnimatorControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionAnimator.h">
+      <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,11 +7,29 @@
 #include "ResourceManager.h"
 #include "RenderComponent.h"
 #include "BoxCollider.h"
+#include "WorldEvents.h"
+#include "ExplosionAnimator.h"
+#include "AnimationClip.h"
 
 D2D::GridComponent::GridComponent()
 {
 	m_pWallTexture = ResourceManager::GetInstance().LoadTexture("Sprites/Wall.png");
 	m_pBrickWallTexture = ResourceManager::GetInstance().LoadTexture("Sprites/BrickWall.png");
+
+	m_pExplosionTextures[ExplosionType::Center] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionCenter.png");
+
+	m_pExplosionTextures[ExplosionType::LeftMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeftMiddle.png");
+	m_pExplosionTextures[ExplosionType::Left] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeft.png");
+
+	m_pExplosionTextures[ExplosionType::UpMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionUpMiddle.png");
+	m_pExplosionTextures[ExplosionType::Up] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionUp.png");
+
+	m_pExplosionTextures[ExplosionType::RightMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionRightMiddle.png");
+	m_pExplosionTextures[ExplosionType::Right] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionRight.png");
+
+	m_pExplosionTextures[ExplosionType::DownMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDownMiddle.png");
+	m_pExplosionTextures[ExplosionType::Down] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDown.png");
+
 }
 
 void D2D::GridComponent::SetGrid(int rows, int columns, float cubeSize)
@@ -78,6 +96,11 @@ void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
 
 void D2D::GridComponent::Notify(const Event& event)
 {
+	if (auto bombExplodeEvent{ dynamic_cast<const BombExplodeEvent*>(&event) })
+	{
+		m_Grid[bombExplodeEvent->gridNumber] = Empty;
+		ExplodeBomb(Center, bombExplodeEvent->gridNumber, bombExplodeEvent->strength, 0);
+	}
 }
 
 void D2D::GridComponent::Render() const
@@ -185,4 +208,101 @@ void D2D::GridComponent::SetGridWalls()
 		auto pCollider = pWall->AddComponent<BoxCollider>();
 		pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
 	}
+}
+
+void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strength, int currentDistance)
+{
+	if (m_Grid[number] != Empty)
+		return;
+
+	switch (type)
+	{
+	case D2D::Center:
+		CreateExplosion(Center, number);
+		ExplodeBomb(Left, GetLeftNeighbour(number), strength, currentDistance + 1);
+		ExplodeBomb(Up, GetTopNeighbour(number), strength, currentDistance + 1);
+		ExplodeBomb(Right, GetRightNeighbour(number), strength, currentDistance + 1);
+		ExplodeBomb(Down, GetBottomNeighbour(number), strength, currentDistance + 1);
+		break;
+	case D2D::Left:
+		if (currentDistance < strength)
+		{
+			ExplodeBomb(Left, GetLeftNeighbour(number), strength, currentDistance + 1);
+			CreateExplosion(LeftMiddle, number);
+		}
+		else
+		{
+			CreateExplosion(Left, number);
+		}
+		break;
+	case D2D::Up:
+		if (currentDistance < strength)
+		{
+			ExplodeBomb(Up, GetTopNeighbour(number), strength, currentDistance + 1);
+			CreateExplosion(UpMiddle, number);
+		}
+		else
+		{
+			CreateExplosion(Up, number);
+		}
+		break;
+	case D2D::Right:
+		if (currentDistance < strength)
+		{
+			ExplodeBomb(Right, GetRightNeighbour(number), strength, currentDistance + 1);
+			CreateExplosion(RightMiddle, number);
+		}
+		else
+		{
+			CreateExplosion(Right, number);
+		}
+		break;
+	case D2D::Down:
+		if (currentDistance < strength)
+		{
+			ExplodeBomb(Down, GetBottomNeighbour(number), strength, currentDistance + 1);
+			CreateExplosion(DownMiddle, number);
+		}
+		else
+		{
+			CreateExplosion(Down, number);
+		}
+		break;
+	}
+}
+
+void D2D::GridComponent::CreateExplosion(ExplosionType type, int gridNumber)
+{
+	const auto pExplosion = GetOwner()->CreateNewObject("Bomb");
+	pExplosion->GetTransform()->SetWorldPosition(GetGridPos(gridNumber));
+
+	auto pRenderComponent = pExplosion->AddComponent<RenderComponent>();
+	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
+	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
+
+	auto pAnimator = pExplosion->AddComponent<ExplosionAnimator>();
+	pAnimator->Init(pRenderComponent.get(), m_pExplosionTextures[type]);
+
+	/*auto pCollider = pExplosion->AddComponent<BoxCollider>();
+	pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);*/
+}
+
+int D2D::GridComponent::GetTopNeighbour(int number)
+{
+	return number - m_Columns;
+}
+
+int D2D::GridComponent::GetBottomNeighbour(int number)
+{
+	return number + m_Columns;
+}
+
+int D2D::GridComponent::GetLeftNeighbour(int number)
+{
+	return number - 1;
+}
+
+int D2D::GridComponent::GetRightNeighbour(int number)
+{
+	return number + 1;
 }

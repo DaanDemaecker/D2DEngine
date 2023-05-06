@@ -12,6 +12,7 @@
 #include "BombermanScene.h"
 #include <ctime>
 
+
 void load()
 {
 	//auto& scene = D2D::SceneManager::GetInstance().CreateScene("Demo");
@@ -23,6 +24,8 @@ void load()
 
 int main(int, char* []) {
 	srand(time(nullptr));
+
+
 	D2D::D2DEngine engine("../Data/");
 	engine.Run(load);
 	return 0;

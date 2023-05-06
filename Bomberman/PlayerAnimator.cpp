@@ -2,6 +2,7 @@
 #include "PlayerAnimator.h"
 #include "AnimationClip.h"
 #include "RenderComponent.h"
+#include "Event.h"
 
 #include "ResourceManager.h"
 

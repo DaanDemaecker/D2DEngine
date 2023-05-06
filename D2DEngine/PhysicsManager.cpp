@@ -4,6 +4,14 @@
 
 #include "Renderer.h"
 
+D2D::PhysicsManager::PhysicsManager()
+{
+}
+
+D2D::PhysicsManager::~PhysicsManager()
+{
+}
+
 void D2D::PhysicsManager::AddCollider(BoxCollider* pCollider)
 {
 	if ((pCollider != nullptr) && (std::find(m_pBoxColliders.begin(), m_pBoxColliders.end(), pCollider) == m_pBoxColliders.end()))
@@ -22,11 +30,17 @@ void D2D::PhysicsManager::AddCollider(CapsuleCollider* pCollider)
 
 void D2D::PhysicsManager::RemoveCollider(BoxCollider* pCollider)
 {
+    if (m_pBoxColliders.size() == 0)
+        return;
+
 	m_pBoxColliders.erase(std::remove(m_pBoxColliders.begin(), m_pBoxColliders.end(), pCollider), m_pBoxColliders.end());
 }
 
 void D2D::PhysicsManager::RemoveCollider(CapsuleCollider* pCollider)
 {
+    if (m_pCapsuleColliders.size() == 0)
+        return;
+
     m_pCapsuleColliders.erase(std::remove(m_pCapsuleColliders.begin(), m_pCapsuleColliders.end(), pCollider), m_pCapsuleColliders.end());
 }
 

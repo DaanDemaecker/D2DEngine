@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "PlayerComponent.h"
 #include "Observer.h"
+#include <map>
 
 namespace D2D
 {
@@ -15,6 +16,19 @@ namespace D2D
 		Wall,
 		BrickWall,
 		Bomb
+	};
+
+	enum ExplosionType
+	{
+		Center,
+		LeftMiddle,
+		Left,
+		UpMiddle,
+		Up,
+		RightMiddle,
+		Right,
+		DownMiddle,
+		Down
 	};
 
 	struct PlaceBombResponse
@@ -50,6 +64,8 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
 
+		std::map<ExplosionType,std::shared_ptr<Texture2D>> m_pExplosionTextures{};
+
 		std::vector<GridType> m_Grid{};
 		std::vector<int> m_PlayerSpawns{};
 
@@ -58,5 +74,13 @@ namespace D2D
 		glm::vec2 GetGridPos(int square);
 
 		void SetGridWalls();
+
+		void ExplodeBomb(ExplosionType type, int number, int strength, int currentDistance);
+		void CreateExplosion(ExplosionType type, int gridNumber);
+
+		int GetTopNeighbour(int number);
+		int GetBottomNeighbour(int number);
+		int GetLeftNeighbour(int number);
+		int GetRightNeighbour(int number);
 	};
 }

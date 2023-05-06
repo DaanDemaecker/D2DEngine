@@ -2,6 +2,7 @@
 #include "TimeManager.h"
 #include "RenderComponent.h"
 #include "Texture2D.h"
+#include "Event.h"
 
 D2D::AnimationClip::AnimationClip(RenderComponent* pRenderComponent)
 {
@@ -24,6 +25,12 @@ void D2D::AnimationClip::SetClip(std::shared_ptr<Texture2D> pTexture, int cols, 
 	m_FrameAmount = frames;
 }
 
+void D2D::AnimationClip::AddAnimationEvent(int frame, std::unique_ptr<Event> event)
+{
+	//The given event will be notified after the given frame
+	m_AnimationEvents.insert(std::make_pair(frame, std::move(event)));
+}
+
 void D2D::AnimationClip::SetCurrentSprite()
 {
 	if (m_pRenderComponent != nullptr)
@@ -40,6 +47,12 @@ void D2D::AnimationClip::Update()
 	if (m_FrameTimer >= m_FrameDuration)
 	{
 		m_FrameTimer -= m_FrameDuration;
+
+		for (const auto& event : m_AnimationEvents)
+		{
+			if (event.first == m_CurrentFrame)
+				NotifyObservers(*(event.second.get()));
+		}
 
 		++m_CurrentFrame %= m_FrameAmount;
 

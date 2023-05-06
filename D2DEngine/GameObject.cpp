@@ -86,6 +86,11 @@ void D2D::GameObject::PostUpdate()
 			return pComponent->ShouldDestroy();
 		}), m_pComponents.end());
 
+	m_pChildren.erase(std::remove_if(m_pChildren.begin(), m_pChildren.end(), [](std::unique_ptr<GameObject>& pChild)
+		{
+			return pChild->ShouldDestroy();
+		}), m_pChildren.end());
+
 
 	for (auto& pChild : m_pChildren)
 	{

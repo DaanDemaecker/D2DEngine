@@ -12,6 +12,8 @@ namespace D2D
 	class PhysicsManager final : public Singleton<PhysicsManager>
 	{
 	public:
+		PhysicsManager();
+		~PhysicsManager();
 
 		void AddCollider(BoxCollider* pCollider);
 		void AddCollider(CapsuleCollider* pCollider);

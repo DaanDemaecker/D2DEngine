@@ -23,10 +23,14 @@ namespace D2D
 		void SetBombSize(float size) { m_BombSize = size; }
 
 	private:
+		GridComponent* m_pGrid;
+
 		std::shared_ptr<Texture2D> m_pBombtexture{};
 		float m_BombSize{};
 
-		GridComponent* m_pGrid;
+		int m_BombStrength{10};
+		int m_BombAmount{1};
+		int m_CurrentBombAmount{};
 
 		void SpawnBomb(const glm::vec2& pos);
 	};

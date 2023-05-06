@@ -13,6 +13,7 @@ D2D::BoxCollider::BoxCollider()
 
 D2D::BoxCollider::~BoxCollider()
 {
+	PhysicsManager::GetInstance().RemoveCollider(this);
 }
 
 void D2D::BoxCollider::SetVariables(float width, float height, float offsetX, float offsetY)

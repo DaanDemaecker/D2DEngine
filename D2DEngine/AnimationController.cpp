@@ -1,5 +1,6 @@
 #include "AnimationController.h"
 #include "AnimationClip.h"
+#include "Event.h"
 
 void D2D::AnimationController::SetShouldAnimate(bool shouldAnimate)
 {

@@ -6,14 +6,19 @@
 #include "RenderComponent.h"
 #include "BoxCollider.h"
 #include "GridComponent.h"
-#include "BombAnimator.h"
+#include "SingleClipAnimator.h"
 #include "AnimationClip.h"
+#include "BombComponent.h"
+#include "WorldEvents.h"
 
 D2D::BombManagerComponent::BombManagerComponent()
 {
 	const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
 	m_pBombtexture = pResourceManager.LoadTexture("sprites/SpriteSheets/Bomb.png");
+
+
+	m_CurrentBombAmount = m_BombAmount;
 }
 
 void D2D::BombManagerComponent::Notify(const Event& event)
@@ -21,6 +26,10 @@ void D2D::BombManagerComponent::Notify(const Event& event)
 	if (auto placeBombEvent{ dynamic_cast<const PlaceBombEvent*>(&event) })
 	{
 		SpawnBomb(placeBombEvent->position);
+	}
+	else if (auto placeBombEvent{ dynamic_cast<const BombExplodeEvent*>(&event) })
+	{
+		++m_CurrentBombAmount;
 	}
 }
 
@@ -31,9 +40,8 @@ void D2D::BombManagerComponent::SetGrid(GridComponent* grid)
 
 void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 {
-	if (m_pGrid == nullptr)
+	if (m_pGrid == nullptr || m_CurrentBombAmount <= 0)
 		return;
-
 
 	D2D::PlaceBombResponse response{};
 
@@ -42,6 +50,8 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 	if (!response.success)
 		return;
 
+	m_CurrentBombAmount--;
+
 	const auto pBomb = GetOwner()->CreateNewObject("Bomb");
 	pBomb->GetTransform()->SetWorldPosition(response.position);
 
@@ -49,9 +59,15 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 	pRenderComponent->SetOffset(-m_BombSize/2, -m_BombSize/2);
 	pRenderComponent->SetDestRectBounds(m_BombSize, m_BombSize);
 
-	auto pAnimator = pBomb->AddComponent<BombAnimator>();
-	pAnimator->Init(pRenderComponent.get(), m_pBombtexture);
+	auto pAnimator = pBomb->AddComponent<SingleClipAnimator>();
+	pAnimator->Init(pRenderComponent.get(), m_pBombtexture, 3, 1, 3);
 
 	auto pCollider = pBomb->AddComponent<BoxCollider>();
 	pCollider->SetVariables(m_BombSize, m_BombSize, -m_BombSize/2, -m_BombSize/2);
+
+	auto pBombComponent = pBomb->AddComponent<BombComponent>();
+	pBombComponent->SetBombStrength(m_BombStrength);
+	pBombComponent->SetGridNumber(response.index);
+	pBombComponent->AddObserver(m_pGrid);
+	pBombComponent->AddObserver(this);
 }
