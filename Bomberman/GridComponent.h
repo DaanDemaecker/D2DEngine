@@ -63,8 +63,10 @@ namespace D2D
 
 		std::shared_ptr<Texture2D> m_pWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
+		std::shared_ptr<Texture2D> m_pBrickExplosionTexture{};
 
 		std::map<ExplosionType,std::shared_ptr<Texture2D>> m_pExplosionTextures{};
+		std::map<int, GameObject*> m_pBrickWalls{};
 
 		std::vector<GridType> m_Grid{};
 		std::vector<int> m_PlayerSpawns{};
@@ -82,5 +84,7 @@ namespace D2D
 		int GetBottomNeighbour(int number);
 		int GetLeftNeighbour(int number);
 		int GetRightNeighbour(int number);
+
+		void DeleteBrickWall(int number);
 	};
 }

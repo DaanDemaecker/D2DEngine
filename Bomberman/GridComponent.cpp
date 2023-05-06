@@ -8,13 +8,14 @@
 #include "RenderComponent.h"
 #include "BoxCollider.h"
 #include "WorldEvents.h"
-#include "ExplosionAnimator.h"
+#include "SelfDestroyingAnimator.h"
 #include "AnimationClip.h"
 
 D2D::GridComponent::GridComponent()
 {
 	m_pWallTexture = ResourceManager::GetInstance().LoadTexture("Sprites/Wall.png");
 	m_pBrickWallTexture = ResourceManager::GetInstance().LoadTexture("Sprites/BrickWall.png");
+	m_pBrickExplosionTexture = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/BrickWallDestroy.png");
 
 	m_pExplosionTextures[ExplosionType::Center] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionCenter.png");
 
@@ -175,7 +176,7 @@ void D2D::GridComponent::SetGridWalls()
 {
 	auto owner{ GetOwner() };
 
-	for (int i{}; i < m_Grid.size(); i++)
+	for (size_t i{}; i < m_Grid.size(); i++)
 	{
 		if (m_Grid[i] == D2D::Empty)
 			continue;
@@ -194,6 +195,8 @@ void D2D::GridComponent::SetGridWalls()
 			pWall = GetOwner()->CreateNewObject("BrickWall");
 			pRenderComponent = pWall->AddComponent<RenderComponent>();
 			pRenderComponent->SetTexture(m_pBrickWallTexture);
+
+			m_pBrickWalls.insert(std::make_pair(i, pWall));
 			break;
 		default:
 			continue;
@@ -213,7 +216,13 @@ void D2D::GridComponent::SetGridWalls()
 void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strength, int currentDistance)
 {
 	if (m_Grid[number] != Empty)
+	{
+		if (m_Grid[number] == BrickWall)
+		{
+			DeleteBrickWall(number);
+		}
 		return;
+	}
 
 	switch (type)
 	{
@@ -273,15 +282,15 @@ void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strengt
 
 void D2D::GridComponent::CreateExplosion(ExplosionType type, int gridNumber)
 {
-	const auto pExplosion = GetOwner()->CreateNewObject("Bomb");
+	const auto pExplosion = GetOwner()->CreateNewObject("Explosion");
 	pExplosion->GetTransform()->SetWorldPosition(GetGridPos(gridNumber));
 
 	auto pRenderComponent = pExplosion->AddComponent<RenderComponent>();
 	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
 	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
 
-	auto pAnimator = pExplosion->AddComponent<ExplosionAnimator>();
-	pAnimator->Init(pRenderComponent.get(), m_pExplosionTextures[type]);
+	auto pAnimator = pExplosion->AddComponent<SelfDestroyingAnimator>();
+	pAnimator->Init(pRenderComponent.get(), m_pExplosionTextures[type], 4, 1, 4);
 
 	/*auto pCollider = pExplosion->AddComponent<BoxCollider>();
 	pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);*/
@@ -305,4 +314,25 @@ int D2D::GridComponent::GetLeftNeighbour(int number)
 int D2D::GridComponent::GetRightNeighbour(int number)
 {
 	return number + 1;
+}
+
+void D2D::GridComponent::DeleteBrickWall(int number)
+{
+	auto iter = m_pBrickWalls.find(number);
+	if (iter != m_pBrickWalls.end())
+	{
+		iter->second->Destroy();
+		m_pBrickWalls.erase(iter);
+		m_Grid[number] = Empty;
+
+		const auto pExplosion = GetOwner()->CreateNewObject("ExplodingBrick");
+		pExplosion->GetTransform()->SetWorldPosition(GetGridPos(number));
+
+		auto pRenderComponent = pExplosion->AddComponent<RenderComponent>();
+		pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
+		pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
+
+		auto pAnimator = pExplosion->AddComponent<SelfDestroyingAnimator>();
+		pAnimator->Init(pRenderComponent.get(), m_pBrickExplosionTexture, 4, 1, 4);
+	}
 }

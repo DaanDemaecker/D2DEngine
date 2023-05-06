@@ -28,7 +28,7 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBombtexture{};
 		float m_BombSize{};
 
-		int m_BombStrength{10};
+		int m_BombStrength{1};
 		int m_BombAmount{1};
 		int m_CurrentBombAmount{};
 

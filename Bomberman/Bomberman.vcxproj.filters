@@ -69,7 +69,7 @@
     <ClCompile Include="SingleClipAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
-    <ClCompile Include="ExplosionAnimator.cpp">
+    <ClCompile Include="SelfDestroyingAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,7 +119,7 @@
     <ClInclude Include="SingleClipAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
-    <ClInclude Include="ExplosionAnimator.h">
+    <ClInclude Include="SelfDestroyingAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
   </ItemGroup>

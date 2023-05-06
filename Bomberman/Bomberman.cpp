@@ -22,7 +22,8 @@ void load()
 	D2D::LoadBombermanScene(bombermanScene);
 }
 
-int main(int, char* []) {
+int main(int, char* [])
+{
 	srand(time(nullptr));
 
 

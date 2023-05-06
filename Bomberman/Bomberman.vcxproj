@@ -169,7 +169,6 @@
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="BombManagerComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
-    <ClCompile Include="ExplosionAnimator.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="pch.cpp">
@@ -183,6 +182,7 @@
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PlayerMovementCommand.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
+    <ClCompile Include="SelfDestroyingAnimator.cpp" />
     <ClCompile Include="SingleClipAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +190,6 @@
     <ClInclude Include="BombermanScene.h" />
     <ClInclude Include="BombManagerComponent.h" />
     <ClInclude Include="DebugCommand.h" />
-    <ClInclude Include="ExplosionAnimator.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="pch.h" />
@@ -200,6 +199,7 @@
     <ClInclude Include="PlayerEvents.h" />
     <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="PointsDisplay.h" />
+    <ClInclude Include="SelfDestroyingAnimator.h" />
     <ClInclude Include="SingleClipAnimator.h" />
     <ClInclude Include="WorldEvents.h" />
   </ItemGroup>
