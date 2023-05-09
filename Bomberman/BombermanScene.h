@@ -29,7 +29,7 @@
 #include "AnimationClip.h"
 
 #include "GridComponent.h"
-
+#include "CameraComponent.h"
 
 #include <functional>
 
@@ -65,7 +65,9 @@ namespace D2D
 
 		const auto pWorld{ scene.CreateGameObject("Playfield") };
 		pWorld->GetTransform()->SetWorldPosition(0, 50);
-		pWorld->AddComponent<GridComponent>()->SetGrid("../Data/TextFiles/Level.txt", gridSize);
+		const auto pGrid = pWorld->AddComponent<GridComponent>();
+		pGrid->SetGrid("../Data/TextFiles/Level.txt", gridSize);
+		pWorld->AddComponent<CameraComponent>()->SetLevelBounds(0, pGrid->GetLevelWidth());
 		
 
 		auto pPlayer1 = SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
@@ -73,7 +75,7 @@ namespace D2D
 
 	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize)
 	{
-		constexpr float playerSpeed{ 50.0f };
+		float playerSpeed{ 4 *  gridSize };
 
 		const float playerHeight{ gridSize * .9f };
 		const float playerRadius{ gridSize / 2.f * 0.8f};
@@ -83,6 +85,8 @@ namespace D2D
 		const auto pGridComponent{ pWorld->GetComponent<GridComponent>().get() };
 
 		const auto pPlayer{ pWorld->CreateNewObject("Bomber Man " + std::to_string(idx)) };
+
+		pWorld->GetComponent<CameraComponent>()->SetPlayer(pPlayer->GetTransform().get());
 
 		auto pPlayerTransform = pPlayer->GetTransform().get();
 		pPlayerTransform->SetWorldPosition(pGridComponent->GetPlayerPosition(idx)); 

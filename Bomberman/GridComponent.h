@@ -56,6 +56,8 @@ namespace D2D
 
 		glm::vec2 GetPlayerPosition(int index);
 
+		float GetLevelWidth();
+
 	private:
 		int m_Rows{};
 		int m_Columns{};

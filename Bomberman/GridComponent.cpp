@@ -213,6 +213,11 @@ void D2D::GridComponent::SetGridWalls()
 	}
 }
 
+float D2D::GridComponent::GetLevelWidth()
+{
+	return m_SquareSize * m_Columns;
+}
+
 void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strength, int currentDistance)
 {
 	if (m_Grid[number] != Empty)

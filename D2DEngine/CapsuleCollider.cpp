@@ -47,5 +47,11 @@ void D2D::CapsuleCollider::Render() const
 
 D2D::Capsule& D2D::CapsuleCollider::GetBounds()
 {
+	if (m_pTransform != nullptr)
+	{
+		auto pos{ m_pTransform->GetWorldPosition() };
+		m_Bounds.center = pos;
+	}
+	
 	return m_Bounds;
 }

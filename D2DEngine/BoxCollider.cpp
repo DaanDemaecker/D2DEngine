@@ -33,12 +33,12 @@ void D2D::BoxCollider::SetVariables(float width, float height, float offsetX, fl
 
 void D2D::BoxCollider::Render() const
 {
-	if (m_pTransform != nullptr)
+	/*if (m_pTransform != nullptr)
 	{
 		const auto rect{ Rect{m_Bounds} };
 
 		Renderer::GetInstance().DrawRect(rect.x, rect.y, rect.w, rect.h);
-	}
+	}*/
 }
 
 D2D::BoxColliderBounds& D2D::BoxCollider::GetBounds()

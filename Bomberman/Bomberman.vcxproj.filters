@@ -72,6 +72,9 @@
     <ClCompile Include="SelfDestroyingAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="SelfDestroyingAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
