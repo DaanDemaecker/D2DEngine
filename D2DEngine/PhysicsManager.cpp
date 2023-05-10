@@ -4,14 +4,6 @@
 
 #include "Renderer.h"
 
-D2D::PhysicsManager::PhysicsManager()
-{
-}
-
-D2D::PhysicsManager::~PhysicsManager()
-{
-}
-
 void D2D::PhysicsManager::AddCollider(BoxCollider* pCollider)
 {
 	if ((pCollider != nullptr) && (std::find(m_pBoxColliders.begin(), m_pBoxColliders.end(), pCollider) == m_pBoxColliders.end()))

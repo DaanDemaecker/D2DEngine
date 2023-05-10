@@ -12,9 +12,6 @@ namespace D2D
 	class PhysicsManager final : public Singleton<PhysicsManager>
 	{
 	public:
-		PhysicsManager();
-		~PhysicsManager();
-
 		void AddCollider(BoxCollider* pCollider);
 		void AddCollider(CapsuleCollider* pCollider);
 		void RemoveCollider(BoxCollider* pCollider);
@@ -29,6 +26,9 @@ namespace D2D
 		bool IsPointInCircle(const glm::vec2& point, const glm::vec2& center, float radius);
 
 	private:
+		friend class Singleton<PhysicsManager>;
+		PhysicsManager() = default;
+
 		std::vector<BoxCollider*> m_pBoxColliders{};
 		std::vector<CapsuleCollider*> m_pCapsuleColliders{};
 
