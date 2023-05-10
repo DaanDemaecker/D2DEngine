@@ -13,6 +13,21 @@ void D2D::GameObject::Init()
 	m_pTransform = AddComponent<Transform>();
 }
 
+void D2D::GameObject::StartFrame()
+{
+	for (int i{}; i < m_pChildrenToAdd.size(); ++i)
+	{
+		m_pChildren.push_back(std::move(m_pChildrenToAdd[i]));
+	}
+
+	m_pChildrenToAdd.clear();
+
+	for (auto& pChild : m_pChildren)
+	{
+		pChild->StartFrame();
+	}
+}
+
 void D2D::GameObject::Update()
 {
 	for (auto& pComponent : m_pComponents)
@@ -106,7 +121,7 @@ D2D::GameObject* D2D::GameObject::CreateNewObject(const std::string& name)
 
 	pNewObject->m_pParent = this;
 
-	return m_pChildren.emplace_back(std::move(pNewObject)).get();
+	return m_pChildrenToAdd.emplace_back(std::move(pNewObject)).get();
 }
 
 void D2D::GameObject::SetParent(GameObject* pParent, bool worldPositionStays)

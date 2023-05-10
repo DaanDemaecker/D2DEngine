@@ -13,6 +13,8 @@ namespace D2D
 	public:
 		Scene& CreateScene(const std::string& name);
 
+		void StartFrame();
+
 		void Update();
 		void FixedUpdate();
 

@@ -76,9 +76,6 @@
     <ClCompile Include="D2DEngine.cpp">
       <Filter>EngineFiles</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>EngineFiles</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>EngineFiles</Filter>
     </ClCompile>

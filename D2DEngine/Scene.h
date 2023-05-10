@@ -13,6 +13,8 @@ namespace D2D
 		void Remove(GameObject* object);
 		void RemoveAll();
 
+		void StartFrame();
+
 		void Update();
 
 		void FixedUpdate();

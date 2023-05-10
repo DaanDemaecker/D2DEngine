@@ -265,7 +265,6 @@
     <ClCompile Include="InfoCommand.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyBoardImpl.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="D2DEngine.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />

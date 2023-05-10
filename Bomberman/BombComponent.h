@@ -20,6 +20,6 @@ namespace D2D
 	private:
 		int m_BombStrength{};
 		int m_GridNumber{};
-		float m_Timer{ 3.0f };
+		float m_Timer{ 2.5f };
 	};
 }

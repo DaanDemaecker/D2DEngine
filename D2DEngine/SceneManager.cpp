@@ -57,3 +57,11 @@ D2D::Scene& D2D::SceneManager::CreateScene(const std::string& name)
 	m_scenes.push_back(scene);
 	return *scene;
 }
+
+void D2D::SceneManager::StartFrame()
+{
+	for (auto& scene : m_scenes)
+	{
+		scene->StartFrame();
+	}
+}

@@ -110,6 +110,8 @@ void D2D::D2DEngine::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput();
 
+		sceneManager.StartFrame();
+
 		while (lag >= fixedTimeStep)
 		{
 			

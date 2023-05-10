@@ -22,6 +22,8 @@ namespace D2D
 
 		void Init();
 
+		void StartFrame();
+
 		void Update();
 
 		void FixedUpdate();
@@ -63,6 +65,7 @@ namespace D2D
 
 		GameObject* m_pParent{};
 		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
+		std::vector<std::unique_ptr<GameObject>> m_pChildrenToAdd{};
 
 		std::shared_ptr<Transform> m_pTransform;
 
