@@ -106,6 +106,9 @@
     <ClCompile Include="AnimationController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>ServiceLocator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -244,6 +247,12 @@
     <ClInclude Include="AnimationController.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>ServiceLocator</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>ServiceLocator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BaseClasses">
@@ -275,6 +284,9 @@
     </Filter>
     <Filter Include="Animation">
       <UniqueIdentifier>{19245858-5d68-435b-abbc-8ca57771b56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServiceLocator">
+      <UniqueIdentifier>{d1002d17-c576-4e29-afdd-95808cf5b93b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

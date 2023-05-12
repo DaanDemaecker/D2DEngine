@@ -17,6 +17,8 @@ namespace D2D
 		void SetGridNumber(int number) { m_GridNumber = number; }
 		void SetBombStrength(int strength) { m_BombStrength = strength; }
 
+		void ExplodeBomb();
+
 	private:
 		int m_BombStrength{};
 		int m_GridNumber{};

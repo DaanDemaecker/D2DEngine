@@ -12,6 +12,8 @@
 #include "BombermanScene.h"
 #include <ctime>
 
+#include "ServiceLocator.h"
+
 
 void load()
 {
