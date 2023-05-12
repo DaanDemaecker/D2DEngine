@@ -15,7 +15,7 @@ void D2D::GameObject::Init()
 
 void D2D::GameObject::StartFrame()
 {
-	for (int i{}; i < m_pChildrenToAdd.size(); ++i)
+	for (size_t i{}; i < m_pChildrenToAdd.size(); ++i)
 	{
 		m_pChildren.push_back(std::move(m_pChildrenToAdd[i]));
 	}
