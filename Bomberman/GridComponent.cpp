@@ -174,8 +174,6 @@ glm::vec2 D2D::GridComponent::GetGridPos(int square)
 
 void D2D::GridComponent::SetGridWalls()
 {
-	auto owner{ GetOwner() };
-
 	for (size_t i{}; i < m_Grid.size(); i++)
 	{
 		if (m_Grid[i] == D2D::Empty)
@@ -196,14 +194,14 @@ void D2D::GridComponent::SetGridWalls()
 			pRenderComponent = pWall->AddComponent<RenderComponent>();
 			pRenderComponent->SetTexture(m_pBrickWallTexture);
 
-			m_pBrickWalls.insert(std::make_pair(i, pWall));
+			m_pBrickWalls.insert(std::make_pair(static_cast<int>(i), pWall));
 			break;
 		default:
 			continue;
 			break;
 		}
 
-		pWall->GetTransform()->SetWorldPosition(GetGridPos(i));
+		pWall->GetTransform()->SetWorldPosition(GetGridPos(static_cast<int>(i)));
 
 		pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
 		pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);

@@ -15,8 +15,9 @@ namespace D2D
 		SoundSystem& operator=(SoundSystem& other) = delete;
 		SoundSystem& operator=(SoundSystem&& other) = delete;
 
-		virtual void Play() = 0;
+		virtual void Play(unsigned short id, int voume) = 0;
 
+		virtual void ReadSoundSheet(const std::string& filePath) = 0;
 
 	};
 
@@ -26,7 +27,10 @@ namespace D2D
 		DefaultSoundSystem() = default;
 		virtual ~DefaultSoundSystem() override = default;
 
-		virtual void Play() override {}
+		virtual void Play(unsigned short, int) override {}
+
+		virtual void ReadSoundSheet(const std::string&) override {}
+
 	};
 
 

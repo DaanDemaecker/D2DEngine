@@ -1,5 +1,6 @@
 #pragma once
 #include "SoundSystem.h"
+#include <map>
 
 struct Mix_Chunk;
 
@@ -13,9 +14,13 @@ namespace D2D
 		SDLSoundSystem();
 		virtual ~SDLSoundSystem();
 
-		virtual void Play() override;
+		virtual void Play(unsigned short id, int voume) override;
+
+		virtual void ReadSoundSheet(const std::string& filePath) override;
 
 	private:
-		Mix_Chunk* m_pTest;
+		std::map<unsigned short, Mix_Chunk*> m_pSoundChunks{};
+
+		void ClearSoundChunks();
 	};
 }

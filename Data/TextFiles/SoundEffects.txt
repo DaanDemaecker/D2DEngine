@@ -1,0 +1,5 @@
+filePath = "Sound/SoundEffects/"
+<"0" = "BombPlacement.wav">
+<"1" = "Explosion.wav">
+<"2" = "PowerUp.wav">
+<"3" = "Walk.wav">

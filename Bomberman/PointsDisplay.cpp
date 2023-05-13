@@ -17,7 +17,7 @@ void D2D::PointsDisplay::Notify(const Event& event)
 	{
 		m_Score = 0;
 	}
-	else if (auto playerDieEvent{ dynamic_cast<const PickupItemEvent*>(&event) })
+	else if (auto pickupItemEvent{ dynamic_cast<const PickupItemEvent*>(&event) })
 	{
 		m_Score += 100;
 	}

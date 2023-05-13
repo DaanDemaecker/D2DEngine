@@ -10,6 +10,7 @@
 #include "AnimationClip.h"
 #include "BombComponent.h"
 #include "WorldEvents.h"
+#include "ServiceLocator.h"
 
 D2D::BombManagerComponent::BombManagerComponent()
 {
@@ -27,7 +28,7 @@ void D2D::BombManagerComponent::Notify(const Event& event)
 	{
 		SpawnBomb(placeBombEvent->position);
 	}
-	else if (auto placeBombEvent{ dynamic_cast<const BombExplodeEvent*>(&event) })
+	else if (auto bombExplodeEvent{ dynamic_cast<const BombExplodeEvent*>(&event) })
 	{
 		++m_CurrentBombAmount;
 	}
@@ -49,6 +50,8 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 
 	if (!response.success)
 		return;
+
+	ServiceLocator::GetSoundSystem().Play(0, 128);
 
 	m_CurrentBombAmount--;
 

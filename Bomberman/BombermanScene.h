@@ -31,6 +31,8 @@
 #include "GridComponent.h"
 #include "CameraComponent.h"
 
+#include "ServiceLocator.h"
+
 #include <functional>
 
 namespace D2D
@@ -39,6 +41,8 @@ namespace D2D
 
 	void LoadBombermanScene(Scene& scene)
 	{
+		ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
+
 		auto& input = D2D::InputManager::GetInstance();
 
 		const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
@@ -70,7 +74,7 @@ namespace D2D
 		pWorld->AddComponent<CameraComponent>()->SetLevelBounds(0, pGrid->GetLevelWidth());
 		
 
-		auto pPlayer1 = SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
+		SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
 	}
 
 	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize)

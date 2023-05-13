@@ -110,7 +110,10 @@
       <Filter>ServiceLocator</Filter>
     </ClCompile>
     <ClCompile Include="SDLSoundSystem.cpp">
-      <Filter>ServiceLocator</Filter>
+      <Filter>ServiceLocator\SoundSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugSDLSoundSystem.cpp">
+      <Filter>ServiceLocator\SoundSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,10 +257,13 @@
       <Filter>ServiceLocator</Filter>
     </ClInclude>
     <ClInclude Include="SoundSystem.h">
-      <Filter>ServiceLocator</Filter>
+      <Filter>ServiceLocator\SoundSystem</Filter>
     </ClInclude>
     <ClInclude Include="SDLSoundSystem.h">
-      <Filter>ServiceLocator</Filter>
+      <Filter>ServiceLocator\SoundSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugSDLSoundSystem.h">
+      <Filter>ServiceLocator\SoundSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +299,9 @@
     </Filter>
     <Filter Include="ServiceLocator">
       <UniqueIdentifier>{d1002d17-c576-4e29-afdd-95808cf5b93b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServiceLocator\SoundSystem">
+      <UniqueIdentifier>{7e7b37c6-2f0e-4e4d-815b-7b876687ad0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

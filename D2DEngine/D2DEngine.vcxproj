@@ -228,6 +228,7 @@
     <ClInclude Include="CapsuleCollider.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DebugSDLSoundSystem.h" />
     <ClInclude Include="DemoScene.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Event.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CapsuleCollider.cpp" />
+    <ClCompile Include="DebugSDLSoundSystem.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameObject.cpp" />

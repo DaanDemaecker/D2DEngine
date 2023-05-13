@@ -14,15 +14,20 @@
 
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
-
+#include "DebugSDLSoundSystem.h"
 
 
 void load()
 {
 	//auto& scene = D2D::SceneManager::GetInstance().CreateScene("Demo");
 	//D2D::LoadDemoScene(scene);
-
+#ifdef NDEBUG
 	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::SDLSoundSystem>());
+#else
+	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::DebugSDLSoundSystem>());
+#endif
+
+
 
 	auto& bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
 	D2D::LoadBombermanScene(bombermanScene);
@@ -30,7 +35,7 @@ void load()
 
 int main(int, char* [])
 {
-	srand(time(nullptr));
+	srand(static_cast<unsigned int>(time(nullptr)));
 
 
 	D2D::D2DEngine engine("../Data/");
