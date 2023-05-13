@@ -13,12 +13,16 @@
 #include <ctime>
 
 #include "ServiceLocator.h"
+#include "SDLSoundSystem.h"
+
 
 
 void load()
 {
 	//auto& scene = D2D::SceneManager::GetInstance().CreateScene("Demo");
 	//D2D::LoadDemoScene(scene);
+
+	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::SDLSoundSystem>());
 
 	auto& bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
 	D2D::LoadBombermanScene(bombermanScene);

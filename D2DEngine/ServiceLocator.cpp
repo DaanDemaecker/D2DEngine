@@ -1,4 +1,5 @@
 #include "ServiceLocator.h"
+#include "SDLSoundSystem.h"
 
 namespace D2D
 {
@@ -6,7 +7,7 @@ namespace D2D
     std::unique_ptr<SoundSystem> ServiceLocator::m_pSoundSystemInstance{ nullptr };
 
 
-    void ServiceLocator::register_sound_system(std::unique_ptr<SoundSystem> soundSystem)
+    void ServiceLocator::RegisterSoundSystem(std::unique_ptr<SoundSystem> soundSystem)
     {
         if (soundSystem != nullptr)
         {

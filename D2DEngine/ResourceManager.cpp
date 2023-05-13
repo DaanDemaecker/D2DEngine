@@ -19,6 +19,7 @@ void D2D::ResourceManager::Init(const std::string& dataPath)
 std::shared_ptr<D2D::Texture2D> D2D::ResourceManager::LoadTexture(const std::string& file) const
 {
 	const auto fullPath = m_dataPath + file;
+
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (texture == nullptr)
 	{

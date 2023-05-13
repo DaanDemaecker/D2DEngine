@@ -17,7 +17,7 @@ namespace D2D
 
 
 		static SoundSystem& GetSoundSystem();
-		static void register_sound_system(std::unique_ptr<SoundSystem> soundSystem);
+		static void RegisterSoundSystem(std::unique_ptr<SoundSystem> soundSystem);
 
 	private:
 		static std::unique_ptr<SoundSystem> m_pSoundSystemInstance;

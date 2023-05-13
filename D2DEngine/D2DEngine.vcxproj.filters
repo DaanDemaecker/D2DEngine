@@ -109,6 +109,9 @@
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>ServiceLocator</Filter>
     </ClCompile>
+    <ClCompile Include="SDLSoundSystem.cpp">
+      <Filter>ServiceLocator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -253,8 +256,8 @@
     <ClInclude Include="SoundSystem.h">
       <Filter>ServiceLocator</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\SDL_mixer\include\SDL_mixer.h">
-      <Filter>SDL_Mixer</Filter>
+    <ClInclude Include="SDLSoundSystem.h">
+      <Filter>ServiceLocator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +293,6 @@
     </Filter>
     <Filter Include="ServiceLocator">
       <UniqueIdentifier>{d1002d17-c576-4e29-afdd-95808cf5b93b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDL_Mixer">
-      <UniqueIdentifier>{a99cf4ca-9a7f-4c7f-b16d-ee0498457897}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
