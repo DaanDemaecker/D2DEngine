@@ -19,32 +19,27 @@ D2D::SDLSoundSystem::SDLSoundSystem()
 		std::cout << "Failed to open audio device: " << Mix_GetError() << std::endl;
 		// Handle the error
 	}
+
+	m_Thread = std::jthread(&SDLSoundSystem::Run, this);
 }
 
 D2D::SDLSoundSystem::~SDLSoundSystem()
 {
+	m_IsRunning = false;
+	m_ConditionVariable.notify_one();
+	m_Thread.join();
+
 	ClearSoundChunks();
 	Mix_Quit();
 }
 
 void D2D::SDLSoundSystem::Play(unsigned short id, int volume)
 {
-	if (m_pSoundChunks.count(id) <= 0)
-	{
-		std::cout << "Failed to find sound chunk: " << id << "\n";
-		return;
-	}
+	std::lock_guard<std::mutex> lock{ m_Mutex };
 
-	const int channel = Mix_GroupAvailable(-1);
-	if (channel == -1)
-	{
-		std::cout << "Failed to find open channel: " << channel << "\n";
-	}
-	else
-	{
-		Mix_Volume(0, volume);
-		Mix_PlayChannel(-1, m_pSoundChunks[id], 0);
-	}
+	m_Queue.push_back(std::pair<unsigned short, int>{id, volume});
+
+	m_ConditionVariable.notify_one();
 }
 
 void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)
@@ -102,5 +97,40 @@ void D2D::SDLSoundSystem::ClearSoundChunks()
 	for (auto& pair : m_pSoundChunks)
 	{
 		Mix_FreeChunk(pair.second);
+	}
+}
+
+void D2D::SDLSoundSystem::Run()
+{
+	while (m_IsRunning)
+	{
+		std::unique_lock<std::mutex> lock(m_Mutex);
+
+		if (m_Queue.size() > 0)
+		{
+			PlaySound(m_Queue[0].first, m_Queue[0].second);
+			m_Queue.pop_front();
+		}
+		m_ConditionVariable.wait(lock);
+	}
+}
+
+void D2D::SDLSoundSystem::PlaySound(unsigned short id, int volume)
+{
+	if (m_pSoundChunks.count(id) <= 0)
+	{
+		std::cout << "Failed to find sound chunk: " << id << "\n";
+		return;
+	}
+
+	const int channel = Mix_GroupAvailable(-1);
+	if (channel == -1)
+	{
+		std::cout << "Failed to find open channel: " << channel << "\n";
+	}
+	else
+	{
+		Mix_Volume(0, volume);
+		Mix_PlayChannel(-1, m_pSoundChunks[id], 0);
 	}
 }

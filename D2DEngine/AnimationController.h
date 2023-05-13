@@ -1,10 +1,10 @@
 #pragma once
 #include "Component.h"
 #include <functional>
+#include "AnimationClip.h"
 
 namespace D2D
 {
-	class AnimationClip;
 
 	class AnimationController : public Component
 	{
