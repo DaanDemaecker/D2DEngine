@@ -50,16 +50,19 @@ glm::vec2 D2D::Transform::GetWorldPosition()
 void D2D::Transform::SetWorldPosition(float x, float y)
 {
 	SetWorldPosition(glm::vec2{ x, y });
+	CheckTriggers();
 }
 
 void D2D::Transform::SetWorldPosition(const glm::vec2& pos)
 {
 	SetLocalPosition(pos - (GetWorldPosition() - m_LocalPosition));
+	CheckTriggers();
 }
 
 void D2D::Transform::MoveLocalPosition(float x, float y)
 {
 	MoveLocalPosition(glm::vec2{ x, y });
+	CheckTriggers();
 }
 
 void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
@@ -70,6 +73,7 @@ void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 		if (PhysicsManager::GetInstance().CanMove(m_pBoxCollider, direction))
 		{
 			SetLocalPosition(m_LocalPosition + direction);
+			CheckTriggers();
 		}
 
 	}
@@ -79,6 +83,7 @@ void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 		if (PhysicsManager::GetInstance().CanMove(m_pCapsuleCollider, direction))
 		{
 			SetLocalPosition(m_LocalPosition + direction);
+			CheckTriggers();
 		}
 	}
 	else
@@ -103,4 +108,16 @@ void D2D::Transform::Render() const
 	//auto pos = m_ParentWorldPosition + m_LocalPosition;
 
 	//Renderer::GetInstance().DrawMarker(pos.x, pos.y, 20, SDL_Color(255, 0, 0));
+}
+
+void D2D::Transform::CheckTriggers()
+{
+	if (m_pBoxCollider != nullptr)
+	{
+			PhysicsManager::GetInstance().CheckColliderForTrigger(m_pBoxCollider);
+	}
+	else if (m_pCapsuleCollider != nullptr)
+	{
+			PhysicsManager::GetInstance().CheckColliderForTrigger(m_pCapsuleCollider);
+	}
 }

@@ -1,16 +1,18 @@
 #pragma once
-#include "Component.h"
+#include "Collider.h"
 #include "Structs.h"
 
 namespace D2D
 {
 	class Transform;
 
-	class BoxCollider final : public Component
+	class BoxCollider final : public Collider
 	{
 	public:
 		BoxCollider();
-		~BoxCollider();
+		virtual ~BoxCollider();
+
+		virtual void AddToPhysicsManager(bool isTrigger = false) override;
 
 		void SetVariables(float width, float height, float offsetX = 0, float offsetY = 0);
 
@@ -18,7 +20,11 @@ namespace D2D
 
 		BoxColliderBounds& GetBounds();
 
+		virtual void TriggerOverlap(Collider* other) override;
+
 	private:
+		bool m_IsTrigger{ false };
+
 		BoxColliderBounds m_Bounds{};
 
 		Transform* m_pTransform{};

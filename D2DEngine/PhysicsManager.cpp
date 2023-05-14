@@ -1,8 +1,10 @@
 #include "PhysicsManager.h"
 #include "BoxCollider.h"
 #include "CapsuleCollider.h"
-
 #include "Renderer.h"
+
+#include <cmath>
+#include <algorithm>
 
 void D2D::PhysicsManager::AddCollider(BoxCollider* pCollider)
 {
@@ -34,6 +36,23 @@ void D2D::PhysicsManager::RemoveCollider(CapsuleCollider* pCollider)
         return;
 
     m_pCapsuleColliders.erase(std::remove(m_pCapsuleColliders.begin(), m_pCapsuleColliders.end(), pCollider), m_pCapsuleColliders.end());
+}
+
+void D2D::PhysicsManager::AddTrigger(BoxCollider* pTrigger)
+{
+    if ((pTrigger != nullptr) && (std::find(m_pBoxTriggers.begin(), m_pBoxTriggers.end(), pTrigger) == m_pBoxTriggers.end()))
+    {
+        m_pBoxTriggers.push_back(pTrigger);
+        CheckTrigger(pTrigger);
+    }
+}
+
+void D2D::PhysicsManager::RemoveTrigger(BoxCollider* pTrigger)
+{
+    if (m_pBoxTriggers.size() == 0)
+        return;
+
+    m_pBoxTriggers.erase(std::remove(m_pBoxTriggers.begin(), m_pBoxTriggers.end(), pTrigger), m_pBoxTriggers.end());
 }
 
 bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, glm::vec2& direction, bool /*secondCheck*/)
@@ -345,4 +364,82 @@ bool D2D::PhysicsManager::IsPointInCircle(const glm::vec2& point, const glm::vec
     const float distanceSqrd = (diff.x * diff.x) + (diff.y * diff.y);
 
     return distanceSqrd <= radius * radius;
+}
+
+bool D2D::PhysicsManager::IsOverlapping(Capsule& capsule, const Rect& rect)
+{
+    if (IsOverlapping(capsule.GetRect(), rect) ||
+        IsRectangleCircleOverlap(rect, capsule.GetTopCenter(), capsule.radius) ||
+        IsRectangleCircleOverlap(rect, capsule.GetBotCenter(), capsule.radius))
+    {
+        return true;
+    }
+
+
+    return false;
+}
+
+bool D2D::PhysicsManager::IsRectangleCircleOverlap(const Rect& rect, const glm::vec2& circleCenter, float circleRadius)
+{
+    // Find the closest point on the rectangle to the center of the circle
+    float closestX = std::clamp(circleCenter.x, rect.x, rect.x + rect.w);
+    float closestY = std::clamp(circleCenter.y, rect.y, rect.y + rect.h);
+
+    // Calculate the distance between the closest point and the center of the circle
+    float distanceX = circleCenter.x - closestX;
+    float distanceY = circleCenter.y - closestY;
+    float distanceSqrd = distanceX * distanceX + distanceY * distanceY;
+
+    // Check if the distance is less than or equal to the circle's radius
+    return distanceSqrd <= (circleRadius * circleRadius);
+}
+
+void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)
+{
+    auto bounds{ pTrigger->GetBounds() };
+    for (const auto& boxCollider : m_pBoxColliders)
+    {
+        if (IsOverlapping(bounds, boxCollider->GetBounds()))
+        {
+            pTrigger->TriggerOverlap(boxCollider);
+            boxCollider->TriggerOverlap(pTrigger);
+        }
+    }
+
+    for (const auto& capsuleCollider : m_pCapsuleColliders)
+    {
+        if (IsOverlapping(capsuleCollider->GetBounds(), bounds))
+        {
+            pTrigger->TriggerOverlap(capsuleCollider);
+            capsuleCollider->TriggerOverlap(pTrigger);
+        }
+    }
+}
+
+void D2D::PhysicsManager::CheckColliderForTrigger(BoxCollider* pCollider)
+{
+    const auto rect{ pCollider->GetBounds() };
+
+    for (const auto& trigger : m_pBoxTriggers)
+    {
+        if (IsOverlapping(trigger->GetBounds(), rect))
+        {
+            pCollider->TriggerOverlap(trigger);
+            trigger->TriggerOverlap(pCollider);
+        }
+    }
+}
+
+void D2D::PhysicsManager::CheckColliderForTrigger(CapsuleCollider* pCollider)
+{
+    auto capsule{ pCollider->GetBounds() };
+
+    for (const auto& trigger : m_pBoxTriggers)
+    {
+        if (IsOverlapping(capsule, trigger->GetBounds()))
+        {
+            pCollider->TriggerOverlap(trigger);
+            trigger->TriggerOverlap(pCollider);
+        }
+    }
 }

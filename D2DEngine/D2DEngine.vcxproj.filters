@@ -123,9 +123,6 @@
     <ClInclude Include="Component.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
@@ -265,6 +262,15 @@
     <ClInclude Include="DebugSDLSoundSystem.h">
       <Filter>ServiceLocator\SoundSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Components\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BaseClasses">
@@ -302,6 +308,9 @@
     </Filter>
     <Filter Include="ServiceLocator\SoundSystem">
       <UniqueIdentifier>{7e7b37c6-2f0e-4e4d-815b-7b876687ad0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{813082b2-aae2-4966-8320-8782cbb57839}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

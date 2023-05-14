@@ -36,5 +36,7 @@ namespace D2D
 
 		BoxCollider* m_pBoxCollider{ nullptr };
 		CapsuleCollider* m_pCapsuleCollider{ nullptr };
+
+		void CheckTriggers();
 	};
 }

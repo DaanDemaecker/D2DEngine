@@ -226,6 +226,8 @@
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CapsuleCollider.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="ColliderEvent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugSDLSoundSystem.h" />

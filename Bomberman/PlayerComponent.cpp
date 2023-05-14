@@ -3,6 +3,8 @@
 #include "Transform.h"
 #include "TimeManager.h"
 #include "PlayerAnimator.h"
+#include "ColliderEvent.h"
+#include <iostream>
 
 void D2D::PlayerComponent::Update()
 {
@@ -52,4 +54,12 @@ void D2D::PlayerComponent::KillPlayer()
 void D2D::PlayerComponent::PickupItem()
 {
 	NotifyObservers(m_PickupItemEvent);
+}
+
+void D2D::PlayerComponent::Notify(const Event& event)
+{
+	if (auto triggerOverlap{ dynamic_cast<const TriggerOverlapEvent*>(&event) })
+	{
+		std::cout << "test\n";
+	}
 }

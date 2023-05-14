@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "PhysicsManager.h"
+#include "ColliderEvent.h"
 
 D2D::CapsuleCollider::CapsuleCollider()
 {
@@ -10,6 +11,37 @@ D2D::CapsuleCollider::CapsuleCollider()
 
 D2D::CapsuleCollider::~CapsuleCollider()
 {
+	if (m_IsTrigger)
+	{
+		//PhysicsManager::GetInstance().RemoveTrigger(this);
+	}
+	else
+	{
+		PhysicsManager::GetInstance().RemoveCollider(this);
+	}
+}
+
+void D2D::CapsuleCollider::AddToPhysicsManager(bool isTrigger)
+{
+	m_IsTrigger = isTrigger;
+
+	if (m_IsTrigger)
+	{
+		//PhysicsManager::GetInstance().AddTrigger(this);
+	}
+	else
+	{
+		PhysicsManager::GetInstance().AddCollider(this);
+	}
+}
+
+void D2D::CapsuleCollider::TriggerOverlap(Collider* other)
+{
+	TriggerOverlapEvent triggerOverlapEvent{};
+	triggerOverlapEvent.Self = this;
+	triggerOverlapEvent.Other = other;
+
+	NotifyObservers(triggerOverlapEvent);
 }
 
 void D2D::CapsuleCollider::SetVariables(float height, float radius, float offsetX, float offsetY)

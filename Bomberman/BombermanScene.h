@@ -110,6 +110,8 @@ namespace D2D
 		auto pPlayerCollider = pPlayer->AddComponent<CapsuleCollider>();
 		pPlayerCollider->SetVariables(playerHeight, playerRadius);
 
+		pPlayerCollider->AddObserver(pPlayerComponent);
+
 
 		const auto pLivesDisplay{ scene.CreateCanvasObject("Lives Display") };
 		pLivesDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 500.f, 0.f });

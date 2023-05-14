@@ -3,17 +3,39 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "Structs.h"
+#include "ColliderEvent.h"
 
 #include <iostream>
 
 D2D::BoxCollider::BoxCollider()
 {
-	PhysicsManager::GetInstance().AddCollider(this);
+	
 }
 
 D2D::BoxCollider::~BoxCollider()
 {
-	PhysicsManager::GetInstance().RemoveCollider(this);
+	if (m_IsTrigger)
+	{
+		PhysicsManager::GetInstance().RemoveTrigger(this);
+	}
+	else
+	{
+		PhysicsManager::GetInstance().RemoveCollider(this);
+	}
+}
+
+void D2D::BoxCollider::AddToPhysicsManager(bool isTrigger)
+{
+	m_IsTrigger = isTrigger;
+
+	if (m_IsTrigger)
+	{
+		PhysicsManager::GetInstance().AddTrigger(this);
+	}
+	else
+	{
+		PhysicsManager::GetInstance().AddCollider(this);
+	}
 }
 
 void D2D::BoxCollider::SetVariables(float width, float height, float offsetX, float offsetY)
@@ -58,6 +80,15 @@ D2D::BoxColliderBounds& D2D::BoxCollider::GetBounds()
 	}
 
 	return m_Bounds;
+}
+
+void D2D::BoxCollider::TriggerOverlap(Collider* other)
+{
+	TriggerOverlapEvent triggerOverlapEvent{};
+	triggerOverlapEvent.Self = this;
+	triggerOverlapEvent.Other = other;
+
+	NotifyObservers(triggerOverlapEvent);
 }
 
 

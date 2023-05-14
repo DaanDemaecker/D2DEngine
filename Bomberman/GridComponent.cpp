@@ -207,6 +207,7 @@ void D2D::GridComponent::SetGridWalls()
 		pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
 
 		auto pCollider = pWall->AddComponent<BoxCollider>();
+		pCollider->AddToPhysicsManager();
 		pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
 	}
 }
@@ -295,8 +296,9 @@ void D2D::GridComponent::CreateExplosion(ExplosionType type, int gridNumber)
 	auto pAnimator = pExplosion->AddComponent<SelfDestroyingAnimator>();
 	pAnimator->Init(pRenderComponent.get(), m_pExplosionTextures[type], 4, 1, 4);
 
-	/*auto pCollider = pExplosion->AddComponent<BoxCollider>();
-	pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);*/
+	auto pCollider = pExplosion->AddComponent<BoxCollider>();
+	pCollider->AddToPhysicsManager(true);
+	pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
 }
 
 int D2D::GridComponent::GetTopNeighbour(int number)
