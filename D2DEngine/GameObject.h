@@ -8,6 +8,7 @@ namespace D2D
 	class Component;
 	class RenderComponent;
 	class Transform;
+	class Collider;
 
 	class GameObject final
 	{
@@ -40,6 +41,9 @@ namespace D2D
 		bool ShouldDestroy() const { return m_ShouldDestroy; }
 
 		GameObject* CreateNewObject(const std::string& name = "UnNamed");
+
+		void OnTriggerEnter(const Collider* pCollider);
+		void OnTriggerExit(const Collider* pCollider);
 
 		template <class T>
 		std::shared_ptr<T> GetComponent() const;

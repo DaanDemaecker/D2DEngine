@@ -20,8 +20,6 @@ namespace D2D
 
 		BoxColliderBounds& GetBounds();
 
-		virtual void TriggerOverlap(Collider* other) override;
-
 	private:
 		bool m_IsTrigger{ false };
 

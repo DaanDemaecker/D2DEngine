@@ -3,7 +3,6 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "Structs.h"
-#include "ColliderEvent.h"
 
 #include <iostream>
 
@@ -80,15 +79,6 @@ D2D::BoxColliderBounds& D2D::BoxCollider::GetBounds()
 	}
 
 	return m_Bounds;
-}
-
-void D2D::BoxCollider::TriggerOverlap(Collider* other)
-{
-	TriggerOverlapEvent triggerOverlapEvent{};
-	triggerOverlapEvent.Self = this;
-	triggerOverlapEvent.Other = other;
-
-	NotifyObservers(triggerOverlapEvent);
 }
 
 

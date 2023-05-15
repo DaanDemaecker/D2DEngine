@@ -124,6 +124,22 @@ D2D::GameObject* D2D::GameObject::CreateNewObject(const std::string& name)
 	return m_pChildrenToAdd.emplace_back(std::move(pNewObject)).get();
 }
 
+void D2D::GameObject::OnTriggerEnter(const Collider* pCollider)
+{
+	for (auto& pComponent : m_pComponents)
+	{
+		pComponent->OnTriggerEnter(pCollider);
+	}
+}
+
+void D2D::GameObject::OnTriggerExit(const Collider* pCollider)
+{
+	for (auto& pComponent : m_pComponents)
+	{
+		pComponent->OnTriggerExit(pCollider);
+	}
+}
+
 void D2D::GameObject::SetParent(GameObject* pParent, bool worldPositionStays)
 {
 	if (pParent == nullptr || m_pParent == nullptr)

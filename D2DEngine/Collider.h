@@ -4,7 +4,7 @@
 
 namespace D2D
 {
-	class Collider : public Component, public Subject
+	class Collider : public Component
 	{
 	public:
 		Collider() = default;
@@ -12,6 +12,14 @@ namespace D2D
 
 		virtual void AddToPhysicsManager(bool isTrigger = false) = 0;
 
-		virtual void TriggerOverlap(Collider* other) = 0;
+		bool TriggerContainsCollider(const Collider* pCollider);
+		void AddCollider(Collider* pCollider);
+		void RemoveCollider(const Collider* pCollider);
+
+		std::vector<Collider*>& GetCollidersInTrigger() { return m_pCollidersInTrigger; }
+
+
+	private:
+		std::vector<Collider*> m_pCollidersInTrigger{};
 	};
 }

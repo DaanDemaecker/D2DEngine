@@ -227,7 +227,6 @@
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CapsuleCollider.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="ColliderEvent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugSDLSoundSystem.h" />
@@ -279,6 +278,7 @@
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CapsuleCollider.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DebugSDLSoundSystem.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />

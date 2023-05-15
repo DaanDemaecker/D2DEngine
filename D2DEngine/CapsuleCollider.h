@@ -14,8 +14,6 @@ namespace D2D
 
 		virtual void AddToPhysicsManager(bool isTrigger = false) override;
 
-		virtual void TriggerOverlap(Collider* other) override;
-
 		void SetVariables(float height, float radius, float offsetX = 0, float offsetY = 0);
 
 		virtual void LateUpdate() override;

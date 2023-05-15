@@ -4,6 +4,8 @@
 
 namespace D2D
 {
+	class Collider;
+
 	class Component
 	{
 	public:
@@ -28,7 +30,8 @@ namespace D2D
 		void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() { return m_ShouldDestroy; }
 
-
+		virtual void OnTriggerEnter(const Collider* /*pCollider*/){}
+		virtual void OnTriggerExit(const Collider* /*pCollider*/){}
 
 		template <class T>
 		friend std::shared_ptr<T> GameObject::AddComponent();
@@ -39,7 +42,6 @@ namespace D2D
 		template <class T>
 		bool HasComponent() const;
 
-	protected:
 		GameObject* GetOwner() const { return m_pOwner; }
 
 	private:

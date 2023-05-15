@@ -2,14 +2,14 @@
 #include "Component.h"
 #include "Subject.h"
 #include "PlayerEvents.h"
-#include "Observer.h"
 
 namespace D2D
 {
 	class Transform;
 	class PlayerAnimator;
+	class Collider;
 
-	class PlayerComponent final : public Component, public Subject, public Observer
+	class PlayerComponent final : public Component, public Subject
 	{
 	public:
 		PlayerComponent() = default;
@@ -29,7 +29,7 @@ namespace D2D
 
 		void AddMovement(const glm::vec2& direction) { m_Movement += direction; }
 
-		virtual void Notify(const Event& event);
+		virtual void OnTriggerEnter(const Collider* pCollider) override;
 	
 	private:
 		Transform* m_pTransform{};

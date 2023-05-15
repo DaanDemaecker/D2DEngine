@@ -115,6 +115,9 @@
     <ClCompile Include="DebugSDLSoundSystem.cpp">
       <Filter>ServiceLocator\SoundSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Components\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -263,9 +266,6 @@
       <Filter>ServiceLocator\SoundSystem</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="ColliderEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">

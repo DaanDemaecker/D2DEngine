@@ -24,6 +24,11 @@ void D2D::PhysicsManager::AddCollider(CapsuleCollider* pCollider)
 
 void D2D::PhysicsManager::RemoveCollider(BoxCollider* pCollider)
 {
+    for (auto& trigger : m_pBoxTriggers)
+    {
+        trigger->RemoveCollider(pCollider);
+    }
+
     if (m_pBoxColliders.size() == 0)
         return;
 
@@ -32,6 +37,11 @@ void D2D::PhysicsManager::RemoveCollider(BoxCollider* pCollider)
 
 void D2D::PhysicsManager::RemoveCollider(CapsuleCollider* pCollider)
 {
+    for (auto& trigger : m_pBoxTriggers)
+    {
+        trigger->RemoveCollider(pCollider);
+    }
+
     if (m_pCapsuleColliders.size() == 0)
         return;
 
@@ -399,19 +409,49 @@ void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)
     auto bounds{ pTrigger->GetBounds() };
     for (const auto& boxCollider : m_pBoxColliders)
     {
-        if (IsOverlapping(bounds, boxCollider->GetBounds()))
+        bool isOverlapping = IsOverlapping(bounds, boxCollider->GetBounds());
+
+        if (pTrigger->TriggerContainsCollider(boxCollider))
         {
-            pTrigger->TriggerOverlap(boxCollider);
-            boxCollider->TriggerOverlap(pTrigger);
+            if (!isOverlapping)
+            {
+                pTrigger->RemoveCollider(boxCollider);
+                boxCollider->GetOwner()->OnTriggerExit(pTrigger);
+                pTrigger->GetOwner()->OnTriggerExit(boxCollider);
+            }
+        }
+        else
+        {
+            if (isOverlapping)
+            {
+                pTrigger->AddCollider(boxCollider);
+                boxCollider->GetOwner()->OnTriggerEnter(pTrigger);
+                pTrigger->GetOwner()->OnTriggerEnter(boxCollider);
+            }
         }
     }
 
     for (const auto& capsuleCollider : m_pCapsuleColliders)
     {
-        if (IsOverlapping(capsuleCollider->GetBounds(), bounds))
+        bool isOverlapping = IsOverlapping(capsuleCollider->GetBounds(), bounds);
+
+        if (pTrigger->TriggerContainsCollider(capsuleCollider))
         {
-            pTrigger->TriggerOverlap(capsuleCollider);
-            capsuleCollider->TriggerOverlap(pTrigger);
+            if (!isOverlapping)
+            {
+                pTrigger->RemoveCollider(capsuleCollider);
+                capsuleCollider->GetOwner()->OnTriggerExit(pTrigger);
+                pTrigger->GetOwner()->OnTriggerExit(capsuleCollider);
+            }
+        }
+        else
+        {
+            if (isOverlapping)
+            {
+                pTrigger->AddCollider(capsuleCollider);
+                capsuleCollider->GetOwner()->OnTriggerEnter(pTrigger);
+                pTrigger->GetOwner()->OnTriggerEnter(capsuleCollider);
+            }
         }
     }
 }
@@ -422,10 +462,25 @@ void D2D::PhysicsManager::CheckColliderForTrigger(BoxCollider* pCollider)
 
     for (const auto& trigger : m_pBoxTriggers)
     {
-        if (IsOverlapping(trigger->GetBounds(), rect))
+        bool isOverlapping = IsOverlapping(trigger->GetBounds(), rect);
+
+        if (trigger->TriggerContainsCollider(pCollider))
         {
-            pCollider->TriggerOverlap(trigger);
-            trigger->TriggerOverlap(pCollider);
+            if (!isOverlapping)
+            {
+                trigger->RemoveCollider(pCollider);
+                pCollider->GetOwner()->OnTriggerExit(trigger);
+                trigger->GetOwner()->OnTriggerExit(pCollider);
+            }
+        }
+        else
+        {
+            if (isOverlapping)
+            {
+                trigger->AddCollider(pCollider);
+                pCollider->GetOwner()->OnTriggerEnter(trigger);
+                trigger->GetOwner()->OnTriggerEnter(pCollider);
+            }
         }
     }
 }
@@ -436,10 +491,25 @@ void D2D::PhysicsManager::CheckColliderForTrigger(CapsuleCollider* pCollider)
 
     for (const auto& trigger : m_pBoxTriggers)
     {
-        if (IsOverlapping(capsule, trigger->GetBounds()))
+        bool isOverlapping = IsOverlapping(capsule, trigger->GetBounds());
+
+        if (trigger->TriggerContainsCollider(pCollider))
         {
-            pCollider->TriggerOverlap(trigger);
-            trigger->TriggerOverlap(pCollider);
+            if (!isOverlapping)
+            {
+                trigger->RemoveCollider(pCollider);
+                pCollider->GetOwner()->OnTriggerExit(trigger);
+                trigger->GetOwner()->OnTriggerExit(pCollider);
+            }
+        }
+        else
+        {
+            if (isOverlapping)
+            {
+                trigger->AddCollider(pCollider);
+                pCollider->GetOwner()->OnTriggerEnter(trigger);
+                trigger->GetOwner()->OnTriggerEnter(pCollider);
+            }
         }
     }
 }
