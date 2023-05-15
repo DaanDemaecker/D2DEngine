@@ -178,6 +178,7 @@
     <ClCompile Include="BombManagerComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
+    <ClCompile Include="ExplosionComponent.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="pch.cpp">

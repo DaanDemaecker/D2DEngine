@@ -26,4 +26,9 @@ void D2D::BombComponent::ExplodeBomb()
 	GetOwner()->Destroy();
 }
 
+void D2D::BombComponent::ChainReaction()
+{
+	m_Timer = std::min(m_Timer, m_ChainReactionTime);
+}
+
 

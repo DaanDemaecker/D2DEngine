@@ -29,7 +29,7 @@ namespace D2D
 		float m_BombSize{};
 
 		int m_BombStrength{1};
-		int m_BombAmount{1};
+		int m_BombAmount{10};
 		int m_CurrentBombAmount{};
 
 		void SpawnBomb(const glm::vec2& pos);

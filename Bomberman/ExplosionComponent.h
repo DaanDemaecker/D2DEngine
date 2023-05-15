@@ -1,15 +1,18 @@
 #pragma once
 #include "Component.h"
+#include "Subject.h"
 
 namespace D2D
 {
-	//This component currently only exists so that the player can recognize the ontriggeroverlap event as an explosion
-	class ExplosionComponent final : public Component
+	class ExplosionComponent final : public Component, public Subject
 	{
 	public:
 		ExplosionComponent() = default;
-		virtual ~ExplosionComponent() override = default;
+		virtual ~ExplosionComponent() override;
+
+		void SetGridIndex(int index) { m_GridIndex = index; }
+
 	private:
-		int m_TestValue{};
+		int m_GridIndex{};
 	};
 }

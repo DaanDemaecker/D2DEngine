@@ -70,6 +70,7 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 	pCollider->SetVariables(m_BombSize, m_BombSize, -m_BombSize/2, -m_BombSize/2);
 
 	auto pBombComponent = pBomb->AddComponent<BombComponent>();
+	m_pGrid->GiveBomb(response.index, pBombComponent.get());
 	pBombComponent->SetBombStrength(m_BombStrength);
 	pBombComponent->SetGridNumber(response.index);
 	pBombComponent->AddObserver(m_pGrid);

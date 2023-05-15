@@ -9,13 +9,15 @@ namespace D2D
 	class TextComponent;
 	class PlayerComponent;
 	class Texture2D;
+	class BombComponent;
 
 	enum GridType
 	{
 		Empty,
 		Wall,
 		BrickWall,
-		Bomb
+		Bomb,
+		Explosion
 	};
 
 	enum ExplosionType
@@ -53,6 +55,7 @@ namespace D2D
 		virtual void Render() const override;
 
 		void SetBomb(const glm::vec2 position, PlaceBombResponse& response);
+		void GiveBomb(int index, BombComponent* pBombComponent);
 
 		glm::vec2 GetPlayerPosition(int index);
 
@@ -69,6 +72,7 @@ namespace D2D
 
 		std::map<ExplosionType,std::shared_ptr<Texture2D>> m_pExplosionTextures{};
 		std::map<int, GameObject*> m_pBrickWalls{};
+		std::map<int, BombComponent*> m_pBombs{};
 
 		std::vector<GridType> m_Grid{};
 		std::vector<int> m_PlayerSpawns{};

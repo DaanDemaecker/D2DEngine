@@ -19,9 +19,12 @@ namespace D2D
 
 		void ExplodeBomb();
 
+		void ChainReaction();
+
 	private:
 		int m_BombStrength{};
 		int m_GridNumber{};
 		float m_Timer{ 2.5f };
+		const float m_ChainReactionTime{ 0.05f };
 	};
 }

@@ -10,6 +10,7 @@
 #include "WorldEvents.h"
 #include "SelfDestroyingAnimator.h"
 #include "ExplosionComponent.h"
+#include "BombComponent.h"
 
 D2D::GridComponent::GridComponent()
 {
@@ -100,7 +101,12 @@ void D2D::GridComponent::Notify(const Event& event)
 	if (auto bombExplodeEvent{ dynamic_cast<const BombExplodeEvent*>(&event) })
 	{
 		m_Grid[bombExplodeEvent->gridNumber] = Empty;
+		m_pBombs[bombExplodeEvent->gridNumber] = nullptr;
 		ExplodeBomb(Center, bombExplodeEvent->gridNumber, bombExplodeEvent->strength, 0);
+	}
+	else if (auto explosionOverEvent{ dynamic_cast<const ExplosionOverEvent*>(&event) })
+	{
+		m_Grid[explosionOverEvent->gridIndex] = Empty;
 	}
 }
 
@@ -134,6 +140,11 @@ void D2D::GridComponent::SetBomb(const glm::vec2 position, D2D::PlaceBombRespons
 	{
 		return;
 	}
+}
+
+void D2D::GridComponent::GiveBomb(int index, BombComponent* pBombComponent)
+{
+	m_pBombs[index] = pBombComponent;
 }
 
 glm::vec2 D2D::GridComponent::GetPlayerPosition(int index)
@@ -225,6 +236,10 @@ void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strengt
 		{
 			DeleteBrickWall(number);
 		}
+		else if (m_Grid[number] == Bomb)
+		{
+			m_pBombs[number]->ChainReaction();
+		}
 		return;
 	}
 
@@ -286,10 +301,14 @@ void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strengt
 
 void D2D::GridComponent::CreateExplosion(ExplosionType type, int gridNumber)
 {
+	m_Grid[gridNumber] = Explosion;
+
 	const auto pExplosion = GetOwner()->CreateNewObject("Explosion");
 	pExplosion->GetTransform()->SetWorldPosition(GetGridPos(gridNumber));
 
-	auto pExplosoinComponent = pExplosion->AddComponent<ExplosionComponent>();
+	auto pExplosionComponent = pExplosion->AddComponent<ExplosionComponent>();
+	pExplosionComponent->AddObserver(this);
+	pExplosionComponent->SetGridIndex(gridNumber);
 
 	auto pRenderComponent = pExplosion->AddComponent<RenderComponent>();
 	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);

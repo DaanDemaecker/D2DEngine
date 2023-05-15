@@ -21,4 +21,12 @@ namespace D2D
 		int gridNumber{};
 		int strength{};
 	};
+
+	struct ExplosionOverEvent final : public Event
+	{
+	public:
+		ExplosionOverEvent() = default;
+
+		int gridIndex{};
+	};
 }
