@@ -9,7 +9,7 @@
 #include "BoxCollider.h"
 #include "WorldEvents.h"
 #include "SelfDestroyingAnimator.h"
-#include "AnimationClip.h"
+#include "ExplosionComponent.h"
 
 D2D::GridComponent::GridComponent()
 {
@@ -288,6 +288,8 @@ void D2D::GridComponent::CreateExplosion(ExplosionType type, int gridNumber)
 {
 	const auto pExplosion = GetOwner()->CreateNewObject("Explosion");
 	pExplosion->GetTransform()->SetWorldPosition(GetGridPos(gridNumber));
+
+	auto pExplosoinComponent = pExplosion->AddComponent<ExplosionComponent>();
 
 	auto pRenderComponent = pExplosion->AddComponent<RenderComponent>();
 	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);

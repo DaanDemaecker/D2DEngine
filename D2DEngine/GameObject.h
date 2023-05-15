@@ -140,7 +140,7 @@ namespace D2D
 		if (!std::is_base_of<Component, T>())
 			return false;
 
-		for (auto& pComponent : m_pComponents)
+		for (const auto& pComponent : m_pComponents)
 		{
 			if (std::dynamic_pointer_cast<T>(pComponent))
 			{

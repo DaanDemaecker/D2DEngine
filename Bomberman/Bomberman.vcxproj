@@ -200,6 +200,7 @@
     <ClInclude Include="BombManagerComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="DebugCommand.h" />
+    <ClInclude Include="ExplosionComponent.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="pch.h" />

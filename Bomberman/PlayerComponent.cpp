@@ -4,6 +4,7 @@
 #include "TimeManager.h"
 #include "PlayerAnimator.h"
 #include "ColliderEvent.h"
+#include "ExplosionComponent.h"
 #include <iostream>
 
 void D2D::PlayerComponent::Update()
@@ -60,6 +61,9 @@ void D2D::PlayerComponent::Notify(const Event& event)
 {
 	if (auto triggerOverlap{ dynamic_cast<const TriggerOverlapEvent*>(&event) })
 	{
-		std::cout << "test\n";
+		if(triggerOverlap->Other->HasComponent<ExplosionComponent>())
+		{
+			KillPlayer();
+		}
 	}
 }

@@ -36,6 +36,9 @@ namespace D2D
 		template <class T>
 		std::shared_ptr<T> GetComponent() const;
 
+		template <class T>
+		bool HasComponent() const;
+
 	protected:
 		GameObject* GetOwner() const { return m_pOwner; }
 
@@ -58,6 +61,18 @@ namespace D2D
 			return nullptr;
 
 		return m_pOwner->GetComponent<T>();
+	}
+
+	template<class T>
+	inline bool Component::HasComponent() const
+	{
+		if (!std::is_base_of<Component, T>())
+			return false;
+
+		if (m_pOwner == nullptr)
+			return false;
+
+		return m_pOwner->HasComponent<T>();
 	}
 }
 
