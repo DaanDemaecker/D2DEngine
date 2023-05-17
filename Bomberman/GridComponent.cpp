@@ -11,6 +11,10 @@
 #include "SelfDestroyingAnimator.h"
 #include "ExplosionComponent.h"
 #include "BombComponent.h"
+#include "SingleClipAnimator.h"
+#include "BalloonEnemy.h"
+#include "CapsuleCollider.h"
+#include "EnemyAnimator.h"
 
 D2D::GridComponent::GridComponent()
 {
@@ -32,6 +36,9 @@ D2D::GridComponent::GridComponent()
 	m_pExplosionTextures[ExplosionType::DownMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDownMiddle.png");
 	m_pExplosionTextures[ExplosionType::Down] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDown.png");
 
+	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonLeft.png"));
+	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonRight.png"));
+	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonDeath.png"));
 }
 
 void D2D::GridComponent::SetGrid(int rows, int columns, float cubeSize)
@@ -94,6 +101,7 @@ void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
 	file.close();
 
 	SetGridWalls();
+	SetupEnemies();
 }
 
 void D2D::GridComponent::Notify(const Event& event)
@@ -219,7 +227,7 @@ void D2D::GridComponent::SetGridWalls()
 
 		auto pCollider = pWall->AddComponent<BoxCollider>();
 		pCollider->AddToPhysicsManager();
-		pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
+		pCollider->SetVariables(m_SquareSize, m_SquareSize);
 	}
 }
 
@@ -319,7 +327,7 @@ void D2D::GridComponent::CreateExplosion(ExplosionType type, int gridNumber)
 
 	auto pCollider = pExplosion->AddComponent<BoxCollider>();
 	pCollider->AddToPhysicsManager(true);
-	pCollider->SetVariables(m_SquareSize, m_SquareSize, -m_SquareSize / 2, -m_SquareSize / 2);
+	pCollider->SetVariables(m_SquareSize, m_SquareSize);
 }
 
 int D2D::GridComponent::GetTopNeighbour(int number)
@@ -361,4 +369,51 @@ void D2D::GridComponent::DeleteBrickWall(int number)
 		auto pAnimator = pExplosion->AddComponent<SelfDestroyingAnimator>();
 		pAnimator->Init(pRenderComponent.get(), m_pBrickExplosionTexture, 4, 1, 4);
 	}
+}
+
+void D2D::GridComponent::SetupEnemies()
+{
+	for (int i{}; i < m_EnemyAmount; ++i)
+	{
+		bool goodPosition{false};
+		int position{};
+
+		while (!goodPosition)
+		{
+			position = rand() % m_Grid.size();
+
+			goodPosition = m_Grid[position] == Empty && position % m_Columns > m_EnemieBorder;
+		}
+		SpawnEnemy(position);
+	}
+}
+
+void D2D::GridComponent::SpawnEnemy(int number)
+{
+	const float enemyHeight{ m_SquareSize * .9f };
+	const float enemyWidth{ m_SquareSize  * 0.8f };
+
+
+
+	const auto pEnemy = GetOwner()->CreateNewObject("Enemy");
+	pEnemy->GetTransform()->SetWorldPosition(GetGridPos(number));
+
+	auto pRenderComponent = pEnemy->AddComponent<RenderComponent>();
+	pRenderComponent->SetOffset(-enemyWidth / 2, -enemyHeight / 2);
+	pRenderComponent->SetDestRectBounds(enemyWidth, enemyHeight);
+
+	auto pAnimator = pEnemy->AddComponent<EnemyAnimator>();
+	pAnimator->Init(pRenderComponent.get(), m_pBalloonTextures);
+
+	auto pTrigger = pEnemy->AddComponent<BoxCollider>();
+	pTrigger->SetVariables(enemyWidth, enemyHeight);
+	pTrigger->AddToPhysicsManager(true);
+
+	auto pCollider = pEnemy->AddComponent<CapsuleCollider>();
+	pCollider->SetVariables(enemyHeight, enemyWidth / 2);
+	pCollider->AddToPhysicsManager(false);
+
+
+	auto pEnemyComponent = pEnemy->AddComponent<BalloonEnemy>();
+	pEnemyComponent->SetSpeed(3 * m_SquareSize);
 }

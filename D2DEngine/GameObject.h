@@ -126,12 +126,13 @@ namespace D2D
 	inline bool GameObject::RemoveComponent()
 	{
 		if (!std::is_base_of<Component, T>())
-			return;
+			return false;
 
 		auto pComponent{ GetComponent<T>() };
 		if (pComponent)
 		{
 			DestroyComponent(pComponent);
+			return true;
 		}
 
 		return false;

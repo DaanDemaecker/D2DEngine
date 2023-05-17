@@ -66,9 +66,15 @@ namespace D2D
 		int m_Columns{};
 		float m_SquareSize{};
 
+		int m_EnemieBorder{ 5 };
+		int m_EnemyAmount{ 5 };
+
 		std::shared_ptr<Texture2D> m_pWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickExplosionTexture{};
+
+		std::vector<std::shared_ptr<Texture2D>> m_pBalloonTextures{};
+
 
 		std::map<ExplosionType,std::shared_ptr<Texture2D>> m_pExplosionTextures{};
 		std::map<int, GameObject*> m_pBrickWalls{};
@@ -92,5 +98,8 @@ namespace D2D
 		int GetRightNeighbour(int number);
 
 		void DeleteBrickWall(int number);
+
+		void SetupEnemies();
+		void SpawnEnemy(int number);
 	};
 }

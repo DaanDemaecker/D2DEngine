@@ -173,11 +173,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BalloonEnemy.cpp" />
+    <ClCompile Include="BaseEnemyComponent.cpp" />
     <ClCompile Include="BombComponent.cpp" />
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="BombManagerComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
+    <ClCompile Include="EnemyAnimator.cpp" />
     <ClCompile Include="ExplosionComponent.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
@@ -196,11 +199,14 @@
     <ClCompile Include="SingleClipAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BalloonEnemy.h" />
+    <ClInclude Include="BaseEnemyComponent.h" />
     <ClInclude Include="BombComponent.h" />
     <ClInclude Include="BombermanScene.h" />
     <ClInclude Include="BombManagerComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="DebugCommand.h" />
+    <ClInclude Include="EnemyAnimator.h" />
     <ClInclude Include="ExplosionComponent.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />

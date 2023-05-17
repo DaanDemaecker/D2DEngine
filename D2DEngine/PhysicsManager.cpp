@@ -11,6 +11,7 @@ void D2D::PhysicsManager::AddCollider(BoxCollider* pCollider)
 	if ((pCollider != nullptr) && (std::find(m_pBoxColliders.begin(), m_pBoxColliders.end(), pCollider) == m_pBoxColliders.end()))
 	{
 		m_pBoxColliders.push_back(pCollider);
+        CheckColliderForTrigger(pCollider);
 	}
 }
 
@@ -19,6 +20,7 @@ void D2D::PhysicsManager::AddCollider(CapsuleCollider* pCollider)
     if ((pCollider != nullptr) && (std::find(m_pCapsuleColliders.begin(), m_pCapsuleColliders.end(), pCollider) == m_pCapsuleColliders.end()))
     {
         m_pCapsuleColliders.push_back(pCollider);
+        CheckColliderForTrigger(pCollider);
     }
 }
 
@@ -427,6 +429,30 @@ void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)
                 pTrigger->AddCollider(boxCollider);
                 boxCollider->GetOwner()->OnTriggerEnter(pTrigger);
                 pTrigger->GetOwner()->OnTriggerEnter(boxCollider);
+            }
+        }
+    }
+
+    for (const auto& boxTrigger : m_pBoxTriggers)
+    {
+        bool isOverlapping = IsOverlapping(bounds, boxTrigger->GetBounds());
+
+        if (pTrigger->TriggerContainsCollider(boxTrigger))
+        {
+            if (!isOverlapping)
+            {
+                pTrigger->RemoveCollider(boxTrigger);
+                boxTrigger->GetOwner()->OnTriggerExit(pTrigger);
+                pTrigger->GetOwner()->OnTriggerExit(boxTrigger);
+            }
+        }
+        else
+        {
+            if (isOverlapping)
+            {
+                pTrigger->AddCollider(boxTrigger);
+                boxTrigger->GetOwner()->OnTriggerEnter(pTrigger);
+                pTrigger->GetOwner()->OnTriggerEnter(boxTrigger);
             }
         }
     }

@@ -16,6 +16,7 @@ D2D::CapsuleCollider::~CapsuleCollider()
 	}
 	else
 	{
+		GetOwner()->GetTransform()->RemoveCollider();
 		PhysicsManager::GetInstance().RemoveCollider(this);
 	}
 }
@@ -30,6 +31,7 @@ void D2D::CapsuleCollider::AddToPhysicsManager(bool isTrigger)
 	}
 	else
 	{
+		GetOwner()->GetTransform()->SetCollider(this);
 		PhysicsManager::GetInstance().AddCollider(this);
 	}
 }
@@ -39,7 +41,6 @@ void D2D::CapsuleCollider::SetVariables(float height, float radius, float offset
 	if (m_pTransform == nullptr)
 	{
 		m_pTransform = GetOwner()->GetTransform().get();
-		m_pTransform->SetCollider(this);
 	}
 
 	if (m_pTransform != nullptr)

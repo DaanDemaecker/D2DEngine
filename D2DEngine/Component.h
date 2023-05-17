@@ -44,6 +44,8 @@ namespace D2D
 
 		GameObject* GetOwner() const { return m_pOwner; }
 
+		Transform* GetTransform() const { return m_pOwner->GetTransform().get(); }
+
 	private:
 		GameObject* m_pOwner{};
 

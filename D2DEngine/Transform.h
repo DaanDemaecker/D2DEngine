@@ -12,6 +12,7 @@ namespace D2D
 	public:
 		void SetCollider(BoxCollider* pCollider);
 		void SetCollider(CapsuleCollider* pCollider);
+		void RemoveCollider();
 
 		const glm::vec2& GetLocalPosition() const { return m_LocalPosition; }
 		void SetLocalPosition(float x, float y);
@@ -21,8 +22,8 @@ namespace D2D
 		void SetWorldPosition(float x, float y);
 		void SetWorldPosition(const glm::vec2& pos);
 
-		void MoveLocalPosition(float x, float y);
-		void MoveLocalPosition(const glm::vec2& dir);
+		bool MoveLocalPosition(float x, float y);
+		bool MoveLocalPosition(const glm::vec2& dir);
 
 		void SetDirtyFlag();
 

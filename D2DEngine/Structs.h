@@ -42,8 +42,8 @@ namespace D2D
 
 		Rect(const BoxColliderBounds& bounds)
 		{
-			x = bounds.x + bounds.offsetX;
-			y = bounds.y + bounds.offsetY;
+			x = bounds.x + bounds.offsetX - bounds.width/2;
+			y = bounds.y + bounds.offsetY - bounds.height/2;
 			w = bounds.width;
 			h = bounds.height;
 		}

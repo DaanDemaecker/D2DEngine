@@ -11,7 +11,7 @@ void D2D::SelfDestroyingAnimator::Init(RenderComponent* pRenderComponent, std::s
 	clip->SetClip(pTexture, cols, rows, frames);
 	clip->AddObserver(this);
 
-	clip->AddAnimationEvent(3, std::make_unique<AnimationFinished>());
+	clip->AddAnimationEvent(frames-1, std::make_unique<AnimationFinished>());
 
 	m_pClips.push_back(std::move(clip));
 

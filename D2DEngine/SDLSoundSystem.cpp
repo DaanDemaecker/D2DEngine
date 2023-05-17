@@ -130,7 +130,7 @@ void D2D::SDLSoundSystem::PlaySound(unsigned short id, int volume)
 	}
 	else
 	{
-		Mix_Volume(0, volume);
-		Mix_PlayChannel(-1, m_pSoundChunks[id], 0);
+		Mix_Volume(channel, volume);
+		Mix_PlayChannel( - 1, m_pSoundChunks[id], 0);
 	}
 }

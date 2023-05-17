@@ -14,6 +14,12 @@ void D2D::Transform::SetCollider(CapsuleCollider* pCollider)
 	m_pCapsuleCollider = pCollider;
 }
 
+void D2D::Transform::RemoveCollider()
+{
+	m_pBoxCollider = nullptr;
+	m_pCapsuleCollider = nullptr;
+}
+
 void D2D::Transform::SetLocalPosition(const float x, const float y)
 {
 	SetLocalPosition(glm::vec2{ x, y });
@@ -59,13 +65,12 @@ void D2D::Transform::SetWorldPosition(const glm::vec2& pos)
 	CheckTriggers();
 }
 
-void D2D::Transform::MoveLocalPosition(float x, float y)
+bool D2D::Transform::MoveLocalPosition(float x, float y)
 {
-	MoveLocalPosition(glm::vec2{ x, y });
-	CheckTriggers();
+	return MoveLocalPosition(glm::vec2{ x, y });
 }
 
-void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
+bool D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 {
 	if (m_pBoxCollider != nullptr)
 	{
@@ -74,6 +79,7 @@ void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 		{
 			SetLocalPosition(m_LocalPosition + direction);
 			CheckTriggers();
+			return true;
 		}
 
 	}
@@ -84,13 +90,16 @@ void D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 		{
 			SetLocalPosition(m_LocalPosition + direction);
 			CheckTriggers();
+			return true;
 		}
 	}
 	else
 	{
 		SetLocalPosition(m_LocalPosition + dir);
+		CheckTriggers();
+		return true;
 	}
-
+	return false;
 }
 
 void D2D::Transform::SetDirtyFlag()

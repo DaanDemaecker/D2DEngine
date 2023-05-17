@@ -28,6 +28,9 @@
     <Filter Include="Components\AnimatorControllers">
       <UniqueIdentifier>{3028344c-44fb-4fc2-a365-420eb8b4129c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Enemies">
+      <UniqueIdentifier>{78eddc19-8d6a-410a-8a19-3f69774f4f6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
@@ -77,6 +80,15 @@
     </ClCompile>
     <ClCompile Include="ExplosionComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEnemyComponent.cpp">
+      <Filter>Components\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BalloonEnemy.cpp">
+      <Filter>Components\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAnimator.cpp">
+      <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="ExplosionComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEnemyComponent.h">
+      <Filter>Components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BalloonEnemy.h">
+      <Filter>Components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAnimator.h">
+      <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

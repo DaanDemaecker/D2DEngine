@@ -108,6 +108,7 @@ namespace D2D
 
 
 		auto pPlayerCollider = pPlayer->AddComponent<CapsuleCollider>();
+		pPlayerCollider->AddToPhysicsManager(false);
 		pPlayerCollider->SetVariables(playerHeight, playerRadius);
 
 
