@@ -15,6 +15,8 @@
 #include "BalloonEnemy.h"
 #include "CapsuleCollider.h"
 #include "EnemyAnimator.h"
+#include "Powerup.h"
+#include <iostream>
 
 D2D::GridComponent::GridComponent()
 {
@@ -39,6 +41,10 @@ D2D::GridComponent::GridComponent()
 	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonLeft.png"));
 	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonRight.png"));
 	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonDeath.png"));
+
+	m_pPowerupSprites[PowerupType::FireUp] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/FireUp.png");
+	m_pPowerupSprites[PowerupType::BombUp] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/BombUp.png");
+	m_pPowerupSprites[PowerupType::RemoteControl] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/RemoteControl.png");
 }
 
 void D2D::GridComponent::SetGrid(int rows, int columns, float cubeSize)
@@ -100,8 +106,10 @@ void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
 	}
 	file.close();
 
+	SetupPowerupAndWall();
 	SetGridWalls();
 	SetupEnemies();
+
 }
 
 void D2D::GridComponent::Notify(const Event& event)
@@ -418,4 +426,54 @@ void D2D::GridComponent::SpawnEnemy(int number)
 
 	auto pEnemyComponent = pEnemy->AddComponent<BalloonEnemy>();
 	pEnemyComponent->SetSpeed(3 * m_SquareSize);
+}
+
+void D2D::GridComponent::SetupPowerupAndWall()
+{
+	int doorIndex{};
+	int powerupIndex{};
+
+	do
+	{
+		doorIndex = rand() % m_Grid.size();
+	} while (m_Grid[doorIndex] != BrickWall);
+
+	do
+	{
+		powerupIndex = rand() % m_Grid.size();
+	} while (m_Grid[powerupIndex] != BrickWall || powerupIndex == doorIndex);
+	
+	std::cout << doorIndex << "   " << powerupIndex << std::endl;
+
+	SpawnDoor(doorIndex);
+	SpawnPowerup(powerupIndex);
+}
+
+void D2D::GridComponent::SpawnDoor(int gridIndex)
+{
+	auto pDoor = GetOwner()->CreateNewObject("Door");
+
+	pDoor->GetTransform()->SetWorldPosition(GetGridPos(gridIndex));
+
+	auto pRenderComponent = pDoor->AddComponent<RenderComponent>();
+	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
+	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
+	pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/Door.png"));
+}
+
+void D2D::GridComponent::SpawnPowerup(int gridIndex)
+{
+	auto pPowerup = GetOwner()->CreateNewObject("Powerup");
+
+	PowerupType powerupType = static_cast<PowerupType>(rand() % 3);
+
+	pPowerup->GetTransform()->SetWorldPosition(GetGridPos(gridIndex));
+
+	auto pRenderComponent = pPowerup->AddComponent<RenderComponent>();
+	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
+	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
+	if (m_pPowerupSprites.contains(powerupType))
+	{
+		pRenderComponent->SetTexture(m_pPowerupSprites[powerupType]);
+	}
 }

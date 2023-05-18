@@ -51,8 +51,6 @@ namespace D2D
 		const auto pFont2{ pResourceManager.LoadFont("Lingua.otf", 15) };
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
-		const auto pEnemyTexture{ pResourceManager.LoadTexture("sprites/Enemy.png") };
-
 		const int gridSize{ 34 };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };

@@ -10,6 +10,7 @@ namespace D2D
 	class PlayerComponent;
 	class Texture2D;
 	class BombComponent;
+	enum class PowerupType;
 
 	enum GridType
 	{
@@ -73,8 +74,7 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickExplosionTexture{};
 
-		int m_DoorIndex{};
-		int m_PowerupIndex{};
+		std::map<PowerupType, std::shared_ptr<Texture2D>> m_pPowerupSprites{};
 
 		std::vector<std::shared_ptr<Texture2D>> m_pBalloonTextures{};
 
@@ -104,5 +104,10 @@ namespace D2D
 
 		void SetupEnemies();
 		void SpawnEnemy(int number);
+
+		void SetupPowerupAndWall();
+
+		void SpawnDoor(int gridIndex);
+		void SpawnPowerup(int gridIndex);
 	};
 }
