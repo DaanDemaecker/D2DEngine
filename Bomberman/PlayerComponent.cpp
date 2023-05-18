@@ -64,3 +64,11 @@ void D2D::PlayerComponent::OnTriggerEnter(const Collider* pCollider)
 		KillPlayer();
 	}
 }
+
+void D2D::PlayerComponent::PowerupCollected(PowerupType powerupType)
+{
+	PowerupCollectedEvent powerupEvent{};
+	powerupEvent.type = powerupType;
+
+	NotifyObservers(powerupEvent);
+}

@@ -30,6 +30,7 @@
 
 #include "GridComponent.h"
 #include "CameraComponent.h"
+#include "RemoteControlCommand.h"
 
 #include "ServiceLocator.h"
 
@@ -154,6 +155,7 @@ namespace D2D
 
 			input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(std::bind(&PlayerComponent::KillPlayer, pPlayerComponent)));
 			input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent));
+			input.AddKeyboardCommand(SDL_SCANCODE_Q, D2D::keyState::Down, std::make_unique<D2D::RemoteControlCommand>(pBombmanagercomponent.get()));
 		}
 		else if (idx == 1)
 		{

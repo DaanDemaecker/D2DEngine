@@ -254,7 +254,7 @@ void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strengt
 		}
 		else if (m_Grid[number] == Bomb)
 		{
-			m_pBombs[number]->ChainReaction();
+			m_pBombs[number]->InstantExplosion();
 		}
 		return;
 	}
@@ -469,6 +469,9 @@ void D2D::GridComponent::SpawnPowerup(int gridIndex)
 
 	pPowerup->GetTransform()->SetWorldPosition(GetGridPos(gridIndex));
 
+	auto powerupComponent = pPowerup->AddComponent<Powerup>();
+	powerupComponent->SetType(powerupType);
+
 	auto pRenderComponent = pPowerup->AddComponent<RenderComponent>();
 	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
 	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
@@ -476,4 +479,8 @@ void D2D::GridComponent::SpawnPowerup(int gridIndex)
 	{
 		pRenderComponent->SetTexture(m_pPowerupSprites[powerupType]);
 	}
+
+	auto pTrigger = pPowerup->AddComponent<BoxCollider>();
+	pTrigger->SetVariables(m_SquareSize * 0.8f, m_SquareSize * 0.8f);
+	pTrigger->AddToPhysicsManager(true);
 }

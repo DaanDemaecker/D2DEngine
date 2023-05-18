@@ -9,6 +9,7 @@ namespace D2D
 {
 	class Texture2D;
 	class GridComponent;
+	class BombComponent;
 
 	class BombManagerComponent : public Component, public Observer
 	{
@@ -22,6 +23,8 @@ namespace D2D
 
 		void SetBombSize(float size) { m_BombSize = size; }
 
+		void RemoteControlTriggered();
+
 	private:
 		GridComponent* m_pGrid;
 
@@ -29,9 +32,12 @@ namespace D2D
 		float m_BombSize{};
 
 		int m_BombStrength{1};
-		int m_BombAmount{10};
-		int m_CurrentBombAmount{};
+		int m_BombAmount{1};
+
+		bool m_RemoteControlActive{ false };
 
 		void SpawnBomb(const glm::vec2& pos);
+
+		std::vector<BombComponent*> m_pBombs;
 	};
 }

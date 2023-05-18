@@ -93,6 +93,9 @@
     <ClCompile Include="Powerup.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="RemoteControlCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Powerup.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteControlCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include "glm/glm.hpp"
+#include "Powerup.h"
 
 namespace D2D
 {
@@ -24,5 +25,13 @@ namespace D2D
 		PlaceBombEvent() = default;
 
 		glm::vec2 position{};
+	};
+
+	struct PowerupCollectedEvent final : public Event
+	{
+	public:
+		PowerupCollectedEvent() = default;
+
+		PowerupType type{};
 	};
 }

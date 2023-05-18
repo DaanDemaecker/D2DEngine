@@ -8,6 +8,7 @@ namespace D2D
 	class Transform;
 	class PlayerAnimator;
 	class Collider;
+	enum class PowerupType;
 
 	class PlayerComponent final : public Component, public Subject
 	{
@@ -30,6 +31,8 @@ namespace D2D
 		void AddMovement(const glm::vec2& direction) { m_Movement += direction; }
 
 		virtual void OnTriggerEnter(const Collider* pCollider) override;
+
+		void PowerupCollected(PowerupType powerupType);
 	
 	private:
 		Transform* m_pTransform{};

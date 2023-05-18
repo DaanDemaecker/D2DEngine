@@ -196,6 +196,7 @@
     <ClCompile Include="PlayerMovementCommand.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
     <ClCompile Include="Powerup.cpp" />
+    <ClCompile Include="RemoteControlCommand.cpp" />
     <ClCompile Include="SelfDestroyingAnimator.cpp" />
     <ClCompile Include="SingleClipAnimator.cpp" />
   </ItemGroup>
@@ -219,6 +220,7 @@
     <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="PointsDisplay.h" />
     <ClInclude Include="Powerup.h" />
+    <ClInclude Include="RemoteControlCommand.h" />
     <ClInclude Include="SelfDestroyingAnimator.h" />
     <ClInclude Include="SingleClipAnimator.h" />
     <ClInclude Include="WorldEvents.h" />
