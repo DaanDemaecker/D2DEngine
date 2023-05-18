@@ -27,7 +27,7 @@ namespace D2D
 		DefaultSoundSystem() = default;
 		virtual ~DefaultSoundSystem() override = default;
 
-		virtual void Play(unsigned short, int) override {}
+		virtual void Play(unsigned short , int) override {}
 
 		virtual void ReadSoundSheet(const std::string&) override {}
 

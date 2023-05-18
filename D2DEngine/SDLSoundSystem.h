@@ -9,8 +9,6 @@ struct Mix_Chunk;
 
 namespace D2D
 {
-
-
 	class SDLSoundSystem final : public SoundSystem
 	{
 	public:

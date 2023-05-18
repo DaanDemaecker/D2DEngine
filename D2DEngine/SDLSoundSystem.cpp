@@ -35,11 +35,12 @@ D2D::SDLSoundSystem::~SDLSoundSystem()
 
 void D2D::SDLSoundSystem::Play(unsigned short id, int volume)
 {
-	std::lock_guard<std::mutex> lock{ m_Mutex };
+	std::unique_lock<std::mutex> lock{ m_Mutex };
 
 	m_Queue.push_back(std::pair<unsigned short, int>{id, volume});
 
 	m_ConditionVariable.notify_one();
+
 }
 
 void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)
@@ -106,12 +107,20 @@ void D2D::SDLSoundSystem::Run()
 	{
 		std::unique_lock<std::mutex> lock(m_Mutex);
 
-		if (m_Queue.size() > 0)
-		{
-			PlaySound(m_Queue[0].first, m_Queue[0].second);
-			m_Queue.pop_front();
-		}
 		m_ConditionVariable.wait(lock);
+
+		while (!m_Queue.empty())
+		{
+			unsigned short chunkId = m_Queue[0].first;
+			int volume = m_Queue[0].second;
+			m_Queue.pop_front();
+
+			lock.unlock();
+
+			PlaySound(chunkId, volume);
+
+			lock.lock();
+		}
 	}
 }
 
