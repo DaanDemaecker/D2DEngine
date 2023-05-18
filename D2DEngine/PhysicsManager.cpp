@@ -89,12 +89,11 @@ bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, glm::vec2& direction, 
     for (const auto& otherCollider : m_pCapsuleColliders)
     {
         auto otherCapsule = otherCollider->GetBounds();
-        auto otherRect = D2D::Rect{ otherCapsule.GetRect()};
-
-        if (IsOverlapping(rect, otherRect))
+        
+        if (IsOverlapping(otherCapsule, rect))
             continue;
 
-        if (IsOverlapping(movedRect, otherRect))
+        if (IsOverlapping(otherCapsule, movedRect))
             return false;
     }
 
@@ -290,11 +289,17 @@ bool D2D::PhysicsManager::CanMove(CapsuleCollider* pCollider, glm::vec2& directi
 
         auto otherCapsule = otherCollider->GetBounds();
         auto otherRect = D2D::Rect{ otherCapsule.GetRect() };
+        auto otherC1 = otherCapsule.GetTopCenter();
+        auto otherC2 = otherCapsule.GetBotCenter();
 
-        if (IsOverlapping(capsuleRect, otherRect))
+        if (IsOverlapping(capsuleRect, otherRect) ||
+            IsOverlapping(C1, capsule.radius, otherC2, otherCapsule.radius) ||
+            IsOverlapping(C2, capsule.radius, otherC1, otherCapsule.radius))
             continue;
 
-        if (IsOverlapping(movedCapsuleRect, otherRect))
+        if (IsOverlapping(movedCapsuleRect, otherRect) ||
+            IsOverlapping(movedC1, capsule.radius, otherC2, otherCapsule.radius) ||
+            IsOverlapping(movedC2, capsule.radius, otherC1, otherCapsule.radius))
             return false;
     }
 
@@ -404,6 +409,14 @@ bool D2D::PhysicsManager::IsRectangleCircleOverlap(const Rect& rect, const glm::
 
     // Check if the distance is less than or equal to the circle's radius
     return distanceSqrd <= (circleRadius * circleRadius);
+}
+
+bool D2D::PhysicsManager::IsOverlapping(const glm::vec2& c1, float r1, const glm::vec2& c2, float r2)
+{
+    float sqrdDistance = (c2.x - c1.x) * (c2.x - c1.x) + (c2.y - c1.y) * (c2.y - c1.y);
+
+
+    return sqrdDistance <= (r1 + r2) * (r1 + r2);
 }
 
 void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)

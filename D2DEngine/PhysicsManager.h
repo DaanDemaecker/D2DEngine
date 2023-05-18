@@ -32,6 +32,8 @@ namespace D2D
 		bool IsOverlapping(Capsule& capsule, const Rect& rect);
 		bool IsRectangleCircleOverlap(const Rect& rect, const glm::vec2& circleCenter, float circleRadius);
 
+		bool IsOverlapping(const glm::vec2& c1, float r1, const glm::vec2& c2, float r2);
+
 
 		void CheckTrigger(BoxCollider* pTrigger);
 		void CheckColliderForTrigger(BoxCollider* pCollider);

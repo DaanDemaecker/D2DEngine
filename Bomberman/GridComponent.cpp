@@ -390,9 +390,11 @@ void D2D::GridComponent::SetupEnemies()
 
 void D2D::GridComponent::SpawnEnemy(int number)
 {
-	const float enemyHeight{ m_SquareSize * .9f };
-	const float enemyWidth{ m_SquareSize  * 0.8f };
+	const float enemyTriggerHeight{ m_SquareSize * .9f };
+	const float enemyTriggerWidth{ m_SquareSize  * 0.8f };
 
+	const float enemyHeight{ enemyTriggerHeight * 0.9f };
+	const float enemyWidth{ enemyTriggerWidth * 0.9f };
 
 
 	const auto pEnemy = GetOwner()->CreateNewObject("Enemy");
@@ -406,7 +408,7 @@ void D2D::GridComponent::SpawnEnemy(int number)
 	pAnimator->Init(pRenderComponent.get(), m_pBalloonTextures);
 
 	auto pTrigger = pEnemy->AddComponent<BoxCollider>();
-	pTrigger->SetVariables(enemyWidth, enemyHeight);
+	pTrigger->SetVariables(enemyTriggerWidth, enemyTriggerHeight);
 	pTrigger->AddToPhysicsManager(true);
 
 	auto pCollider = pEnemy->AddComponent<CapsuleCollider>();
