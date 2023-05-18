@@ -73,6 +73,9 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickExplosionTexture{};
 
+		int m_DoorIndex{};
+		int m_PowerupIndex{};
+
 		std::vector<std::shared_ptr<Texture2D>> m_pBalloonTextures{};
 
 
