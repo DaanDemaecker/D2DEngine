@@ -11,9 +11,7 @@ void D2D::AnimationController::Update()
 {
 	for (auto& transition : m_pTransitions)
 	{
-		if (transition.fromClip != -1 && transition.fromClip != m_CurrentClip && transition.toClip == m_CurrentClip)
-			continue;
-		else
+		if (transition.fromClip == -1 || transition.fromClip == m_CurrentClip)
 		{
 			if (transition.predicate())
 			{

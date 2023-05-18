@@ -16,7 +16,7 @@ void D2D::EnemyAnimator::Init(RenderComponent* pRenderComponent, std::vector<std
 
 	std::unique_ptr<AnimationClip> rightClip{ std::make_unique<AnimationClip>(pRenderComponent) };
 
-	rightClip->SetClip(pTextures[0], 3, 1, 3);
+	rightClip->SetClip(pTextures[1], 3, 1, 3);
 	m_pClips.push_back(std::move(rightClip));
 
 	std::unique_ptr<AnimationClip> deathClip{ std::make_unique<AnimationClip>(pRenderComponent) };
