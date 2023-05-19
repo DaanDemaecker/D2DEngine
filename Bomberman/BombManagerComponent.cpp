@@ -30,8 +30,6 @@ void D2D::BombManagerComponent::Notify(const Event& event)
 	{
 		if (!m_pBombs.empty())
 		{
-			m_pBombs[m_pBombs.size()-1]->InstantExplosion();
-
 			m_pBombs.erase(std::remove_if(m_pBombs.begin(), m_pBombs.end(), [&](BombComponent* pBomb) {return pBomb->GetGridNumber() == bombExplodeEvent->gridNumber; }), m_pBombs.end());
 		}
 	}
@@ -63,7 +61,7 @@ void D2D::BombManagerComponent::RemoteControlTriggered()
 {
 	if (m_RemoteControlActive && !m_pBombs.empty())
 	{
-		m_pBombs[0]->InstantExplosion();
+		m_pBombs[m_pBombs.size() - 1]->InstantExplosion();
 	}
 }
 
@@ -79,7 +77,7 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 	if (!response.success)
 		return;
 
-	ServiceLocator::GetSoundSystem().Play(0, 128);
+	ServiceLocator::GetSoundSystem().Play(1, 128);
 
 	const auto pBomb = GetOwner()->CreateNewObject("Bomb");
 	pBomb->GetTransform()->SetWorldPosition(response.position);

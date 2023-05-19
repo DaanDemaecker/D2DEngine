@@ -20,7 +20,7 @@ void D2D::BombComponent::ExplodeBomb()
 	event.strength = m_BombStrength;
 	NotifyObservers(event);
 
-	ServiceLocator::GetSoundSystem().Play(1, 128);
+	ServiceLocator::GetSoundSystem().Play(2, 128);
 
 
 	GetOwner()->Destroy();

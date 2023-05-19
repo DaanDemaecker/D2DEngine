@@ -1,5 +1,6 @@
-filePath = "Sound/SoundEffects/"
-<"0" = "BombPlacement.wav">
-<"1" = "Explosion.wav">
-<"2" = "PowerUp.wav">
-<"3" = "Walk.wav">
+filePath = "Sound/"
+<"0" = "Music/Main.mp3">
+<"1" = "SoundEffects/BombPlacement.wav">
+<"2" = "SoundEffects/Explosion.wav">
+<"3" = "SoundEffects/PowerUp.wav">
+<"4" = "SoundEffects/Walk.wav">

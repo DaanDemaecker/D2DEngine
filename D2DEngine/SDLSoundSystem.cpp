@@ -33,14 +33,13 @@ D2D::SDLSoundSystem::~SDLSoundSystem()
 	Mix_Quit();
 }
 
-void D2D::SDLSoundSystem::Play(unsigned short id, int volume)
+void D2D::SDLSoundSystem::Play(unsigned short id, int volume, int loops)
 {
 	std::unique_lock<std::mutex> lock{ m_Mutex };
 
-	m_Queue.push_back(std::pair<unsigned short, int>{id, volume});
+	m_Queue.push_back(std::make_tuple(id, volume, loops));
 
 	m_ConditionVariable.notify_one();
-
 }
 
 void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)
@@ -67,7 +66,8 @@ void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)
 		soundeffectsFilePath << resourcesFilePath.str() << line;
 
 		
-		std::regex pattern("<\"(\\d+)\" = \"(.+\\.wav)\">");
+		std::regex wavPattern("<\"(\\d+)\" = \"(.+\\.wav)\">");
+		std::regex mp3Pattern("<\"(\\d+)\" = \"(.+\\.mp3)\">");
 		while (std::getline(file, line))
 		{
 			unsigned short id{};
@@ -77,7 +77,7 @@ void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)
 			std::smatch matches;
 
 			// Try to match the pattern
-			if (std::regex_match(line, matches, pattern))
+			if (std::regex_match(line, matches, wavPattern))
 			{
 				// Extract the values from the match results
 				id = static_cast<unsigned short>(std::stoi(matches[1].str()));
@@ -89,6 +89,18 @@ void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)
 					std::cout << "failed to open sound effect";
 				}
 			}
+			else if (std::regex_match(line, matches, mp3Pattern))
+			{
+				// Extract the values from the match results
+				id = static_cast<unsigned short>(std::stoi(matches[1].str()));
+				soundEffectName = matches[2].str();
+
+				m_pSoundMusic[id] = Mix_LoadMUS((soundeffectsFilePath.str() + soundEffectName).c_str());
+				if (!m_pSoundMusic[id])
+				{
+					std::cout << "failed to open mp3 file";
+				}
+			}
 		}
 	}
 }
@@ -98,6 +110,11 @@ void D2D::SDLSoundSystem::ClearSoundChunks()
 	for (auto& pair : m_pSoundChunks)
 	{
 		Mix_FreeChunk(pair.second);
+	}
+
+	for (auto& pair : m_pSoundMusic)
+	{
+		Mix_FreeMusic(pair.second);
 	}
 }
 
@@ -111,35 +128,43 @@ void D2D::SDLSoundSystem::Run()
 
 		while (!m_Queue.empty())
 		{
-			unsigned short chunkId = m_Queue[0].first;
-			int volume = m_Queue[0].second;
+			auto queueEntry = m_Queue[0];
 			m_Queue.pop_front();
 
 			lock.unlock();
 
-			PlaySound(chunkId, volume);
+			PlaySound(queueEntry);
 
 			lock.lock();
 		}
 	}
 }
 
-void D2D::SDLSoundSystem::PlaySound(unsigned short id, int volume)
+void D2D::SDLSoundSystem::PlaySound(const std::tuple<unsigned short, int, int>& queueEntry)
 {
-	if (m_pSoundChunks.count(id) <= 0)
+	if (m_pSoundChunks.contains(std::get<0>(queueEntry)))
 	{
-		std::cout << "Failed to find sound chunk: " << id << "\n";
-		return;
+		const int channel = Mix_GroupAvailable(-1);
+		if (channel == -1)
+		{
+			std::cout << "Failed to find open channel: " << channel << "\n";
+		}
+		else
+		{
+			Mix_Volume(channel, std::get<1>(queueEntry));
+			Mix_PlayChannel(-1, m_pSoundChunks[std::get<0>(queueEntry)], std::get<2>(queueEntry));
+		}
 	}
-
-	const int channel = Mix_GroupAvailable(-1);
-	if (channel == -1)
+	else if (m_pSoundMusic.contains(std::get<0>(queueEntry)))
 	{
-		std::cout << "Failed to find open channel: " << channel << "\n";
+		Mix_VolumeMusic(std::get<1>(queueEntry));
+		Mix_PlayMusic(m_pSoundMusic[std::get<0>(queueEntry)], std::get<2>(queueEntry));
 	}
 	else
 	{
-		Mix_Volume(channel, volume);
-		Mix_PlayChannel( - 1, m_pSoundChunks[id], 0);
+		std::cout << "Failed to find sound chunk: " << std::get<0>(queueEntry) << "\n";
+		return;
 	}
+
+	
 }

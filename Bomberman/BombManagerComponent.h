@@ -32,7 +32,7 @@ namespace D2D
 		float m_BombSize{};
 
 		int m_BombStrength{1};
-		int m_BombAmount{1};
+		int m_BombAmount{10};
 
 		bool m_RemoteControlActive{ false };
 

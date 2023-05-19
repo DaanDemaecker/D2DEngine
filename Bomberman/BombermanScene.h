@@ -74,6 +74,8 @@ namespace D2D
 		
 
 		SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
+
+		ServiceLocator::GetSoundSystem().Play(0, 128, -1);
 	}
 
 	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize)
