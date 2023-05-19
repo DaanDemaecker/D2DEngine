@@ -3,8 +3,12 @@
 #include "ImGuiInfoComponent.h"
 #include "InfoCommand.h"
 #include "InputManager.h"
-
+#include "ResourceManager.h"
+#include "RenderComponent.h"
 #include <iostream>
+#include <SDL.h>
+
+extern SDL_Window* g_window;
 
 using namespace D2D;
 
@@ -14,6 +18,15 @@ Scene::Scene(const std::string& name) : m_name(name)
 {
 	m_pSceneRoot = std::make_unique<GameObject>("Scene Root");
 	m_pSceneRoot->Init();
+
+	int windowWidth{};
+	int windowHeight{};
+	SDL_GetWindowSize(g_window, &windowWidth, &windowHeight);
+
+	const auto pBackgroundTexture{ ResourceManager::GetInstance().LoadTexture("sprites/UIBackGround.tga")};
+	auto sceneRootRenderComponent = m_pSceneRoot->AddComponent<RenderComponent>();
+	sceneRootRenderComponent->SetTexture(pBackgroundTexture);
+	sceneRootRenderComponent->SetDestRectBounds(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
 
 	m_pCanvas = std::make_unique<GameObject>("Canvas");
 	m_pCanvas->Init();

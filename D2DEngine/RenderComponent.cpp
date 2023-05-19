@@ -30,7 +30,7 @@ void D2D::RenderComponent::SetDestRectBounds(float width, float height)
 
 void D2D::RenderComponent::Render() const
 {
-	const auto tranform = GetComponent<Transform>();
+	const auto tranform = GetOwner()->GetTransform();
 
 	if (!tranform || !m_pTexture)
 		return;

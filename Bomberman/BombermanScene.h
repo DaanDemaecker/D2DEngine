@@ -47,6 +47,8 @@ namespace D2D
 	{
 		ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
 
+		constexpr float hudSize{ 50.f };
+
 		auto& input = D2D::InputManager::GetInstance();
 
 		const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
@@ -58,7 +60,7 @@ namespace D2D
 		const int gridSize{ 34 };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
-
+		pBackground->GetTransform()->SetWorldPosition(0, hudSize);
 		pBackground->AddComponent<D2D::RenderComponent>()->SetTexture(pBackgroundTexture);
 
 		const auto pTimer{ scene.CreateCanvasObject("Timer") };
@@ -90,7 +92,7 @@ namespace D2D
 
 
 		const auto pWorld{ scene.CreateGameObject("Playfield") };
-		pWorld->GetTransform()->SetWorldPosition(0, 50);
+		pWorld->GetTransform()->SetWorldPosition(0, hudSize);
 		const auto pGrid = pWorld->AddComponent<GridComponent>();
 		pGrid->ReadLevelFromFile("../Data/TextFiles/Level.txt", gridSize);
 		pWorld->AddComponent<CameraComponent>()->SetLevelBounds(0, pGrid->GetLevelWidth());
