@@ -3,8 +3,8 @@
 #include "PlayerEvents.h"
 #include "TextComponent.h"
 #include "PlayerComponent.h"
-
-
+#include "WorldEvents.h"
+#include "BaseEnemyComponent.h"
 
 D2D::PointsDisplay::PointsDisplay()
 	:Component()
@@ -13,13 +13,25 @@ D2D::PointsDisplay::PointsDisplay()
 
 void D2D::PointsDisplay::Notify(const Event& event)
 {
-	if (auto playerDieEvent{ dynamic_cast<const PlayerDieEvent*>(&event) })
+	/*if (auto playerDieEvent{ dynamic_cast<const PlayerDieEvent*>(&event) })
 	{
 		m_Score = 0;
 	}
-	else if (auto pickupItemEvent{ dynamic_cast<const PickupItemEvent*>(&event) })
+	else */
+	if (auto pickupItemEvent{ dynamic_cast<const PowerupCollectedEvent*>(&event) })
 	{
-		m_Score += 100;
+		m_Score += 1000;
+	}
+	else if (auto enemieDieEvent{ dynamic_cast<const EnemyDieEvent*>(&event) })
+	{
+		switch (enemieDieEvent->enemyType)
+		{
+		case EnemyType::Balloom:
+			m_Score += 100;
+			break;
+		default:
+			break;
+		}
 	}
 	else
 	{
@@ -27,7 +39,7 @@ void D2D::PointsDisplay::Notify(const Event& event)
 	}
 
 
-		m_ShouldUpdateText = true;
+	m_ShouldUpdateText = true;
 }
 
 void D2D::PointsDisplay::Update()

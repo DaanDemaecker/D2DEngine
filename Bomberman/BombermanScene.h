@@ -34,11 +34,13 @@
 
 #include "ServiceLocator.h"
 
+#include "EnemyManager.h"
+
 #include <functional>
 
 namespace D2D
 {
-	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize);
+	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize);
 
 	void LoadBombermanScene(Scene& scene)
 	{
@@ -66,19 +68,38 @@ namespace D2D
 		pText->SetFont(pFont2);
 		pText->SetColor(255, 255, 0);
 
+		const auto pPointsDisplay{ scene.CreateCanvasObject("Points Display") };
+		pPointsDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 400.0f, 0.f });
+		pPointsDisplay->AddComponent<D2D::RenderComponent>();
+
+		const auto pPointsText = pPointsDisplay->AddComponent<D2D::TextComponent>();
+		pPointsText->SetFont(pFont2);
+		pPointsText->SetColor(255, 255, 255);
+
+		const auto pPointsDisplayComponent = pPointsDisplay->AddComponent<D2D::PointsDisplay>();
+
+
 		const auto pWorld{ scene.CreateGameObject("Playfield") };
 		pWorld->GetTransform()->SetWorldPosition(0, 50);
 		const auto pGrid = pWorld->AddComponent<GridComponent>();
-		pGrid->SetGrid("../Data/TextFiles/Level.txt", gridSize);
+		pGrid->ReadLevelFromFile("../Data/TextFiles/Level.txt", gridSize);
 		pWorld->AddComponent<CameraComponent>()->SetLevelBounds(0, pGrid->GetLevelWidth());
-		
 
-		SetupPlayer(pWorld, scene, input, pFont2, 0, gridSize);
+		const auto pEnemyManager{ scene.CreateGameObject("EnemyManager") };
+		auto pEnemyManagerComponent = pEnemyManager->AddComponent<EnemyManager>();
+		
+		pGrid->AddObserver(pEnemyManagerComponent.get());
+
+		pEnemyManagerComponent->AddObserver(pPointsDisplayComponent.get());
+
+		pGrid->SetupEnemies();
+
+		SetupPlayer(pWorld, scene, input, pPointsDisplayComponent.get(), pFont2, 0, gridSize);
 
 		ServiceLocator::GetSoundSystem().Play(0, 128, -1);
 	}
 
-	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, std::shared_ptr<Font> font, int idx, float gridSize)
+	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize)
 	{
 		float playerSpeed{ 4 *  gridSize };
 
@@ -125,19 +146,9 @@ namespace D2D
 
 		pPlayerComponent->AddObserver(pLivesDisplayComponent.get());
 
+		
 
-
-		const auto pPointsDisplay{ scene.CreateCanvasObject("Points Display") };
-		pPointsDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 400.0f, 0.f });
-		pPointsDisplay->AddComponent<D2D::RenderComponent>();
-
-		const auto pPointsText = pPointsDisplay->AddComponent<D2D::TextComponent>();
-		pPointsText->SetFont(font);
-		pPointsText->SetColor(255, 255, 255);
-
-		const auto pPointsDisplayComponent = pPointsDisplay->AddComponent<D2D::PointsDisplay>();
-
-		pPlayerComponent->AddObserver(pPointsDisplayComponent.get());
+		pPlayerComponent->AddObserver(pPointsDisplay);
 
 
 		const auto pBombmanagercomponent = pBombManager->AddComponent<BombManagerComponent>();

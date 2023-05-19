@@ -9,6 +9,7 @@
 #include "PlayerComponent.h"
 #include "BoxCollider.h"
 #include "CapsuleCollider.h"
+#include "WorldEvents.h"
 
 void D2D::BalloonEnemy::Update()
 {
@@ -72,6 +73,12 @@ void D2D::BalloonEnemy::OnTriggerEnter(const Collider* pCollider)
 		GetOwner()->RemoveComponent<BoxCollider>();
 		GetOwner()->RemoveComponent<CapsuleCollider>();
 		m_IsDead = true;
+
+		auto dieEvent{ EnemyDieEvent()};
+		dieEvent.pEnemy = this;
+		dieEvent.enemyType = m_Type;
+
+		NotifyObservers(dieEvent);
 	}
 	else if (auto player = pCollider->GetComponent<PlayerComponent>())
 	{

@@ -10,7 +10,7 @@ namespace D2D
 	class BalloonEnemy final : public BaseEnemyComponent
 	{
 	public:
-		BalloonEnemy() = default;
+		BalloonEnemy() { m_Type = EnemyType::Balloom; }
 		virtual ~BalloonEnemy() override = default;
 
 		void SetSpeed(float speed) { m_Speed = speed; }

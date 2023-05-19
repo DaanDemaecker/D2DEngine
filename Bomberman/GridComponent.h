@@ -42,14 +42,15 @@ namespace D2D
 	};
 
 
-	class GridComponent : public Component, public Observer
+	class GridComponent : public Component, public Observer, public Subject
 	{
 	public:
 		GridComponent();
 		virtual ~GridComponent() override = default;
 
 		void SetGrid(int rows, int columns, float cubeSize);
-		void SetGrid(const std::string& file, float cubeSize);
+		void ReadLevelFromFile(const std::string& file, float cubeSize);
+		void SetupEnemies();
 
 		virtual void Notify(const Event& event);
 
@@ -102,7 +103,6 @@ namespace D2D
 
 		void DeleteBrickWall(int number);
 
-		void SetupEnemies();
 		void SpawnEnemy(int number);
 
 		void SetupPowerupAndWall();

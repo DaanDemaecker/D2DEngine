@@ -57,7 +57,7 @@ void D2D::GridComponent::SetGrid(int rows, int columns, float cubeSize)
 	std::fill(m_Grid.begin(), m_Grid.end(), GridType::Empty);
 }
 
-void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
+void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cubeSize)
 {
 	std::ifstream file(fileName);
 	if (!file.is_open()) {
@@ -108,8 +108,6 @@ void D2D::GridComponent::SetGrid(const std::string& fileName, float cubeSize)
 
 	SetupPowerupAndWall();
 	SetGridWalls();
-	SetupEnemies();
-
 }
 
 void D2D::GridComponent::Notify(const Event& event)
@@ -426,6 +424,10 @@ void D2D::GridComponent::SpawnEnemy(int number)
 
 	auto pEnemyComponent = pEnemy->AddComponent<BalloonEnemy>();
 	pEnemyComponent->SetSpeed(3 * m_SquareSize);
+
+	auto spawnEvent = EnemySpawnEvent();
+	spawnEvent.pEnemy = pEnemyComponent.get();
+	NotifyObservers(spawnEvent);
 }
 
 void D2D::GridComponent::SetupPowerupAndWall()

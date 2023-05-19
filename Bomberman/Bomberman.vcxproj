@@ -181,6 +181,7 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
     <ClCompile Include="EnemyAnimator.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="ExplosionComponent.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="DebugCommand.h" />
     <ClInclude Include="EnemyAnimator.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="ExplosionComponent.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
