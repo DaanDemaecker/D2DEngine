@@ -200,6 +200,7 @@
     <ClCompile Include="RemoteControlCommand.cpp" />
     <ClCompile Include="SelfDestroyingAnimator.cpp" />
     <ClCompile Include="SingleClipAnimator.cpp" />
+    <ClCompile Include="TimerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BalloonEnemy.h" />
@@ -225,6 +226,7 @@
     <ClInclude Include="RemoteControlCommand.h" />
     <ClInclude Include="SelfDestroyingAnimator.h" />
     <ClInclude Include="SingleClipAnimator.h" />
+    <ClInclude Include="TimerComponent.h" />
     <ClInclude Include="WorldEvents.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

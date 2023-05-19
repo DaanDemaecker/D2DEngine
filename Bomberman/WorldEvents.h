@@ -47,4 +47,10 @@ namespace D2D
 		BaseEnemyComponent* pEnemy{};
 		EnemyType enemyType{};
 	};
+
+	struct TimerOverEvent final : public Event
+	{
+	public:
+		TimerOverEvent() = default;
+	};
 }

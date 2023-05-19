@@ -35,6 +35,7 @@
 #include "ServiceLocator.h"
 
 #include "EnemyManager.h"
+#include "TimerComponent.h"
 
 #include <functional>
 
@@ -50,8 +51,8 @@ namespace D2D
 
 		const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
-		const auto pFont{ pResourceManager.LoadFont("Lingua.otf", 36) };
-		const auto pFont2{ pResourceManager.LoadFont("Lingua.otf", 15) };
+		const auto pBigFont{ pResourceManager.LoadFont("Lingua.otf", 36) };
+		const auto pSmallFont{ pResourceManager.LoadFont("Lingua.otf", 15) };
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
 		const int gridSize{ 34 };
@@ -60,12 +61,21 @@ namespace D2D
 
 		pBackground->AddComponent<D2D::RenderComponent>()->SetTexture(pBackgroundTexture);
 
+		const auto pTimer{ scene.CreateCanvasObject("Timer") };
+		pTimer->GetTransform()->SetWorldPosition(5.f, 5.f);
+		pTimer->AddComponent<RenderComponent>();
+		auto pTimerText = pTimer->AddComponent<TextComponent>();
+		pTimerText->SetFont(pBigFont);
+		pTimerText->SetText("TIME   200");
+		pTimer->AddComponent<TimerComponent>();
+
+
 		const auto pFPSCounter{ scene.CreateCanvasObject("Fps Counter") };
 		pFPSCounter->GetTransform()->SetWorldPosition(0.0f, 0.0f);
 		pFPSCounter->AddComponent<D2D::RenderComponent>();
 		pFPSCounter->AddComponent<D2D::FPSCounter>();
 		const auto pText{ pFPSCounter->AddComponent<D2D::TextComponent>() };
-		pText->SetFont(pFont2);
+		pText->SetFont(pSmallFont);
 		pText->SetColor(255, 255, 0);
 
 		const auto pPointsDisplay{ scene.CreateCanvasObject("Points Display") };
@@ -73,7 +83,7 @@ namespace D2D
 		pPointsDisplay->AddComponent<D2D::RenderComponent>();
 
 		const auto pPointsText = pPointsDisplay->AddComponent<D2D::TextComponent>();
-		pPointsText->SetFont(pFont2);
+		pPointsText->SetFont(pSmallFont);
 		pPointsText->SetColor(255, 255, 255);
 
 		const auto pPointsDisplayComponent = pPointsDisplay->AddComponent<D2D::PointsDisplay>();
@@ -94,7 +104,7 @@ namespace D2D
 
 		pGrid->SetupEnemies();
 
-		SetupPlayer(pWorld, scene, input, pPointsDisplayComponent.get(), pFont2, 0, gridSize);
+		SetupPlayer(pWorld, scene, input, pPointsDisplayComponent.get(), pSmallFont, 0, gridSize);
 
 		ServiceLocator::GetSoundSystem().Play(0, 128, -1);
 	}
