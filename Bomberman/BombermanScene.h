@@ -53,8 +53,8 @@ namespace D2D
 
 		const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
-		const auto pBigFont{ pResourceManager.LoadFont("Lingua.otf", 36) };
-		const auto pSmallFont{ pResourceManager.LoadFont("Lingua.otf", 15) };
+		const auto pBigFont{ pResourceManager.LoadFont("Fonts/Minecraft.ttf", 36) };
+		const auto pSmallFont{ pResourceManager.LoadFont("Fonts/Minecraft.ttf", 15) };
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
 		const int gridSize{ 34 };

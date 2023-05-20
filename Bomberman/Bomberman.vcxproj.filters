@@ -179,5 +179,8 @@
     <ClInclude Include="TimerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="StartScreenScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -226,6 +226,7 @@
     <ClInclude Include="RemoteControlCommand.h" />
     <ClInclude Include="SelfDestroyingAnimator.h" />
     <ClInclude Include="SingleClipAnimator.h" />
+    <ClInclude Include="StartScreenScene.h" />
     <ClInclude Include="TimerComponent.h" />
     <ClInclude Include="WorldEvents.h" />
   </ItemGroup>
