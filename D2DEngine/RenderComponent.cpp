@@ -39,7 +39,7 @@ void D2D::RenderComponent::Render() const
 
 	if (m_DestRectWidth == 0 || m_DestRectHeight == 0)
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX, pos.y + m_OffsetY, m_SrcRect);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX , pos.y + m_OffsetY, m_SrcRect);
 	}
 	else
 	{

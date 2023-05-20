@@ -102,6 +102,12 @@
     <ClCompile Include="TimerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="MenuScrollCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -181,6 +187,12 @@
     </ClInclude>
     <ClInclude Include="StartScreenScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScrollCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
