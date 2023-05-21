@@ -32,9 +32,13 @@ void D2D::ImGuiInfoComponent::CreateWindow()
         if (ImGui::TreeNodeEx("Controls", mainFlags))
         {
             ImGui::Text("KeyBoard :");
-            ImGui::Text("-Move         WASD/ZQSD");
-            ImGui::Text("-Place Bomb   SPACE");
-            ImGui::Text("-Kill Player  BACKSPACE");
+            ImGui::Text("-Move             WASD/ZQSD");
+            ImGui::Text("-Place Bomb       SPACE");
+            ImGui::Text("-Kill Player      BACKSPACE");
+            ImGui::Text("-Remote Detonate  Q/A");
+            ImGui::Text("");
+            ImGui::Text("-Navigate mmenu   WASD/ZQSD/ARROW KEYS");
+            ImGui::Text("-Select menu      SPACE");
 
             ImGui::TreePop();
         }

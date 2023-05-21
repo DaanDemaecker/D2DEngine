@@ -178,6 +178,7 @@
     <ClCompile Include="BombComponent.cpp" />
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="BombManagerComponent.cpp" />
+    <ClCompile Include="ButtonActivateCommand.cpp" />
     <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="ExplosionComponent.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
+    <ClCompile Include="MainMenuComponent.cpp" />
     <ClCompile Include="MenuScrollCommand.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -210,6 +212,7 @@
     <ClInclude Include="BombComponent.h" />
     <ClInclude Include="BombermanScene.h" />
     <ClInclude Include="BombManagerComponent.h" />
+    <ClInclude Include="ButtonActivateCommand.h" />
     <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="DebugCommand.h" />
@@ -218,6 +221,7 @@
     <ClInclude Include="ExplosionComponent.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
+    <ClInclude Include="MainMenuComponent.h" />
     <ClInclude Include="MenuScrollCommand.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlaceBombCommand.h" />

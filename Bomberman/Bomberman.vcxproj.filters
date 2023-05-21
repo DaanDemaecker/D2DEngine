@@ -108,6 +108,12 @@
     <ClCompile Include="ButtonComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ButtonActivateCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -192,6 +198,12 @@
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="ButtonComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonActivateCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

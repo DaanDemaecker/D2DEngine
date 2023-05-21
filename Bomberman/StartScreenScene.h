@@ -25,6 +25,8 @@
 
 #include "ButtonComponent.h"
 #include "MenuScrollCommand.h"
+#include "ButtonActivateCommand.h"
+#include "MainMenuComponent.h"
 
 extern SDL_Window* g_window;
 
@@ -66,6 +68,7 @@ namespace D2D
 		constexpr float margin{ 15.0f };
 		const float logoWidth{ windowWidth * 0.6f };
 		const float logoHeight{ windowHeight * 0.6f };
+		auto pMainMenuComponent{ pLogo->AddComponent<MainMenuComponent>() };
 
 		pLogo->GetTransform()->SetWorldPosition(windowWidth / 2.f, margin);
 		auto pLogoRenderComponent = pLogo->AddComponent<RenderComponent>();
@@ -85,6 +88,7 @@ namespace D2D
 		pSinglePlayerButton->GetTransform()->SetWorldPosition(windowWidth/2.f - textOffset, windowHeight - 10 * margin);
 		auto pSinglePlayerButtonComponent = pSinglePlayerButton->AddComponent<ButtonComponent>();
 		pSinglePlayerButtonComponent->SetSelected(true);
+		pSinglePlayerButtonComponent->SetFunction(std::bind(&MainMenuComponent::SinglePlayerButton, pMainMenuComponent.get()));
 
 		const auto pCoopButton{ scene.CreateCanvasObject("CoopButton") };
 		pCoopButton->AddComponent<RenderComponent>();
@@ -95,6 +99,7 @@ namespace D2D
 		pCoopButton->GetTransform()->SetWorldPosition(windowWidth / 2.f - textOffset, windowHeight - 8 * margin);
 		pCoopButton->AddComponent<ButtonComponent>();
 		auto pCoopButtonComponent = pCoopButton->AddComponent<ButtonComponent>();
+		pCoopButtonComponent->SetFunction(std::bind(&MainMenuComponent::CoopButton, pMainMenuComponent.get()));
 
 		const auto pVersusButton{ scene.CreateCanvasObject("VersusButton") };
 		pVersusButton->AddComponent<RenderComponent>();
@@ -104,6 +109,7 @@ namespace D2D
 		pVersusText->SetText("VERSUS");
 		pVersusButton->GetTransform()->SetWorldPosition(windowWidth / 2.f - textOffset, windowHeight - 6 * margin);
 		auto pVersusButtonComponent = pVersusButton->AddComponent<ButtonComponent>();
+		pVersusButtonComponent->SetFunction(std::bind(&MainMenuComponent::VersusButton, pMainMenuComponent.get()));
 
 		const auto pSelector{ pSinglePlayerButton->CreateNewObject("Selector") };
 		auto pSelectorRenderComponent = pSelector->AddComponent<RenderComponent>();
@@ -116,5 +122,7 @@ namespace D2D
 
 		input.AddKeyboardCommand(SDL_SCANCODE_UP, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(-1, pButtons, pSelector));
 		input.AddKeyboardCommand(SDL_SCANCODE_DOWN, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(1, pButtons, pSelector));
+
+		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::ButtonActivateCommand>(pButtons));
 	}
 }
