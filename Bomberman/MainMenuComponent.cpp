@@ -5,8 +5,8 @@
 void D2D::MainMenuComponent::SinglePlayerButton()
 {
 	std::cout << "SinglePlayerButton\n";
-}
-
+}                                                     
+ 
 void D2D::MainMenuComponent::CoopButton()
 {
 	std::cout << "CoopButton\n";

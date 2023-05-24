@@ -61,7 +61,7 @@ void D2D::BombManagerComponent::RemoteControlTriggered()
 {
 	if (m_RemoteControlActive && !m_pBombs.empty())
 	{
-		m_pBombs[m_pBombs.size() - 1]->InstantExplosion();
+		m_pBombs[0]->InstantExplosion();
 	}
 }
 
