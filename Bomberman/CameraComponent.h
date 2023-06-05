@@ -15,7 +15,7 @@ namespace D2D
 
 		void SetLevelBounds(float min, float max);
 
-		virtual void Update() override;
+		virtual void LateUpdate() override;
 
 	private:
 		int m_WindowWidth{};

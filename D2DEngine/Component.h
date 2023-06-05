@@ -46,7 +46,12 @@ namespace D2D
 
 		Transform* GetTransform() const { return m_pOwner->GetTransform().get(); }
 
+		bool IsActive() const { return m_IsActive; }
+		void SetActive(bool isActive) { m_IsActive = isActive; }
+
 	private:
+		bool m_IsActive{ true };
+
 		GameObject* m_pOwner{};
 
 		void SetOwner(GameObject* pOwner) { m_pOwner = pOwner; }

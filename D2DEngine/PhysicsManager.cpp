@@ -75,7 +75,7 @@ bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, glm::vec2& direction, 
 
 	for (const auto& otherCollider : m_pBoxColliders)
 	{
-		if (otherCollider == pCollider)continue;
+		if (otherCollider == pCollider || !otherCollider->IsActive())continue;
 		
         auto otherRect = D2D::Rect{ otherCollider->GetBounds() };
 
@@ -88,6 +88,9 @@ bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, glm::vec2& direction, 
 
     for (const auto& otherCollider : m_pCapsuleColliders)
     {
+        if (!otherCollider->IsActive())
+            continue;
+
         auto otherCapsule = otherCollider->GetBounds();
         
         if (IsOverlapping(otherCapsule, rect))
@@ -124,6 +127,9 @@ bool D2D::PhysicsManager::CanMove(CapsuleCollider* pCollider, glm::vec2& directi
 
     for (const auto& otherCollider : m_pBoxColliders)
     {
+        if (!otherCollider->IsActive())
+            continue;
+
         auto otherRect = D2D::Rect{ otherCollider->GetBounds() };
 
         //---Initial overlap---
@@ -285,7 +291,7 @@ bool D2D::PhysicsManager::CanMove(CapsuleCollider* pCollider, glm::vec2& directi
 
     for (const auto& otherCollider : m_pCapsuleColliders)
     {
-        if (otherCollider == pCollider)continue;
+        if (otherCollider == pCollider || !otherCollider->IsActive())continue;
 
         auto otherCapsule = otherCollider->GetBounds();
         auto otherRect = D2D::Rect{ otherCapsule.GetRect() };
@@ -424,6 +430,9 @@ void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)
     auto bounds{ pTrigger->GetBounds() };
     for (const auto& boxCollider : m_pBoxColliders)
     {
+        if (!boxCollider->IsActive())
+            continue;
+
         bool isOverlapping = IsOverlapping(bounds, boxCollider->GetBounds());
 
         if (pTrigger->TriggerContainsCollider(boxCollider))
@@ -448,6 +457,9 @@ void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)
 
     for (const auto& boxTrigger : m_pBoxTriggers)
     {
+        if (!boxTrigger->IsActive())
+            continue;
+
         bool isOverlapping = IsOverlapping(bounds, boxTrigger->GetBounds());
 
         if (pTrigger->TriggerContainsCollider(boxTrigger))
@@ -472,6 +484,9 @@ void D2D::PhysicsManager::CheckTrigger(BoxCollider* pTrigger)
 
     for (const auto& capsuleCollider : m_pCapsuleColliders)
     {
+        if (!capsuleCollider->IsActive())
+            continue;
+
         bool isOverlapping = IsOverlapping(capsuleCollider->GetBounds(), bounds);
 
         if (pTrigger->TriggerContainsCollider(capsuleCollider))
@@ -501,6 +516,9 @@ void D2D::PhysicsManager::CheckColliderForTrigger(BoxCollider* pCollider)
 
     for (const auto& trigger : m_pBoxTriggers)
     {
+        if (!trigger->IsActive())
+            continue;
+
         bool isOverlapping = IsOverlapping(trigger->GetBounds(), rect);
 
         if (trigger->TriggerContainsCollider(pCollider))
@@ -530,6 +548,9 @@ void D2D::PhysicsManager::CheckColliderForTrigger(CapsuleCollider* pCollider)
 
     for (const auto& trigger : m_pBoxTriggers)
     {
+        if (!trigger->IsActive())
+            continue;
+
         bool isOverlapping = IsOverlapping(capsule, trigger->GetBounds());
 
         if (trigger->TriggerContainsCollider(pCollider))

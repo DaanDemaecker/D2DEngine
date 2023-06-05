@@ -24,7 +24,10 @@ void D2D::GameObject::StartFrame()
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->StartFrame();
+		if (pChild->IsActive())
+		{
+			pChild->StartFrame();
+		}
 	}
 }
 
@@ -32,12 +35,18 @@ void D2D::GameObject::Update()
 {
 	for (auto& pComponent : m_pComponents)
 	{
-		pComponent->Update();
+		if (pComponent->IsActive())
+		{
+			pComponent->Update();
+		}
 	}
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->Update();
+		if (pChild->IsActive())
+		{
+			pChild->Update();
+		}
 	}
 }
 
@@ -45,12 +54,18 @@ void D2D::GameObject::FixedUpdate()
 {
 	for (auto& pComponent : m_pComponents)
 	{
-		pComponent->FixedUpdate();
+		if (pComponent->IsActive())
+		{
+			pComponent->FixedUpdate();
+		}
 	}
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->FixedUpdate();
+		if (pChild->IsActive())
+		{
+			pChild->FixedUpdate();
+		}
 	}
 }
 
@@ -58,12 +73,18 @@ void D2D::GameObject::LateUpdate()
 {
 	for (auto& pComponent : m_pComponents)
 	{
-		pComponent->LateUpdate();
+		if (pComponent->IsActive())
+		{
+			pComponent->LateUpdate();
+		}
 	}
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->LateUpdate();
+		if (pChild->IsActive())
+		{
+			pChild->LateUpdate();
+		}
 	}
 
 }
@@ -72,7 +93,10 @@ void D2D::GameObject::Render() const
 {
 	for (auto& pComponent : m_pComponents)
 	{
-		pComponent->Render();
+		if (pComponent->IsActive())
+		{
+			pComponent->Render();
+		}
 	}
 
 	for (auto& pChild : m_pChildren)
@@ -85,12 +109,18 @@ void D2D::GameObject::OnGUI()
 {
 	for (auto& pComponent : m_pComponents)
 	{
-		pComponent->OnGUI();
+		if (pComponent->IsActive())
+		{
+			pComponent->OnGUI();
+		}
 	}
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->OnGUI();
+		if (pChild->IsActive())
+		{
+			pChild->OnGUI();
+		}
 	}
 }
 
@@ -109,7 +139,10 @@ void D2D::GameObject::PostUpdate()
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->PostUpdate();
+		if (pChild->IsActive())
+		{
+			pChild->PostUpdate();
+		}
 	}
 }
 
@@ -202,6 +235,21 @@ bool D2D::GameObject::ContainsChild(GameObject* pChild) const
 			return true;
 	}
 	return false;
+}
+
+void D2D::GameObject::SetActive(bool isActive)
+{
+	m_IsActive = isActive;
+
+	for (auto& pComponent : m_pComponents)
+	{
+		pComponent->SetActive(isActive);
+	}
+
+	for (auto& pChild : m_pChildren)
+	{
+		pChild->SetActive(isActive);
+	}
 }
 
 void D2D::GameObject::DestroyComponent(std::shared_ptr<Component> pComponent)

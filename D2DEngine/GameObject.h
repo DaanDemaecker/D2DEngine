@@ -64,8 +64,11 @@ namespace D2D
 
 		const std::string& GetName() const { return m_Name; }
 
+		bool IsActive() const { return m_IsActive; }
+		void SetActive(bool isActive);
 	private:
 		const std::string m_Name;
+		bool m_IsActive{ true };
 
 		GameObject* m_pParent{};
 		std::vector<std::unique_ptr<GameObject>> m_pChildren{};

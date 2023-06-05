@@ -4,10 +4,12 @@
 
 namespace D2D
 {
+	class GameObject;
+
 	class DebugCommand final : public Command
 	{
 	public:
-		DebugCommand(std::function<void()> fn) : Command(), m_pDebugFunction{ fn } {}
+		DebugCommand(GameObject* object) : Command(), m_pGameObject{ object } {}
 
 		virtual ~DebugCommand() = default;
 		DebugCommand(const DebugCommand& other) = delete;
@@ -18,7 +20,7 @@ namespace D2D
 		virtual void Execute() override;
 
 	private:
-		std::function<void()> m_pDebugFunction;
+		GameObject* m_pGameObject{};
 	};
 }
 

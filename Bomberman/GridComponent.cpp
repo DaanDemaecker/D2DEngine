@@ -444,8 +444,7 @@ void D2D::GridComponent::SetupPowerupAndWall()
 	{
 		powerupIndex = rand() % m_Grid.size();
 	} while (m_Grid[powerupIndex] != BrickWall || powerupIndex == doorIndex);
-	
-	std::cout << doorIndex << "   " << powerupIndex << std::endl;
+
 
 	SpawnDoor(doorIndex);
 	SpawnPowerup(powerupIndex);

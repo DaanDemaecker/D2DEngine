@@ -23,7 +23,7 @@ void D2D::CameraComponent::SetLevelBounds(float min, float max)
 	m_CameraMax = -max + m_WindowWidth;
 }
 
-void D2D::CameraComponent::Update()
+void D2D::CameraComponent::LateUpdate()
 {
 	if (m_pPlayerTransform == nullptr)
 		return;
