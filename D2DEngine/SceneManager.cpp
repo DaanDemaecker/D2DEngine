@@ -35,11 +35,19 @@ void D2D::SceneManager::OnGUI()
 	}
 }
 
-void D2D::SceneManager::Render()
+void D2D::SceneManager::Render() const
 {
 	for (const auto& scene : m_scenes)
 	{
 		scene->Render();
+	}
+}
+
+void D2D::SceneManager::RenderCanvas() const
+{
+	for (const auto& scene : m_scenes)
+	{
+		scene->RenderCanvas();
 	}
 }
 

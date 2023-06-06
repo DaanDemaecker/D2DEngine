@@ -47,6 +47,7 @@ void D2D::Renderer::Render()
 	SDL_RenderClear(m_renderer);
 
 	SceneManager::GetInstance().Render();
+	SceneManager::GetInstance().RenderCanvas();
 
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_window);

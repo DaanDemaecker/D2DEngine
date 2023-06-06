@@ -89,6 +89,10 @@ void D2D::Scene::LateUpdate()
 void Scene::Render() const
 {
 	m_pSceneRoot->Render();
+}
+
+void D2D::Scene::RenderCanvas() const
+{
 	m_pCanvas->Render();
 }
 

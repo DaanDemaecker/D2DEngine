@@ -126,6 +126,7 @@ void D2D::D2DEngine::Run(const std::function<void()>& load)
 		sceneManager.PostUpdate();
 
 		renderer.Render();
+		
 
 		const auto frameDuration{std::chrono::high_resolution_clock::now() - lastTime};
 		const auto sleepTime{std::chrono::milliseconds(static_cast<int>(desiredFrameDuration)) - frameDuration};

@@ -23,6 +23,8 @@ namespace D2D
 
 		void Render() const;
 
+		void RenderCanvas() const;
+
 		void OnGUI() const;
 
 		void PostUpdate();

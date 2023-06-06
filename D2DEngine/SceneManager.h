@@ -22,7 +22,8 @@ namespace D2D
 
 		void OnGUI();
 
-		void Render();
+		void Render() const;
+		void RenderCanvas() const;
 
 		void PostUpdate();
 	private:
