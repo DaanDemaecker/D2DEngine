@@ -14,6 +14,7 @@ void D2D::ButtonActivateCommand::Execute()
 		if (pButton->GetSelected())
 		{
 			pButton->Execute();
+			return;
 		}
 	}
 }

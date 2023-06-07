@@ -57,7 +57,7 @@ namespace D2D
 		const auto pSmallFont{ pResourceManager.LoadFont("Fonts/Minecraft.ttf", 15) };
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
-		const int gridSize{ 34 };
+		constexpr int gridSize{ 34 };
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
 		pBackground->GetTransform()->SetWorldPosition(0, hudSize);
@@ -169,26 +169,26 @@ namespace D2D
 
 		pPlayerComponent->AddObserver(pBombmanagercomponent.get());
 
-		
+		const auto sceneName = scene.GetName();
 
 		if (idx == 0)
 		{
-			input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent));
-			input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent));
-			input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, 1 }, pPlayerComponent));
-			input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 1, 0 }, pPlayerComponent));
+			input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent), sceneName);
+			input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent), sceneName);
+			input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, 1 }, pPlayerComponent), sceneName);
+			input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 1, 0 }, pPlayerComponent), sceneName);
 
-			input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(pPlayer));
-			input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent));
-			input.AddKeyboardCommand(SDL_SCANCODE_Q, D2D::keyState::Down, std::make_unique<D2D::RemoteControlCommand>(pBombmanagercomponent.get()));
+			input.AddKeyboardCommand(SDL_SCANCODE_BACKSPACE, D2D::keyState::Down, std::make_unique<D2D::DebugCommand>(pPlayer), sceneName);
+			input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::PlaceBombCommand>(pPlayerComponent), sceneName);
+			input.AddKeyboardCommand(SDL_SCANCODE_Q, D2D::keyState::Down, std::make_unique<D2D::RemoteControlCommand>(pBombmanagercomponent.get()), sceneName);
 
 		}
 		else if (idx == 1)
 		{
-			input.AddGamepadCommand(0, GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent));
-			input.AddGamepadCommand(0, GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent));
-			input.AddGamepadCommand(0, GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, 1 }, pPlayerComponent));
-			input.AddGamepadCommand(0, GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 1, 0 }, pPlayerComponent));
+			input.AddGamepadCommand(0, GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent), sceneName);
+			input.AddGamepadCommand(0, GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent), sceneName);
+			input.AddGamepadCommand(0, GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, 1 }, pPlayerComponent), sceneName);
+			input.AddGamepadCommand(0, GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 1, 0 }, pPlayerComponent), sceneName);
 		}
 
 		return pPlayer;

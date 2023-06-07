@@ -72,14 +72,16 @@ namespace D2D
 
 		const float playerSpeed{ 50.0f };
 
-		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, playerSpeed, pBombermanTransform));
-		input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, playerSpeed, pBombermanTransform));
-		input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, playerSpeed, pBombermanTransform));
-		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, playerSpeed, pBombermanTransform));
+		const auto sceneName = scene.GetName();
 
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, 2* playerSpeed, pEnemyTransform));
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, 2* playerSpeed, pEnemyTransform));
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, 2* playerSpeed, pEnemyTransform));
-		input.AddGamepadCommand(0, D2D::GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, 2* playerSpeed, pEnemyTransform));
+		input.AddKeyboardCommand(SDL_SCANCODE_W, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, playerSpeed, pBombermanTransform), sceneName);
+		input.AddKeyboardCommand(SDL_SCANCODE_A, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, playerSpeed, pBombermanTransform), sceneName);
+		input.AddKeyboardCommand(SDL_SCANCODE_S, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, playerSpeed, pBombermanTransform), sceneName);
+		input.AddKeyboardCommand(SDL_SCANCODE_D, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, playerSpeed, pBombermanTransform), sceneName);
+
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, -1 }, 2* playerSpeed, pEnemyTransform), sceneName);
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ -1, 0 }, 2* playerSpeed, pEnemyTransform), sceneName);
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 0, 1 }, 2* playerSpeed, pEnemyTransform), sceneName);
+		input.AddGamepadCommand(0, D2D::GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::MoveCommand>(glm::vec2{ 1, 0 }, 2* playerSpeed, pEnemyTransform), sceneName);
 	}
 }

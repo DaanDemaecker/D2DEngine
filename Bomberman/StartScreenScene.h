@@ -120,9 +120,11 @@ namespace D2D
 
 		auto& input = D2D::InputManager::GetInstance();
 
-		input.AddKeyboardCommand(SDL_SCANCODE_UP, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(-1, pButtons, pSelector));
-		input.AddKeyboardCommand(SDL_SCANCODE_DOWN, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(1, pButtons, pSelector));
+		const auto sceneName = scene.GetName();
 
-		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::ButtonActivateCommand>(pButtons));
+		input.AddKeyboardCommand(SDL_SCANCODE_UP, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(-1, pButtons, pSelector), sceneName);
+		input.AddKeyboardCommand(SDL_SCANCODE_DOWN, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(1, pButtons, pSelector), sceneName);
+
+		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::ButtonActivateCommand>(pButtons), sceneName);
 	}
 }

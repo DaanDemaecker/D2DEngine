@@ -53,17 +53,17 @@ namespace D2D
 		return true;
 	}
 
-	void InputManager::AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand)
+	void InputManager::AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName)
 	{
-		m_KeyboardCommands.push_back(std::make_unique<KeyboardCommand>(keyCode, keyState, std::move(pCommand)));
+		m_KeyboardCommands.push_back(std::make_unique<KeyboardCommand>(keyCode, keyState, std::move(pCommand), sceneName));
 	}
 
-	void InputManager::AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand)
+	void InputManager::AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName)
 	{
 		if (CheckIndex(index))
 		{
 			m_GamepadCommands.push_back(std::make_unique<GamepadCommand>(
-				index, button, keyState, std::move(pCommand)));
+				index, button, keyState, std::move(pCommand), sceneName));
 		}
 	}
 
@@ -72,6 +72,15 @@ namespace D2D
 	{
 		m_GamepadCommands.erase(std::remove_if(m_GamepadCommands.begin(), m_GamepadCommands.end(),
 			[gamePadIdx](const std::unique_ptr<GamepadCommand>& command) {return command->gamepadIndex == gamePadIdx; }), m_GamepadCommands.end());
+	}
+
+	void InputManager::RemoveCommands(const std::string& sceneName)
+	{
+		m_KeyboardCommands.erase(std::remove_if(m_KeyboardCommands.begin(), m_KeyboardCommands.end(),
+			[sceneName](const std::unique_ptr<KeyboardCommand>& command) {return command->sceneName == sceneName; }), m_KeyboardCommands.end());
+
+		m_GamepadCommands.erase(std::remove_if(m_GamepadCommands.begin(), m_GamepadCommands.end(),
+			[sceneName](const std::unique_ptr<GamepadCommand>& command) {return command->sceneName == sceneName; }), m_GamepadCommands.end());
 	}
 
 	void InputManager::HandleCommands()

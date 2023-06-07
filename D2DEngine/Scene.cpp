@@ -35,7 +35,7 @@ Scene::Scene(const std::string& name) : m_name(name)
 
 	pInfoComponent->SetCanvas(m_pCanvas.get());
 
-	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent));
+	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent), m_name);
 
 	std::cout << "\n Pres Tab to toggle the info window \n \n";
 }

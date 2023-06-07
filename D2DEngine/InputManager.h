@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include "Enums.h"
+#include <string>
 
 namespace D2D
 {
@@ -15,8 +16,8 @@ namespace D2D
 
 	struct KeyboardCommand
 	{
-		KeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand)
-			:key{ keyCode }, state{ keyState }, command{ std::move(pCommand) }
+		KeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand, std::string sceneName)
+			:key{ keyCode }, state{ keyState }, command{ std::move(pCommand) }, sceneName{sceneName}
 		{}
 		~KeyboardCommand() {};
 
@@ -24,12 +25,13 @@ namespace D2D
 		keyState state;
 
 		std::unique_ptr<Command> command;
+		std::string sceneName;
 	};
 
 	struct GamepadCommand
 	{
-		GamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand)
-			:gamepadIndex{ index }, button {button}, state{ keyState }, command{ std::move(pCommand) }
+		GamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand, std::string sceneName)
+			:gamepadIndex{ index }, button {button}, state{ keyState }, command{ std::move(pCommand) }, sceneName{sceneName}
 		{}
 		~GamepadCommand() {};
 
@@ -39,6 +41,7 @@ namespace D2D
 		keyState state;
 
 		std::unique_ptr<Command> command;
+		std::string sceneName;
 	};
 
 	class InputManager final : public Singleton<InputManager>
@@ -49,10 +52,12 @@ namespace D2D
 
 		bool ProcessInput();
 
-		void AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand);
+		void AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName);
 
-		void AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand);
+		void AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName);
 		void RemoveGamepadCommands(int gamePadIdx);
+
+		void RemoveCommands(const std::string& sceneName);
 
 	private:
 		std::unique_ptr<KeyBoard> m_pKeyBoard;

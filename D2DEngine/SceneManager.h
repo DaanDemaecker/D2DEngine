@@ -12,6 +12,8 @@ namespace D2D
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		void DeleteScene(const std::string& name);
+		std::shared_ptr<Scene> GetScene(const std::string& name);
 
 		void StartFrame();
 
@@ -30,5 +32,7 @@ namespace D2D
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		std::vector<std::shared_ptr<Scene>> m_scenes;
+
+		
 	};
 }
