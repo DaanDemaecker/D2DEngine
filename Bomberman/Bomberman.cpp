@@ -9,7 +9,7 @@
 #include "D2DEngine.h"
 #include "SceneManager.h"
 #include "DemoScene.h"
-//#include "BombermanScene.h"
+#include "BombermanScene.h"
 #include "StartScreenScene.h"
 #include <ctime>
 
@@ -29,12 +29,12 @@ void load()
 #endif
 
 
-
-	//auto& bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
-	//D2D::LoadBombermanScene(bombermanScene);
-
 	auto& startScreenScene = D2D::SceneManager::GetInstance().CreateScene("StartScreen");
 	D2D::LoadStartScreenScene(startScreenScene);
+
+	auto& bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
+	D2D::LoadBombermanScene(bombermanScene);
+
 }
 
 int main(int, char* [])

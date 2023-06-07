@@ -4,6 +4,8 @@
 #include "KeyBoard.h"
 #include "GamePad.h"
 #include <algorithm>
+#include "SceneManager.h"
+#include "Scene.h"
 
 #include <iostream>
 
@@ -85,8 +87,13 @@ namespace D2D
 
 	void InputManager::HandleCommands()
 	{
+		const auto currentScenName = D2D::SceneManager::GetInstance().GetActiveScene().GetName();
+
 		for (auto& command : m_KeyboardCommands)
 		{
+			if (command->sceneName != currentScenName)
+				continue;
+
 			switch (command->state)
 			{
 			case keyState::Down:
@@ -108,6 +115,9 @@ namespace D2D
 
 		for (auto& command : m_GamepadCommands)
 		{
+			if (command->sceneName != currentScenName)
+				continue;
+
 			if (m_pGamePads[command->gamepadIndex] == nullptr)
 				continue;
 

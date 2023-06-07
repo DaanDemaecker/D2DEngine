@@ -15,6 +15,12 @@ namespace D2D
 		void DeleteScene(const std::string& name);
 		std::shared_ptr<Scene> GetScene(const std::string& name);
 
+		void NextScene();
+		void PreviousScene();
+		void SetActiveScene(const std::string name);
+
+		Scene& GetActiveScene() { return *m_ActiveScene; }
+
 		void StartFrame();
 
 		void Update();
@@ -33,6 +39,7 @@ namespace D2D
 		SceneManager() = default;
 		std::vector<std::shared_ptr<Scene>> m_scenes;
 
+		std::shared_ptr<Scene> m_ActiveScene{};
 		
 	};
 }
