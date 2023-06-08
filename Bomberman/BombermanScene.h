@@ -36,14 +36,21 @@
 #include "TimerComponent.h"
 #include "GameMode.h"
 
+#include "GameUI.h"
+
 #include <functional>
+
+extern SDL_Window* g_window;
 
 namespace D2D
 {
-	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize);
+	GameObject* SetupPlayer(GameObject* pWorld, GameObject* pHud, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize);
 
 	void LoadBombermanScene(Scene& scene)
 	{
+		int windowWidth{}, windowHeight{};
+		SDL_GetWindowSize(g_window, &windowWidth, &windowHeight);
+
 		constexpr float hudSize{ 50.f };
 
 		auto& input = D2D::InputManager::GetInstance();
@@ -53,6 +60,7 @@ namespace D2D
 		const auto pBigFont{ pResourceManager.LoadFont("Fonts/Minecraft.ttf", 36) };
 		const auto pSmallFont{ pResourceManager.LoadFont("Fonts/Minecraft.ttf", 15) };
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
+		const auto pIntroScreenBackgroundTexture{ pResourceManager.LoadTexture("sprites/StartScreenBackGround.tga") };
 
 		constexpr int gridSize{ 34 };
 
@@ -63,7 +71,9 @@ namespace D2D
 		pBackground->GetTransform()->SetWorldPosition(0, hudSize);
 		pBackground->AddComponent<D2D::RenderComponent>()->SetTexture(pBackgroundTexture);
 
-		const auto pTimer{ scene.CreateCanvasObject("Timer") };
+		const auto pHud{ scene.CreateCanvasObject("HUD") };
+
+		const auto pTimer{ pHud->CreateNewObject("Timer") };
 		pTimer->GetTransform()->SetWorldPosition(5.f, 5.f);
 		pTimer->AddComponent<RenderComponent>();
 		auto pTimerText = pTimer->AddComponent<TextComponent>();
@@ -80,7 +90,7 @@ namespace D2D
 		pText->SetFont(pSmallFont);
 		pText->SetColor(255, 255, 0);
 
-		const auto pPointsDisplay{ scene.CreateCanvasObject("Points Display") };
+		const auto pPointsDisplay{ pHud->CreateNewObject("Points Display") };
 		pPointsDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 400.0f, 0.f });
 		pPointsDisplay->AddComponent<D2D::RenderComponent>();
 
@@ -106,13 +116,32 @@ namespace D2D
 
 		pGrid->SetupEnemies();
 
-		SetupPlayer(pWorld, scene, input, pPointsDisplayComponent.get(), pSmallFont, 0, gridSize);
+		SetupPlayer(pWorld, pHud, scene, input, pPointsDisplayComponent.get(), pSmallFont, 0, gridSize);
 
-		//ServiceLocator::GetSoundSystem().Play(0, 128, -1);
+		const auto pGameUI{ scene.CreateCanvasObject("UI") };
+		const auto pGameUIComponent{ pGameUI->AddComponent<GameUI>() };
+
+		const auto pIntroScreen{ pGameUI->CreateNewObject("IntroScreen") };
+		const auto pIntroScreenRenderComponent{ pIntroScreen->AddComponent<RenderComponent>() };
+		pIntroScreenRenderComponent->SetTexture(pIntroScreenBackgroundTexture);
+		pIntroScreenRenderComponent->SetDestRectBounds(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
+
+		
+		const auto pIntroScreenTextObject{ pIntroScreen->CreateNewObject("IntroScreenText") };
+		const auto pIntroScreenTextRenderComponent{ pIntroScreenTextObject->AddComponent<RenderComponent>() };
+		const auto pIntroScreenText{ pIntroScreenTextObject->AddComponent<TextComponent>() };
+		pIntroScreenTextObject->GetTransform()->SetWorldPosition(static_cast<float>(windowWidth) / 2.f - 50, static_cast<float>(windowHeight) / 2.f);
+		pIntroScreenText->SetFont(pBigFont);
+		pIntroScreenText->SetColor(255.f, 255.f, 255.f, 255.f);
+		pIntroScreenText->SetText("STAGE   1");
+
+		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pEnemyManager);
+		
+		
 		scene.StartFrame();
 	}
 
-	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize)
+	GameObject* SetupPlayer(GameObject* pWorld, GameObject* pHud, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize)
 	{
 		float playerSpeed{ 4 *  gridSize };
 
@@ -147,7 +176,7 @@ namespace D2D
 		pPlayerCollider->SetVariables(playerHeight, playerRadius);
 
 
-		const auto pLivesDisplay{ scene.CreateCanvasObject("Lives Display") };
+		const auto pLivesDisplay{ pHud->CreateNewObject("Lives Display") };
 		pLivesDisplay->GetTransform()->SetWorldPosition(glm::vec2{ 500.f, 0.f });
 		pLivesDisplay->AddComponent<D2D::RenderComponent>();
 

@@ -15,8 +15,9 @@ namespace D2D
 		State& operator=(State& other) = delete;
 		State& operator=(State&& other) = delete;
 
-		virtual std::unique_ptr<State> Update() = 0;
+		virtual void Update() = 0;
 
-		virtual void Render() {};
+		virtual void OnStateEnter() = 0;
+		virtual void OnStateLeave() = 0;
 	};
 }

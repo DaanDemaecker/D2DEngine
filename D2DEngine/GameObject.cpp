@@ -127,7 +127,10 @@ void D2D::GameObject::Render() const
 
 	for (auto& pChild : m_pChildren)
 	{
-		pChild->Render();
+		if (pChild->IsActive())
+		{
+			pChild->Render();
+		}
 	}
 }
 
