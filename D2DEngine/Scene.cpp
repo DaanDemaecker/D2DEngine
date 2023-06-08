@@ -62,6 +62,12 @@ void Scene::RemoveAll()
 	
 }
 
+void D2D::Scene::OnSceneLoad()
+{
+	m_pSceneRoot->OnSceneLoad();
+	m_pCanvas->OnSceneLoad();
+}
+
 void D2D::Scene::StartFrame()
 {
 	m_pSceneRoot->StartFrame();

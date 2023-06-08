@@ -11,7 +11,7 @@ namespace D2D
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(const std::string& name);
+		std::shared_ptr<Scene> CreateScene(const std::string& name);
 		void DeleteScene(const std::string& name);
 		std::shared_ptr<Scene> GetScene(const std::string& name);
 
@@ -19,7 +19,9 @@ namespace D2D
 		void PreviousScene();
 		void SetActiveScene(const std::string name);
 
-		Scene& GetActiveScene() { return *m_ActiveScene; }
+		std::shared_ptr<Scene> GetActiveScene() { return m_ActiveScene; }
+
+		void SetActiveScene(std::shared_ptr<Scene> scene);
 
 		void StartFrame();
 
@@ -39,7 +41,6 @@ namespace D2D
 		SceneManager() = default;
 		std::vector<std::shared_ptr<Scene>> m_scenes;
 
-		std::shared_ptr<Scene> m_ActiveScene{};
-		
+		std::shared_ptr<Scene> m_ActiveScene{}, m_NextActiveScene;
 	};
 }

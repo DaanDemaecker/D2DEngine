@@ -87,7 +87,15 @@ namespace D2D
 
 	void InputManager::HandleCommands()
 	{
-		const auto currentScenName = D2D::SceneManager::GetInstance().GetActiveScene().GetName();
+		auto currentScene = D2D::SceneManager::GetInstance().GetActiveScene();
+
+		std::string currentScenName{};
+
+		if (currentScene != nullptr)
+		{
+			currentScenName = currentScene->GetName();
+		}
+
 
 		for (auto& command : m_KeyboardCommands)
 		{

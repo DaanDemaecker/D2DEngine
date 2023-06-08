@@ -2,7 +2,13 @@
 #include "MainMenuComponent.h"
 #include "SceneManager.h"
 #include "InputManager.h"
+#include "ServiceLocator.h"
 #include <iostream>
+
+void D2D::MainMenuComponent::OnSceneLoad()
+{
+	ServiceLocator::GetSoundSystem().Play(5, 128, -1);
+}
 
 void D2D::MainMenuComponent::SinglePlayerButton()
 {

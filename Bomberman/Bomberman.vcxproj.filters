@@ -114,6 +114,9 @@
     <ClCompile Include="MainMenuComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -204,6 +207,9 @@
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

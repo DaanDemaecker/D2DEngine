@@ -32,10 +32,9 @@
 #include "CameraComponent.h"
 #include "RemoteControlCommand.h"
 
-#include "ServiceLocator.h"
-
 #include "EnemyManager.h"
 #include "TimerComponent.h"
+#include "GameMode.h"
 
 #include <functional>
 
@@ -45,8 +44,6 @@ namespace D2D
 
 	void LoadBombermanScene(Scene& scene)
 	{
-		ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
-
 		constexpr float hudSize{ 50.f };
 
 		auto& input = D2D::InputManager::GetInstance();
@@ -58,6 +55,9 @@ namespace D2D
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 
 		constexpr int gridSize{ 34 };
+
+		const auto pSceneRoot{ scene.GetSceneRoot() };
+		pSceneRoot->AddComponent<D2D::GameMode>();
 
 		const auto pBackground{ scene.CreateGameObject("Background") };
 		pBackground->GetTransform()->SetWorldPosition(0, hudSize);
@@ -108,7 +108,8 @@ namespace D2D
 
 		SetupPlayer(pWorld, scene, input, pPointsDisplayComponent.get(), pSmallFont, 0, gridSize);
 
-		ServiceLocator::GetSoundSystem().Play(0, 128, -1);
+		//ServiceLocator::GetSoundSystem().Play(0, 128, -1);
+		scene.StartFrame();
 	}
 
 	GameObject* SetupPlayer(GameObject* pWorld, Scene& scene, InputManager& input, PointsDisplay* pPointsDisplay, std::shared_ptr<Font> font, int idx, float gridSize)

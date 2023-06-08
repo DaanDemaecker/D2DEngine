@@ -17,6 +17,8 @@ namespace D2D
 		Component& operator=(const Component& other) = delete;
 		Component& operator=(Component&& other) = delete;
 
+		virtual void OnSceneLoad() {};
+
 		virtual void Update() {};
 
 		virtual void FixedUpdate() {};

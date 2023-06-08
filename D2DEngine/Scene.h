@@ -5,13 +5,15 @@ namespace D2D
 {
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
+		friend std::shared_ptr<Scene> SceneManager::CreateScene(const std::string& name);
 	public:
 		GameObject* CreateGameObject(const std::string& name = "UnNamed");
 		GameObject* CreateCanvasObject(const std::string& name = "UnNamed");
 		
 		void Remove(GameObject* object);
 		void RemoveAll();
+
+		void OnSceneLoad();
 
 		void StartFrame();
 
@@ -36,6 +38,9 @@ namespace D2D
 		Scene& operator=(Scene&& other) = delete;
 
 		const std::string& GetName() const { return m_name; }
+
+		GameObject* GetSceneRoot(){ return m_pSceneRoot.get(); }
+		GameObject* GetCanvas() { return m_pCanvas.get(); }
 	private: 
 		explicit Scene(const std::string& name);
 

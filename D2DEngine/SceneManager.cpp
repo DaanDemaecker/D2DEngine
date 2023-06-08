@@ -94,17 +94,12 @@ void D2D::SceneManager::PostUpdate()
 	}*/
 }
 
-D2D::Scene& D2D::SceneManager::CreateScene(const std::string& name)
+std::shared_ptr<D2D::Scene> D2D::SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
 	m_scenes.push_back(scene);
 
-	if (m_ActiveScene == nullptr)
-	{
-		m_ActiveScene = scene;
-	}
-
-	return *scene;
+	return scene;
 }
 
 void D2D::SceneManager::DeleteScene(const std::string& name)
@@ -144,8 +139,7 @@ void D2D::SceneManager::NextScene()
 	if (currentSceneIndex <= 0)
 	{
 		int nextActiveScene = (currentSceneIndex+1) % m_scenes.size();
-
-		m_ActiveScene = m_scenes[nextActiveScene];
+		SetActiveScene(m_scenes[nextActiveScene]);
 	}
 }
 
@@ -168,8 +162,7 @@ void D2D::SceneManager::PreviousScene()
 		if (nextActiveScene < 0)
 			nextActiveScene = static_cast<int>(m_scenes.size() - 1);
 
-
-		m_ActiveScene = m_scenes[nextActiveScene];
+		SetActiveScene(m_scenes[nextActiveScene]);
 	}
 }
 
@@ -179,16 +172,29 @@ void D2D::SceneManager::SetActiveScene(const std::string name)
 	{
 		if (scene->GetName() == name)
 		{
-			m_ActiveScene = scene;
+			SetActiveScene(scene);
 			return;
 		}
 	}
 }
 
+void D2D::SceneManager::SetActiveScene(std::shared_ptr<Scene> scene)
+{
+	m_NextActiveScene = scene;
+}
+
 void D2D::SceneManager::StartFrame()
 {
-	for (auto& scene : m_scenes)
+	if (m_NextActiveScene != nullptr)
 	{
-		scene->StartFrame();
+		m_ActiveScene = m_NextActiveScene;
+		m_ActiveScene->OnSceneLoad();
+		m_NextActiveScene = nullptr;
+	}
+
+
+	if (m_ActiveScene != nullptr)
+	{
+		m_ActiveScene->StartFrame();
 	}
 }

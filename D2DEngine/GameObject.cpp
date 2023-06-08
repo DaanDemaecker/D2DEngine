@@ -13,6 +13,19 @@ void D2D::GameObject::Init()
 	m_pTransform = AddComponent<Transform>();
 }
 
+void D2D::GameObject::OnSceneLoad()
+{
+	for (auto& pcomponent : m_pComponents)
+	{
+		pcomponent->OnSceneLoad();
+	}
+
+	for (auto& pChild : m_pChildren)
+	{
+		pChild->OnSceneLoad();
+	}
+}
+
 void D2D::GameObject::StartFrame()
 {
 	for (size_t i{}; i < m_pChildrenToAdd.size(); ++i)

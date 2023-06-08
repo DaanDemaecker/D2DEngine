@@ -126,5 +126,7 @@ namespace D2D
 		input.AddKeyboardCommand(SDL_SCANCODE_DOWN, D2D::keyState::Down, std::make_unique<D2D::MenuScrollCommand>(1, pButtons, pSelector), sceneName);
 
 		input.AddKeyboardCommand(SDL_SCANCODE_SPACE, D2D::keyState::Down, std::make_unique<D2D::ButtonActivateCommand>(pButtons), sceneName);
+		
+		scene.StartFrame();
 	}
 }

@@ -27,14 +27,16 @@ void load()
 #else
 	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::DebugSDLSoundSystem>());
 #endif
+	D2D::ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
+
+	auto startScreenScene = D2D::SceneManager::GetInstance().CreateScene("StartScreen");
+	D2D::LoadStartScreenScene(*startScreenScene);
+
+	auto bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
+	D2D::LoadBombermanScene(*bombermanScene);
 
 
-	auto& startScreenScene = D2D::SceneManager::GetInstance().CreateScene("StartScreen");
-	D2D::LoadStartScreenScene(startScreenScene);
-
-	auto& bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
-	D2D::LoadBombermanScene(bombermanScene);
-
+	D2D::SceneManager::GetInstance().SetActiveScene(startScreenScene);
 }
 
 int main(int, char* [])
