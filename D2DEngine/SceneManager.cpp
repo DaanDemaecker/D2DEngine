@@ -128,7 +128,7 @@ void D2D::SceneManager::NextScene()
 {
 	int currentSceneIndex{ -1 };
 
-	for (int i{}; i < m_scenes.size(); ++i)
+	for (int i{}; i < static_cast<int>(m_scenes.size()); ++i)
 	{
 		if (m_scenes[i] == m_ActiveScene)
 		{
@@ -147,7 +147,7 @@ void D2D::SceneManager::PreviousScene()
 {
 	int currentSceneIndex{ -1 };
 
-	for (int i{}; i < m_scenes.size(); ++i)
+	for (int i{}; i < static_cast<int>(m_scenes.size()); ++i)
 	{
 		if (m_scenes[i] == m_ActiveScene)
 		{

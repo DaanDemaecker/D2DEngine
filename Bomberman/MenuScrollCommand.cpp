@@ -18,7 +18,7 @@ void D2D::MenuScrollCommand::Execute()
 	int currentSelected{};
 	int nextSelected{};
 
-	for (int i{}; i < m_pButtons.size(); i++)
+	for (int i{}; i < static_cast<int>(m_pButtons.size()); i++)
 	{
 		if (m_pButtons[i]->GetSelected())
 		{
