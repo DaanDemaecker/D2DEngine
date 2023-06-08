@@ -15,6 +15,9 @@ namespace D2D
 		virtual void Play(unsigned short id, int volume, int loops) override;
 
 		virtual void ReadSoundSheet(const std::string& path) override;
+
+		virtual void StopMusic() override;
+
 	private:
 		std::unique_ptr<SDLSoundSystem> m_pSDLSoundSystem{};
 	};

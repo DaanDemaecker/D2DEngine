@@ -187,6 +187,10 @@ void D2D::SceneManager::StartFrame()
 {
 	if (m_NextActiveScene != nullptr)
 	{
+		if (m_ActiveScene != nullptr)
+		{
+			m_ActiveScene->OnSceneUnload();
+		}
 		m_ActiveScene = m_NextActiveScene;
 		m_ActiveScene->OnSceneLoad();
 		m_NextActiveScene = nullptr;

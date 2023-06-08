@@ -20,3 +20,10 @@ void D2D::DebugSDLSoundSystem::ReadSoundSheet(const std::string& path)
 
 	std::cout << "Reading in soundsheet: " << path << std::endl;
 }
+
+void D2D::DebugSDLSoundSystem::StopMusic()
+{
+	m_pSDLSoundSystem->StopMusic();
+
+	std::cout << "Stopped music \n";
+}

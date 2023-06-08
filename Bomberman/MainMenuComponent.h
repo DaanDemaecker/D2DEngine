@@ -10,6 +10,7 @@ namespace D2D
 		virtual ~MainMenuComponent() = default;
 
 		virtual void OnSceneLoad() override;
+		virtual void OnSceneUnload() override;
 
 		void SinglePlayerButton();
 		void CoopButton();

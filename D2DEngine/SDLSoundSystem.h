@@ -22,6 +22,8 @@ namespace D2D
 
 		void Run();
 
+		virtual void StopMusic();
+
 	private:
 		std::map<unsigned short, Mix_Chunk*> m_pSoundChunks{};
 		std::map<unsigned short, _Mix_Music*> m_pSoundMusic{};

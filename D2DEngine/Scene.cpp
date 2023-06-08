@@ -68,6 +68,12 @@ void D2D::Scene::OnSceneLoad()
 	m_pCanvas->OnSceneLoad();
 }
 
+void D2D::Scene::OnSceneUnload()
+{
+	m_pSceneRoot->OnSceneUnload();
+	m_pCanvas->OnSceneUnload();
+}
+
 void D2D::Scene::StartFrame()
 {
 	m_pSceneRoot->StartFrame();

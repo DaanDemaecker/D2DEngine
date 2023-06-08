@@ -4,5 +4,5 @@
 
 void D2D::GameMode::OnSceneLoad()
 {
-	ServiceLocator::GetSoundSystem().Play(0, 128, -1);
+	//ServiceLocator::GetSoundSystem().Play(0, 128, -1);
 }

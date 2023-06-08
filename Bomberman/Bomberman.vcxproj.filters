@@ -31,16 +31,25 @@
     <Filter Include="Components\Enemies">
       <UniqueIdentifier>{78eddc19-8d6a-410a-8a19-3f69774f4f6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{b9f082b0-d6fc-4ab4-8e04-6e519efe9fbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Bombs">
+      <UniqueIdentifier>{d6f35cc7-486f-43d4-b4a0-43cc50dbbbc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\GameManagement">
+      <UniqueIdentifier>{b032d721-007e-4024-9c66-dfd1246c7fea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Player">
+      <UniqueIdentifier>{ba93d1ed-5e0a-401e-87e4-1de1f4553a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\UI">
+      <UniqueIdentifier>{19c3567a-0d9f-4dcd-bf95-ecc0fb778335}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplayComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="DebugCommand.cpp">
       <Filter>Commands</Filter>
@@ -48,17 +57,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="PointsDisplay.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="BombManagerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="PlaceBombCommand.cpp">
       <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GridComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
@@ -66,20 +66,11 @@
     <ClCompile Include="PlayerMovementCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="BombComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="SingleClipAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
     <ClCompile Include="SelfDestroyingAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ExplosionComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="BaseEnemyComponent.cpp">
       <Filter>Components\Enemies</Filter>
@@ -90,46 +81,70 @@
     <ClCompile Include="EnemyAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
-    <ClCompile Include="Powerup.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="RemoteControlCommand.cpp">
       <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TimerComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="MenuScrollCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="ButtonActivateCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenuComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="BombComponent.cpp">
+      <Filter>Components\Bombs</Filter>
+    </ClCompile>
+    <ClCompile Include="BombManagerComponent.cpp">
+      <Filter>Components\Bombs</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionComponent.cpp">
+      <Filter>Components\Bombs</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Components\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Components\GameManagement</Filter>
     </ClCompile>
     <ClCompile Include="GameMode.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="GridComponent.cpp">
+      <Filter>Components\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Powerup.cpp">
+      <Filter>Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplayComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsDisplay.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUIStates.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerEvents.h">
       <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplayComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="DebugCommand.h">
       <Filter>Commands</Filter>
@@ -137,26 +152,14 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointsDisplay.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="BombManagerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="PlaceBombCommand.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GridComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMovementCommand.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="BombComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="WorldEvents.h">
       <Filter>Events</Filter>
@@ -167,12 +170,6 @@
     <ClInclude Include="SelfDestroyingAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
-    <ClInclude Include="CameraComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ExplosionComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="BaseEnemyComponent.h">
       <Filter>Components\Enemies</Filter>
     </ClInclude>
@@ -182,17 +179,8 @@
     <ClInclude Include="EnemyAnimator.h">
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
-    <ClInclude Include="Powerup.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="RemoteControlCommand.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TimerComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="StartScreenScene.h">
       <Filter>Scenes</Filter>
@@ -200,17 +188,59 @@
     <ClInclude Include="MenuScrollCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="ButtonActivateCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="BombComponent.h">
+      <Filter>Components\Bombs</Filter>
+    </ClInclude>
+    <ClInclude Include="BombManagerComponent.h">
+      <Filter>Components\Bombs</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionComponent.h">
+      <Filter>Components\Bombs</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Components\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Components\GameManagement</Filter>
     </ClInclude>
     <ClInclude Include="GameMode.h">
-      <Filter>Components</Filter>
+      <Filter>Components\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="GridComponent.h">
+      <Filter>Components\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Powerup.h">
+      <Filter>Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplayComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsDisplay.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUIStates.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

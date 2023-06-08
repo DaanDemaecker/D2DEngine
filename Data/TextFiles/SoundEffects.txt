@@ -5,3 +5,4 @@ filePath = "Sound/"
 <"3" = "SoundEffects/PowerUp.wav">
 <"4" = "SoundEffects/Walk.wav">
 <"5" = "Music/MainMenu.mp3">
+<"6" = "SoundEffects/LevelStart.wav">

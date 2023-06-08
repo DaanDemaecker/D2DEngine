@@ -15,6 +15,8 @@ namespace D2D
 
 		void OnSceneLoad();
 
+		void OnSceneUnload();
+
 		void StartFrame();
 
 		void Update();

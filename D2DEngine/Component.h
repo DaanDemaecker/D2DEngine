@@ -19,6 +19,8 @@ namespace D2D
 
 		virtual void OnSceneLoad() {};
 
+		virtual void OnSceneUnload() {};
+
 		virtual void Update() {};
 
 		virtual void FixedUpdate() {};

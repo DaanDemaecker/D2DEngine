@@ -140,6 +140,11 @@ void D2D::SDLSoundSystem::Run()
 	}
 }
 
+void D2D::SDLSoundSystem::StopMusic()
+{
+	Mix_HaltMusic();
+}
+
 void D2D::SDLSoundSystem::PlaySound(const std::tuple<unsigned short, int, int>& queueEntry)
 {
 	if (m_pSoundChunks.contains(std::get<0>(queueEntry)))

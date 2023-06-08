@@ -26,6 +26,19 @@ void D2D::GameObject::OnSceneLoad()
 	}
 }
 
+void D2D::GameObject::OnSceneUnload()
+{
+	for (auto& pcomponent : m_pComponents)
+	{
+		pcomponent->OnSceneUnload();
+	}
+
+	for (auto& pChild : m_pChildren)
+	{
+		pChild->OnSceneUnload();
+	}
+}
+
 void D2D::GameObject::StartFrame()
 {
 	for (size_t i{}; i < m_pChildrenToAdd.size(); ++i)
