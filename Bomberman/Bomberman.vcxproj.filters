@@ -31,9 +31,6 @@
     <Filter Include="Components\Enemies">
       <UniqueIdentifier>{78eddc19-8d6a-410a-8a19-3f69774f4f6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="States">
-      <UniqueIdentifier>{b9f082b0-d6fc-4ab4-8e04-6e519efe9fbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Bombs">
       <UniqueIdentifier>{d6f35cc7-486f-43d4-b4a0-43cc50dbbbc0}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="Misc">
       <UniqueIdentifier>{5f6e2833-d62e-4aa7-9c96-69c00e152567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{b9f082b0-d6fc-4ab4-8e04-6e519efe9fbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +140,15 @@
     </ClCompile>
     <ClCompile Include="GameData.cpp">
       <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreStates.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreScreenComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionCommand.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="GameData.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreStates.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="HighscoreScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreScreenComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

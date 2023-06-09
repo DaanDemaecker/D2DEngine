@@ -11,6 +11,7 @@
 #include "DemoScene.h"
 #include "BombermanScene.h"
 #include "StartScreenScene.h"
+#include "HighscoreScene.h"
 #include <ctime>
 
 #include "ServiceLocator.h"
@@ -35,8 +36,12 @@ void load()
 	auto bombermanScene = D2D::SceneManager::GetInstance().CreateScene("Bomberman");
 	D2D::LoadBombermanScene(*bombermanScene);
 
+	auto highScoreScene = D2D::SceneManager::GetInstance().CreateScene("HighscoreScreen");
+	D2D::LoadHighscoreScene(*highScoreScene);
 
-	D2D::SceneManager::GetInstance().SetActiveScene(startScreenScene);
+	D2D::SceneManager::GetInstance().SetActiveScene(highScoreScene);
+
+	std::cout << "\n Pres Tab to toggle the info window \n \n";
 }
 
 int main(int, char* [])

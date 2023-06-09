@@ -5,6 +5,7 @@
 #include "PlayerComponent.h"
 #include "WorldEvents.h"
 #include "BaseEnemyComponent.h"
+#include "GameData.h"
 
 D2D::PointsDisplay::PointsDisplay()
 	:Component()
@@ -13,11 +14,6 @@ D2D::PointsDisplay::PointsDisplay()
 
 void D2D::PointsDisplay::Notify(const Event& event)
 {
-	/*if (auto playerDieEvent{ dynamic_cast<const PlayerDieEvent*>(&event) })
-	{
-		m_Score = 0;
-	}
-	else */
 	if (auto pickupItemEvent{ dynamic_cast<const PowerupCollectedEvent*>(&event) })
 	{
 		m_Score += 1000;
@@ -55,6 +51,12 @@ void D2D::PointsDisplay::OnSceneLoad()
 {
 	m_Score = 0;
 	UpdatePointsDisplay();
+	GameData::GetInstance().SetScore(0);
+}
+
+void D2D::PointsDisplay::OnSceneUnload()
+{
+	GameData::GetInstance().SetScore(m_Score);
 }
 
 void D2D::PointsDisplay::UpdatePointsDisplay()

@@ -63,7 +63,7 @@ namespace D2D
 
 
 		const auto pGameUI{ scene.CreateCanvasObject("UI") };
-		const auto pGameUIComponent{ pGameUI->AddComponent<GameUI>() };
+		const auto pGameUIComponent{ pGameUI->AddComponent<GameUI>()};
 
 		const auto pHud{ pGameUI->CreateNewObject("HUD") };
 

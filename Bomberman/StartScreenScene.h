@@ -34,10 +34,6 @@ namespace D2D
 {
 	void LoadStartScreenScene(Scene& scene)
 	{
-		ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
-
-		//auto& input = D2D::InputManager::GetInstance();
-
 		const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
 		const auto pFont{ pResourceManager.LoadFont("Fonts/Minecraft.ttf", 25) };

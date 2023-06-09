@@ -136,7 +136,7 @@ void D2D::SceneManager::NextScene()
 		}
 	}
 
-	if (currentSceneIndex <= 0)
+	if (currentSceneIndex >= 0)
 	{
 		int nextActiveScene = (currentSceneIndex+1) % m_scenes.size();
 		SetActiveScene(m_scenes[nextActiveScene]);

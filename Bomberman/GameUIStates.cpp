@@ -146,7 +146,7 @@ void D2D::GameOverState::Update()
 	m_Timer -= TimeManager::GetInstance().GetDeltaTime();
 	if (m_Timer <= 0)
 	{
-		SceneManager::GetInstance().PreviousScene();
+		SceneManager::GetInstance().NextScene();
 	}
 }
 
