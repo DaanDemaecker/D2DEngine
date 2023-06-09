@@ -45,6 +45,7 @@ namespace D2D
 		bool ShouldDestroy() const { return m_ShouldDestroy; }
 
 		GameObject* CreateNewObject(const std::string& name = "UnNamed");
+		void RemoveAllChildren();
 
 		void OnTriggerEnter(const Collider* pCollider);
 		void OnTriggerExit(const Collider* pCollider);

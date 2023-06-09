@@ -21,4 +21,24 @@ void D2D::EnemyManager::Notify(const Event& event)
 			m_pEnemies.erase(std::remove(m_pEnemies.begin(), m_pEnemies.end(), enemyDieEvent->pEnemy), m_pEnemies.end());
 		}
 	}
+	else if (auto cleanupGameEvent{ dynamic_cast<const CleanupGameEvent*>(&event) })
+	{
+		m_pEnemies.clear();
+	}
+}
+
+void D2D::EnemyManager::AddSubject(Subject* subject)
+{
+	if (std::find(m_pSubjects.begin(), m_pSubjects.end(), subject) == m_pSubjects.end())
+	{
+		m_pSubjects.push_back(subject);
+	}
+}
+
+void D2D::EnemyManager::RemoveSubjects()
+{
+	for (auto& subject : m_pSubjects)
+	{
+		subject->RemoveObserver(this);
+	}
 }

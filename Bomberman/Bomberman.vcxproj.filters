@@ -46,6 +46,9 @@
     <Filter Include="Components\UI">
       <UniqueIdentifier>{19c3567a-0d9f-4dcd-bf95-ecc0fb778335}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayerSetup">
+      <UniqueIdentifier>{f63003fa-aad3-4073-b0b9-8d5dccbb0d42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="GameUIStates.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSetup.h">
+      <Filter>PlayerSetup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

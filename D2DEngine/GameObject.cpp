@@ -186,6 +186,12 @@ D2D::GameObject* D2D::GameObject::CreateNewObject(const std::string& name)
 	return m_pChildrenToAdd.emplace_back(std::move(pNewObject)).get();
 }
 
+void D2D::GameObject::RemoveAllChildren()
+{
+	m_pChildren.clear();
+	m_pChildrenToAdd.clear();
+}
+
 void D2D::GameObject::OnTriggerEnter(const Collider* pCollider)
 {
 	for (auto& pComponent : m_pComponents)

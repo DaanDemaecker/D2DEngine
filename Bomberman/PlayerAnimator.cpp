@@ -2,13 +2,13 @@
 #include "PlayerAnimator.h"
 #include "AnimationClip.h"
 #include "RenderComponent.h"
-#include "Event.h"
+#include "PlayerEvents.h"
 
 #include "ResourceManager.h"
 
 #include <iostream>
 
-void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent)
+void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent, Observer* pObserver)
 {
 	constexpr float deathClipFrameDuration{ 1 / 5.f };
 
@@ -35,6 +35,8 @@ void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent)
 	std::unique_ptr<AnimationClip> deathClip{ std::make_unique<AnimationClip>(pRenderComponent) };
 	deathClip->SetClip(deathTexture, 7, 1, 7);
 	deathClip->SetFrameDuration(deathClipFrameDuration);
+	deathClip->AddAnimationEvent(6, std::move(std::make_unique<PlayerDeathAnimationFinished>()));
+	deathClip->AddObserver(pObserver);
 
 	Transition toDownTransition{ 0,std::bind(&D2D::PlayerAnimator::ShouldGoDown, this) };
 	upClip->AddTransition(toDownTransition);

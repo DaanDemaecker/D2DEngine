@@ -235,6 +235,7 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerEvents.h" />
     <ClInclude Include="PlayerMovementCommand.h" />
+    <ClInclude Include="PlayerSetup.h" />
     <ClInclude Include="PointsDisplay.h" />
     <ClInclude Include="Powerup.h" />
     <ClInclude Include="RemoteControlCommand.h" />

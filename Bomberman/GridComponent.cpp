@@ -16,6 +16,9 @@
 #include "CapsuleCollider.h"
 #include "EnemyAnimator.h"
 #include "Powerup.h"
+#include "CameraComponent.h"
+#include "EnemyManager.h"
+#include "PlayerSetup.h"
 #include <iostream>
 
 D2D::GridComponent::GridComponent()
@@ -241,6 +244,40 @@ float D2D::GridComponent::GetLevelWidth()
 {
 	return m_SquareSize * m_Columns;
 }
+
+void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, const std::string& sceneName)
+{
+	ReadLevelFromFile(levelFile, cubeSize);
+
+	GetComponent<CameraComponent>()->SetLevelBounds(0, GetLevelWidth());
+
+	const auto pEnemyManager{ GetOwner()->CreateNewObject("EnemyManager") };
+	m_pEnemyManager = pEnemyManager->AddComponent<EnemyManager>().get();
+
+	AddObserver(m_pEnemyManager);
+
+	m_pEnemyManager->AddObserver(pPointsDisplay);
+	m_pEnemyManager->AddSubject(this);
+
+	
+
+	SetupEnemies();
+
+	SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, cubeSize);
+}
+
+void D2D::GridComponent::EndGame()
+{
+	m_pBrickWalls.clear();
+	m_pBombs.clear();
+	m_Grid.clear();
+	m_PlayerSpawns.clear();
+
+	m_pEnemyManager->RemoveSubjects();
+
+	GetOwner()->RemoveAllChildren();
+}
+
 
 void D2D::GridComponent::ExplodeBomb(ExplosionType type, int number, int strength, int currentDistance)
 {

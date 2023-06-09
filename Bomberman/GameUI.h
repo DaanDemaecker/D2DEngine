@@ -4,13 +4,15 @@
 
 namespace D2D
 {
+	class Observer;
+
 	class GameUI final : public Component
 	{
 	public:
 		GameUI() = default;
 		virtual ~GameUI() = default;
 
-		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject, GameObject* pEnemyManager);
+		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject, Observer* pPointsDisplay, Observer* pLivesDisplay);
 
 		virtual void OnSceneLoad() override;
 
@@ -20,6 +22,7 @@ namespace D2D
 
 		GameUIState* GetIntroState(){ return m_pIntroState.get(); }
 		GameUIState* GetPlayingState() { return m_pPlayingState.get(); }
+
 
 	private:
 		GameUIState* m_pState{};

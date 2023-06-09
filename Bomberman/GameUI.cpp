@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "GameUI.h"
+#include "PlayerEvents.h"
 
-void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject, GameObject* pEnemyManager)
+void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject,
+	Observer* pPointsDisplay, Observer* pLivesDisplay)
 {
 	if (pHud != nullptr)
 	{
@@ -13,16 +15,11 @@ void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, G
 		pPlayfieldObject->SetActive(false);
 	}
 
-	if (pEnemyManager != nullptr)
-	{
-		pEnemyManager->SetActive(false);
-	}
-
 	m_pIntroState = std::make_unique<IntroState>();
-	m_pIntroState->SetVariables(pIntroScreenObject);
-
 	m_pPlayingState = std::make_unique<PlayingState>();
-	m_pPlayingState->SetVariables(pHud, pPlayfieldObject, pEnemyManager);
+
+	m_pIntroState->SetVariables(pIntroScreenObject, pPlayfieldObject, m_pPlayingState.get(), pPointsDisplay, pLivesDisplay);
+	m_pPlayingState->SetVariables(pHud, pPlayfieldObject);
 
 	m_pState = m_pIntroState.get();
 }

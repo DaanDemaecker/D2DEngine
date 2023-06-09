@@ -10,6 +10,7 @@ namespace D2D
 	class PlayerComponent;
 	class Texture2D;
 	class BombComponent;
+	class EnemyManager;
 	enum class PowerupType;
 
 	enum GridType
@@ -63,6 +64,11 @@ namespace D2D
 
 		float GetLevelWidth();
 
+		void SetupGame(const std::string& levelFile, float cubeSize, 
+			Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay,
+			const std::string& sceneName);
+		void EndGame();
+
 	private:
 		int m_Rows{};
 		int m_Columns{};
@@ -86,6 +92,8 @@ namespace D2D
 
 		std::vector<GridType> m_Grid{};
 		std::vector<int> m_PlayerSpawns{};
+
+		EnemyManager* m_pEnemyManager{ nullptr };
 
 		glm::vec2 WorldToGridPos(const glm::vec2& pos);
 		int GetGridNumber(const glm::vec2& pos);

@@ -15,7 +15,12 @@ namespace D2D
 		
 		virtual void Notify(const Event& event);
 
+		void AddSubject(Subject* subject);
+		void RemoveSubjects();
+
 	private:
 		std::vector<BaseEnemyComponent*> m_pEnemies{};
+
+		std::vector<Subject*> m_pSubjects;
 	};
 }

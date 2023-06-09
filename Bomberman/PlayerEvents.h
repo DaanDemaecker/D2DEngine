@@ -34,4 +34,10 @@ namespace D2D
 
 		PowerupType type{};
 	};
+
+	struct PlayerDeathAnimationFinished final : public Event
+	{
+	public:
+		PlayerDeathAnimationFinished() = default;
+	};
 }

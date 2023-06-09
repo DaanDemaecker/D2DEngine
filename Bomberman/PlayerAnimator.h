@@ -5,6 +5,7 @@
 namespace D2D
 {
 	class RenderComponent;
+	class Observer;
 
 	class PlayerAnimator final : public AnimationController
 	{
@@ -12,7 +13,7 @@ namespace D2D
 		PlayerAnimator() = default;
 		virtual ~PlayerAnimator() override = default;
 
-		void Init(RenderComponent* pRenderComponent);
+		void Init(RenderComponent* pRenderComponent, Observer* pObserver);
 
 		void SetDirection(const glm::vec2& direction) { m_Direction = direction; }
 
