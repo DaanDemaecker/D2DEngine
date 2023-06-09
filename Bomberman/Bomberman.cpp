@@ -39,7 +39,7 @@ void load()
 	auto highScoreScene = D2D::SceneManager::GetInstance().CreateScene("HighscoreScreen");
 	D2D::LoadHighscoreScene(*highScoreScene);
 
-	D2D::SceneManager::GetInstance().SetActiveScene(highScoreScene);
+	D2D::SceneManager::GetInstance().SetActiveScene(startScreenScene);
 
 	std::cout << "\n Pres Tab to toggle the info window \n \n";
 }

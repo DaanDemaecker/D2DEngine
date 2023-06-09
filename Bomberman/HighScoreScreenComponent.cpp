@@ -15,30 +15,36 @@
 
 extern SDL_Window* g_window;
 
-void D2D::HighScoreScreenComponent::Initialize(GameObject* pInputWindow, GameObject* /*pHighscoresWindow*/)
+D2D::HighScoreScreenComponent::~HighScoreScreenComponent()
+{
+
+}
+
+void D2D::HighScoreScreenComponent::Initialize(GameObject* pInputWindow, GameObject* pHighscoresWindow)
 {
 	m_pInputState = std::make_unique<InputState>();
 	m_pHighscoresState = std::make_unique<HighscoresState>();
 
 
 	SetupInputState(pInputWindow);
+	m_pHighscoresState->SetVariables(pHighscoresWindow);
 
 	SetState(m_pInputState.get());
 }
 
 void D2D::HighScoreScreenComponent::OnSceneLoad()
 {
-	m_Score = GameData::GetInstance().GetScore();
+	SetState(m_pInputState.get());
 
 	if (m_pTextComponent != nullptr)
 	{
-		m_pTextComponent->SetText(std::to_string(m_Score));
+		m_pTextComponent->SetText(std::to_string(GameData::GetInstance().GetScore()));
 	}
 }
 
 void D2D::HighScoreScreenComponent::OnSceneUnload()
 {
-	InputManager::GetInstance().RemoveCommands(SceneManager::GetInstance().GetActiveScene()->GetName());
+	//InputManager::GetInstance().RemoveCommands(SceneManager::GetInstance().GetActiveScene()->GetName());
 }
 
 void D2D::HighScoreScreenComponent::Update()

@@ -47,7 +47,7 @@ void D2D::IntroState::OnStateEnter()
 	if (m_pGrid != nullptr)
 	{
 		constexpr float gridSize{ 34.f };
-		m_LoadLevelThread = std::jthread(&GridComponent::SetupGame, m_pGrid, "../Data/TextFiles/Level.txt", gridSize,
+		m_LoadLevelThread = std::jthread(&GridComponent::SetupGame, m_pGrid, "../Data/TextFiles/Level1.txt", gridSize,
 			m_pPlayingStateObserver, m_pLivesDisplay, m_pPointsDisplay,
 			D2D::SceneManager::GetInstance().GetActiveScene()->GetName());
 	}

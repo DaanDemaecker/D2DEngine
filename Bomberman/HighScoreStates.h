@@ -3,6 +3,7 @@
 #include "Observer.h"
 #include <thread>
 #include "Subject.h"
+#include <string>
 
 namespace D2D
 {
@@ -56,14 +57,27 @@ namespace D2D
 		HighscoresState() = default;
 		~HighscoresState() = default;
 
-		void SetVariables() {};
+		void SetVariables(GameObject* pScreen);
 
 		virtual void Update() override {};
 
 		virtual void ChangeState(HighScoreScreenComponent* /*highScoreUI*/) override {};
 
-		virtual void OnStateEnter() override {};
-		virtual void OnStateLeave() override {};
+		virtual void OnStateEnter() override;
+		virtual void OnStateLeave() override;
+
+		void Continue();
+	private:
+		bool m_Active{ false };
+
+		GameObject* m_pScreen{};
+
+		void SetupScores();
+		
+		void CreateScoreBoard(std::vector<std::pair<int, std::string>>& entries, std::pair<int, std::string> entry);
+
+		void ReadFromFile(const std::string& fileName, std::vector<std::pair<int, std::string>>& entries);
+		void WriteToFile(const std::string& fileName, std::vector<std::pair<int, std::string>>& entries);
 	};
 }
 

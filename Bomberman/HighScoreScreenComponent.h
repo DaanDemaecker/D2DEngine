@@ -12,7 +12,7 @@ namespace D2D
 	{
 	public:
 		HighScoreScreenComponent() = default;
-		virtual ~HighScoreScreenComponent() override = default;
+		virtual ~HighScoreScreenComponent() override;
 
 		void Initialize(GameObject* pInputWindow, GameObject* pHighscoresWindow);
 
@@ -26,9 +26,6 @@ namespace D2D
 		HighscoresState* GetHighscoresState() { return m_pHighscoresState.get(); }
 
 	private:
-		int m_Score{};
-		std::vector<std::pair<std::string, int>> m_ScoreEntries{};
-
 		TextComponent* m_pTextComponent{};
 
 		HighScoreStates* m_pState{};

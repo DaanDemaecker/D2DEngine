@@ -2,6 +2,8 @@
 #include "Command.h"
 #include <functional>
 
+#include <iostream>
+
 namespace D2D
 {
 	class PlayerComponent;

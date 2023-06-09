@@ -38,7 +38,10 @@ Scene::Scene(const std::string& name) : m_name(name)
 	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent), m_name);
 }
 
-Scene::~Scene() = default;
+Scene::~Scene()
+{
+
+}
 
 GameObject* D2D::Scene::CreateGameObject(const std::string& name)
 {

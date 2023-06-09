@@ -27,7 +27,7 @@ namespace D2D
 	private:
 		int m_LivesAmount{};
 
-		int m_Score{100};
+		int m_Score{};
 		std::string m_Name{};
 
 		std::vector<PowerupType> m_Powerups{};
