@@ -41,6 +41,8 @@ namespace D2D
 		glm::vec2 m_Movement{};
 		float m_Speed{ 20 };
 
+		bool m_IsDead{ false };
+
 		int m_PlayerIndex{};
 		PlayerDieEvent m_PlayerDieEvent{};
 		PickupItemEvent m_PickupItemEvent{};

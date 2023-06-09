@@ -5,6 +5,7 @@
 #include "PlayerAnimator.h"
 #include "ExplosionComponent.h"
 #include "Collider.h"
+#include "ServiceLocator.h"
 #include <iostream>
 
 void D2D::PlayerComponent::Update()
@@ -21,11 +22,11 @@ void D2D::PlayerComponent::Update()
 
 	if (m_pAnimator != nullptr)
 	{
-		m_pAnimator->SetShouldAnimate(m_Movement != glm::vec2{});
+		m_pAnimator->SetShouldAnimate(m_Movement != glm::vec2{} || m_IsDead);
 		m_pAnimator->SetDirection(m_Movement);
 	}
 
-	if (m_pTransform != nullptr && m_Movement != glm::vec2{})
+	if (m_pTransform != nullptr && m_Movement != glm::vec2{} && !m_IsDead)
 	{
 		m_Movement = glm::normalize(m_Movement) * m_Speed;
 		m_pTransform->MoveLocalPosition(m_Movement * TimeManager::GetInstance().GetDeltaTime());
@@ -50,6 +51,9 @@ void D2D::PlayerComponent::PlaceBomb()
 void D2D::PlayerComponent::KillPlayer()
 {
 	NotifyObservers(m_PlayerDieEvent);
+	ServiceLocator::GetSoundSystem().Play(7, 128, 0);
+	m_pAnimator->Kill();
+	m_IsDead = true;
 }
 
 void D2D::PlayerComponent::PickupItem()

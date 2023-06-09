@@ -6,3 +6,4 @@ filePath = "Sound/"
 <"4" = "SoundEffects/Walk.wav">
 <"5" = "Music/MainMenu.mp3">
 <"6" = "SoundEffects/LevelStart.wav">
+<"7" = "SoundEffects/PlayerDeath.wav">

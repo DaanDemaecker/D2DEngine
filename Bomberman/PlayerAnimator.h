@@ -16,13 +16,17 @@ namespace D2D
 
 		void SetDirection(const glm::vec2& direction) { m_Direction = direction; }
 
+		void Kill() { m_IsDead = true; }
+
 	private:
 		glm::vec2 m_Direction{};
 
+		bool m_IsDead{ false };
 
 		bool ShouldGoDown();
 		bool ShouldGoUp();
 		bool ShouldGoLeft();
 		bool ShouldGoRight();
+		bool IsDead();
 	};
 }

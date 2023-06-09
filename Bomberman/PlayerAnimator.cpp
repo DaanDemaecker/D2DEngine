@@ -10,7 +10,7 @@
 
 void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent)
 {
-	//constexpr float deathClipFrameDuration{ 1 / 5.f };
+	constexpr float deathClipFrameDuration{ 1 / 5.f };
 
 	auto downTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerDown.png");
 	std::unique_ptr<AnimationClip> downClip{ std::make_unique<AnimationClip>(pRenderComponent) };
@@ -30,6 +30,11 @@ void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent)
 	auto rightTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerRight.png");
 	std::unique_ptr<AnimationClip> rightClip{ std::make_unique<AnimationClip>(pRenderComponent) };
 	rightClip->SetClip(rightTexture, 3, 1, 3);
+
+	auto deathTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerDie.png");
+	std::unique_ptr<AnimationClip> deathClip{ std::make_unique<AnimationClip>(pRenderComponent) };
+	deathClip->SetClip(deathTexture, 7, 1, 7);
+	deathClip->SetFrameDuration(deathClipFrameDuration);
 
 	Transition toDownTransition{ 0,std::bind(&D2D::PlayerAnimator::ShouldGoDown, this) };
 	upClip->AddTransition(toDownTransition);
@@ -51,12 +56,17 @@ void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent)
 	upClip->AddTransition(toRightTransition);
 	leftClip->AddTransition(toRightTransition);
 
+	Transition toDeathTransition{ 4, std::bind(&D2D::PlayerAnimator::IsDead, this) };
+	downClip->AddTransition(toDeathTransition);
+	upClip->AddTransition(toDeathTransition);
+	leftClip->AddTransition(toDeathTransition);
+	rightClip->AddTransition(toDeathTransition);
 
-	m_pClips.push_back(std::move(downClip));
-	m_pClips.push_back(std::move(upClip));
-	m_pClips.push_back(std::move(leftClip));
-	m_pClips.push_back(std::move(rightClip));
-
+	m_pClips.emplace_back(std::move(downClip));
+	m_pClips.emplace_back(std::move(upClip));
+	m_pClips.emplace_back(std::move(leftClip));
+	m_pClips.emplace_back(std::move(rightClip));
+	m_pClips.emplace_back(std::move(deathClip));
 
 
 	m_pClips[m_CurrentClip]->SetCurrentSprite();
@@ -80,4 +90,9 @@ bool D2D::PlayerAnimator::ShouldGoLeft()
 bool D2D::PlayerAnimator::ShouldGoRight()
 {
 	return m_Direction.x > 0;
+}
+
+bool D2D::PlayerAnimator::IsDead()
+{
+	return m_IsDead;
 }
