@@ -185,7 +185,7 @@
     <ClCompile Include="EnemyAnimator.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="ExplosionComponent.cpp" />
-    <ClCompile Include="GameMode.cpp" />
+    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GameUIStates.cpp" />
     <ClCompile Include="GridComponent.cpp" />
@@ -222,7 +222,7 @@
     <ClInclude Include="EnemyAnimator.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="ExplosionComponent.h" />
-    <ClInclude Include="GameMode.h" />
+    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="GameUIStates.h" />
     <ClInclude Include="GridComponent.h" />

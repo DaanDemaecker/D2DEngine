@@ -18,6 +18,8 @@ namespace D2D
 
 		virtual void Update() override;
 
+		virtual void OnSceneLoad() override;
+
 	private:
 		int m_Score{};
 

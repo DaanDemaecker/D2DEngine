@@ -18,6 +18,7 @@ namespace D2D
 
 		virtual void Update() override;
 
+		virtual void OnSceneLoad() override;
 
 	private:
 		const int m_StartHealth{ 3 };

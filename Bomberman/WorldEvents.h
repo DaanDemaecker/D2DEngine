@@ -54,9 +54,9 @@ namespace D2D
 		TimerOverEvent() = default;
 	};
 
-	struct CleanupGameEvent final : public Event
+	struct StartGameEvent final : public Event
 	{
 	public:
-		CleanupGameEvent() = default;
+		StartGameEvent() = default;
 	};
 }

@@ -33,3 +33,11 @@ void D2D::TimerComponent::Update()
 	}
 
 }
+
+void D2D::TimerComponent::Notify(const Event& event)
+{
+	if (auto startGameEvent{ dynamic_cast<const StartGameEvent*>(&event) })
+	{
+		m_Timer = m_Time;
+	}
+}

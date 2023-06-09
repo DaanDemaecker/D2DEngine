@@ -235,7 +235,6 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSCounter.h" />
-    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="GamepadImpl.h" />
@@ -283,7 +282,6 @@
     <ClCompile Include="DebugSDLSoundSystem.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
-    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamepadImpl.cpp" />
     <ClCompile Include="ImGuiInfoComponent.cpp" />

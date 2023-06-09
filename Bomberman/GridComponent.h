@@ -49,8 +49,9 @@ namespace D2D
 		GridComponent();
 		virtual ~GridComponent() override = default;
 
+		virtual void OnSceneUnload() override;
+
 		void SetGrid(int rows, int columns, float cubeSize);
-		void ReadLevelFromFile(const std::string& file, float cubeSize);
 		void SetupEnemies();
 
 		virtual void Notify(const Event& event);
@@ -98,6 +99,8 @@ namespace D2D
 		glm::vec2 WorldToGridPos(const glm::vec2& pos);
 		int GetGridNumber(const glm::vec2& pos);
 		glm::vec2 GetGridPos(int square);
+
+		void ReadLevelFromFile(const std::string& file, float cubeSize);
 
 		void SetGridWalls();
 

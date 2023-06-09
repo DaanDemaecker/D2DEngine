@@ -21,10 +21,6 @@ void D2D::EnemyManager::Notify(const Event& event)
 			m_pEnemies.erase(std::remove(m_pEnemies.begin(), m_pEnemies.end(), enemyDieEvent->pEnemy), m_pEnemies.end());
 		}
 	}
-	else if (auto cleanupGameEvent{ dynamic_cast<const CleanupGameEvent*>(&event) })
-	{
-		m_pEnemies.clear();
-	}
 }
 
 void D2D::EnemyManager::AddSubject(Subject* subject)

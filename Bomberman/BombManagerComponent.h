@@ -39,5 +39,7 @@ namespace D2D
 		void SpawnBomb(const glm::vec2& pos);
 
 		std::vector<BombComponent*> m_pBombs;
+
+		void CollectPowerup(PowerupType type);
 	};
 }

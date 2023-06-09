@@ -46,8 +46,8 @@
     <Filter Include="Components\UI">
       <UniqueIdentifier>{19c3567a-0d9f-4dcd-bf95-ecc0fb778335}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayerSetup">
-      <UniqueIdentifier>{f63003fa-aad3-4073-b0b9-8d5dccbb0d42}</UniqueIdentifier>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{5f6e2833-d62e-4aa7-9c96-69c00e152567}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +108,6 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Components\GameManagement</Filter>
     </ClCompile>
-    <ClCompile Include="GameMode.cpp">
-      <Filter>Components\GameManagement</Filter>
-    </ClCompile>
     <ClCompile Include="GridComponent.cpp">
       <Filter>Components\GameManagement</Filter>
     </ClCompile>
@@ -140,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="GameUIStates.cpp">
       <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +212,6 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>Components\GameManagement</Filter>
     </ClInclude>
-    <ClInclude Include="GameMode.h">
-      <Filter>Components\GameManagement</Filter>
-    </ClInclude>
     <ClInclude Include="GridComponent.h">
       <Filter>Components\GameManagement</Filter>
     </ClInclude>
@@ -246,7 +243,10 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSetup.h">
-      <Filter>PlayerSetup</Filter>
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

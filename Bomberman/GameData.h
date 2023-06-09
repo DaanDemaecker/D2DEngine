@@ -1,11 +1,10 @@
 #pragma once
 #include "Singleton.h"
 #include "GameObject.h"
-
+#include "Powerup.h"
 
 namespace D2D
 {
-
 	class GameData final : public Singleton<GameData>
 	{
 	public:
@@ -17,7 +16,7 @@ namespace D2D
 
 		void AddPowerup(PowerupType type);
 		void ResetPowerups();
-		std::vector<PowerupType>
+		std::vector<PowerupType>& GetPowerups();
 
 	private:
 		int m_LivesAmount{};

@@ -11,13 +11,20 @@
 #include "BombComponent.h"
 #include "WorldEvents.h"
 #include "ServiceLocator.h"
-#include "Powerup.h"
+#include "GameData.h"
 
 D2D::BombManagerComponent::BombManagerComponent()
 {
 	const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
 	m_pBombtexture = pResourceManager.LoadTexture("sprites/SpriteSheets/Bomb.png");
+
+	auto powerups = GameData::GetInstance().GetPowerups();
+
+	for (const auto& type : powerups)
+	{
+		CollectPowerup(type);
+	}
 }
 
 void D2D::BombManagerComponent::Notify(const Event& event)
@@ -35,20 +42,8 @@ void D2D::BombManagerComponent::Notify(const Event& event)
 	}
 	else if (auto powerupCollectedEvent{ dynamic_cast<const PowerupCollectedEvent*>(&event) })
 	{
-		switch (powerupCollectedEvent->type)
-		{
-		case PowerupType::FireUp:
-			m_BombStrength++;
-			break;
-		case PowerupType::BombUp:
-			m_BombAmount++;
-			break;
-		case PowerupType::RemoteControl:
-			m_RemoteControlActive = true;
-			break;
-		default:
-			break;
-		}
+		GameData::GetInstance().AddPowerup(powerupCollectedEvent->type);
+		CollectPowerup(powerupCollectedEvent->type);
 	}
 }
 
@@ -101,4 +96,22 @@ void D2D::BombManagerComponent::SpawnBomb(const glm::vec2& pos)
 	pBombComponent->AddObserver(this);
 
 	m_pBombs.push_back(pBombComponent.get());
+}
+
+void D2D::BombManagerComponent::CollectPowerup(PowerupType type)
+{
+	switch (type)
+	{
+	case PowerupType::FireUp:
+		m_BombStrength++;
+		break;
+	case PowerupType::BombUp:
+		m_BombAmount++;
+		break;
+	case PowerupType::RemoteControl:
+		m_RemoteControlActive = true;
+		break;
+	default:
+		break;
+	}
 }

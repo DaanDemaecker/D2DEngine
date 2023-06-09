@@ -34,7 +34,6 @@
 
 #include "EnemyManager.h"
 #include "TimerComponent.h"
-#include "GameMode.h"
 
 #include "GameUI.h"
 
@@ -58,9 +57,6 @@ namespace D2D
 		const auto pBackgroundTexture{ pResourceManager.LoadTexture("sprites/background.tga") };
 		const auto pIntroScreenBackgroundTexture{ pResourceManager.LoadTexture("sprites/StartScreenBackGround.tga") };
 
-		const auto pSceneRoot{ scene.GetSceneRoot() };
-		pSceneRoot->AddComponent<D2D::GameMode>();
-
 		const auto pBackground{ scene.CreateGameObject("Background") };
 		pBackground->GetTransform()->SetWorldPosition(0, hudSize);
 		pBackground->AddComponent<D2D::RenderComponent>()->SetTexture(pBackgroundTexture);
@@ -77,7 +73,7 @@ namespace D2D
 		auto pTimerText = pTimer->AddComponent<TextComponent>();
 		pTimerText->SetFont(pBigFont);
 		pTimerText->SetText("TIME   200");
-		pTimer->AddComponent<TimerComponent>();
+		auto pTimerComponent = pTimer->AddComponent<TimerComponent>();
 
 
 		const auto pFPSCounter{ scene.CreateCanvasObject("Fps Counter") };
@@ -147,7 +143,7 @@ namespace D2D
 
 
 
-		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen);
+		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pTimerComponent.get(), pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen);
 		
 		
 		scene.StartFrame();

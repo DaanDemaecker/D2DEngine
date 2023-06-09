@@ -3,7 +3,7 @@
 #include "PlayerEvents.h"
 
 void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject,
-	Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen)
+	Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen)
 {
 	if (pHud != nullptr)
 	{
@@ -20,6 +20,7 @@ void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, G
 	m_pGameOverState = std::make_unique<GameOverState>();
 
 	m_pIntroState->SetVariables(pIntroScreenObject, pPlayfieldObject, m_pPlayingState.get(), pPointsDisplay, pLivesDisplay);
+	m_pIntroState->AddObserver(pTimerDisplay);
 	m_pPlayingState->SetVariables(pHud, pPlayfieldObject);
 	m_pGameOverState->SetVariables(pGameOverScreen);
 

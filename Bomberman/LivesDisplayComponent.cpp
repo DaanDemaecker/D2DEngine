@@ -10,6 +10,7 @@ D2D::LivesDisplayComponent::LivesDisplayComponent()
 {
 	m_PlayerHealth = m_StartHealth;
 	GameData::GetInstance().SetLives(m_PlayerHealth);
+	m_ShouldUpdateText = true;
 }
 
 void D2D::LivesDisplayComponent::Notify(const Event& event)
@@ -29,6 +30,13 @@ void D2D::LivesDisplayComponent::Update()
 		UpdateLivesDisplay();
 		m_ShouldUpdateText = false;
 	}
+}
+
+void D2D::LivesDisplayComponent::OnSceneLoad()
+{
+	m_PlayerHealth = m_StartHealth;
+	GameData::GetInstance().SetLives(m_PlayerHealth);
+	m_ShouldUpdateText = true;
 }
 
 void D2D::LivesDisplayComponent::UpdateLivesDisplay()

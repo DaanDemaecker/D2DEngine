@@ -10,6 +10,7 @@
 #include "PlayerEvents.h"
 #include "InputManager.h"
 #include "GameData.h"
+#include "WorldEvents.h"
 
 #pragma region IntroState
 void D2D::IntroState::SetVariables(GameObject* pIntroScreen, GameObject* pPlayfield,
@@ -52,6 +53,8 @@ void D2D::IntroState::OnStateEnter()
 	}
 
 	m_Timer = m_Time;
+
+	NotifyObservers(StartGameEvent());
 
 	ServiceLocator::GetSoundSystem().Play(6, 128, 0);
 }
@@ -104,6 +107,8 @@ void D2D::PlayingState::OnStateEnter()
 
 	if (m_pPlayField != nullptr)
 		m_pPlayField->SetActive(true);
+
+	
 }
 
 void D2D::PlayingState::OnStateLeave()

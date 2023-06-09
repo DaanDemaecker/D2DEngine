@@ -2,6 +2,7 @@
 #include "State.h"
 #include "Observer.h"
 #include <thread>
+#include "Subject.h"
 
 namespace D2D
 {
@@ -16,7 +17,7 @@ namespace D2D
 		virtual void ChangeState(GameUI* manager) = 0;
 	};
 
-	class IntroState final : public GameUIState
+	class IntroState final : public GameUIState, public Subject
 	{
 	public:
 		IntroState() = default;

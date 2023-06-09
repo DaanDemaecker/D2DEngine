@@ -51,6 +51,12 @@ void D2D::PointsDisplay::Update()
 	}
 }
 
+void D2D::PointsDisplay::OnSceneLoad()
+{
+	m_Score = 0;
+	UpdatePointsDisplay();
+}
+
 void D2D::PointsDisplay::UpdatePointsDisplay()
 {
 	if (m_pTextComponent == nullptr)

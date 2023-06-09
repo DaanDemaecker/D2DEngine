@@ -118,9 +118,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Components\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="GameData.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -273,9 +270,6 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Components\Colliders</Filter>
-    </ClInclude>
-    <ClInclude Include="GameData.h">
-      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

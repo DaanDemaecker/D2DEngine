@@ -19,6 +19,7 @@
 #include "CameraComponent.h"
 #include "EnemyManager.h"
 #include "PlayerSetup.h"
+#include "GameData.h"
 #include <iostream>
 
 D2D::GridComponent::GridComponent()
@@ -48,6 +49,11 @@ D2D::GridComponent::GridComponent()
 	m_pPowerupSprites[PowerupType::FireUp] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/FireUp.png");
 	m_pPowerupSprites[PowerupType::BombUp] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/BombUp.png");
 	m_pPowerupSprites[PowerupType::RemoteControl] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/RemoteControl.png");
+}
+
+void D2D::GridComponent::OnSceneUnload()
+{
+	GameData::GetInstance().ResetPowerups();
 }
 
 void D2D::GridComponent::SetGrid(int rows, int columns, float cubeSize)
