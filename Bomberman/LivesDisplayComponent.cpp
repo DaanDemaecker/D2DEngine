@@ -3,11 +3,13 @@
 #include "PlayerEvents.h"
 #include "TextComponent.h"
 #include "PlayerComponent.h"
+#include "GameData.h"
 
 D2D::LivesDisplayComponent::LivesDisplayComponent()
 	:Component()
 {
 	m_PlayerHealth = m_StartHealth;
+	GameData::GetInstance().SetLives(m_PlayerHealth);
 }
 
 void D2D::LivesDisplayComponent::Notify(const Event& event)
@@ -15,6 +17,7 @@ void D2D::LivesDisplayComponent::Notify(const Event& event)
 	if (auto playerDieEvent{ dynamic_cast<const PlayerDieEvent*>(&event) })
 	{
 		--m_PlayerHealth;
+		GameData::GetInstance().SetLives(m_PlayerHealth);
 		m_ShouldUpdateText = true;
 	}
 }

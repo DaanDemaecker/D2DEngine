@@ -155,7 +155,7 @@ void D2D::SceneManager::PreviousScene()
 		}
 	}
 
-	if (currentSceneIndex <= 0)
+	if (currentSceneIndex >= 0)
 	{
 		int nextActiveScene = (currentSceneIndex - 1);
 

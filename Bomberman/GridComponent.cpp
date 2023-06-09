@@ -67,6 +67,8 @@ void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cu
 		return;
 	}
 
+	srand(static_cast<unsigned int>(time(nullptr)));
+
 	m_Columns = 0;
 	m_Rows = 0;
 	m_SquareSize = cubeSize;

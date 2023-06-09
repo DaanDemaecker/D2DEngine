@@ -20,7 +20,7 @@ namespace D2D
 
 
 	private:
-		const int m_StartHealth{ 5 };
+		const int m_StartHealth{ 3 };
 		int m_PlayerHealth{};
 
 		TextComponent* m_pTextComponent{};

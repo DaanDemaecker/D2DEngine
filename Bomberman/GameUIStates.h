@@ -70,5 +70,28 @@ namespace D2D
 		GameObject* m_pHud{ nullptr };
 		GameObject* m_pPlayField{ nullptr };
 	};
+
+	class GameOverState final : public GameUIState
+	{
+	public:
+		GameOverState() = default;
+		~GameOverState() = default;
+
+		void SetVariables(GameObject* pGameOverScreen);
+
+		virtual void Update() override;
+
+		virtual void ChangeState(GameUI*) override {};
+
+		virtual void OnStateEnter() override;
+		virtual void OnStateLeave() override;
+
+	private:
+		float m_Timer{};
+		const float m_Time{ 7.0f };
+
+		GameObject* m_pGameOverScreen{};
+
+	};
 }
 

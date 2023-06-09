@@ -128,7 +128,26 @@ namespace D2D
 		pIntroScreenText->SetColor(255.f, 255.f, 255.f, 255.f);
 		pIntroScreenText->SetText("STAGE   1");
 
-		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pPointsDisplayComponent.get(), pLivesDisplayComponent.get());
+
+
+		const auto pGameOverScreen{ pGameUI->CreateNewObject("GameOverScreen") };
+		pGameOverScreen->SetActive(false);
+		const auto pGameOverScreenRenderComponent{ pGameOverScreen->AddComponent<RenderComponent>() };
+		pGameOverScreenRenderComponent->SetTexture(pIntroScreenBackgroundTexture);
+		pGameOverScreenRenderComponent->SetDestRectBounds(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
+
+
+		const auto pGameOverScreenTextObject{ pGameOverScreen->CreateNewObject("GameOverScreenText") };
+		const auto pGameOverScreenTextRenderComponent{ pGameOverScreenTextObject->AddComponent<RenderComponent>() };
+		const auto pGameOverScreenText{ pGameOverScreenTextObject->AddComponent<TextComponent>() };
+		pGameOverScreenTextObject->GetTransform()->SetWorldPosition(static_cast<float>(windowWidth) / 2.f - 150, static_cast<float>(windowHeight) / 2.f);
+		pGameOverScreenText->SetFont(pBigFont);
+		pGameOverScreenText->SetColor(255.f, 255.f, 255.f, 255.f);
+		pGameOverScreenText->SetText("GAME OVER");
+
+
+
+		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen);
 		
 		
 		scene.StartFrame();

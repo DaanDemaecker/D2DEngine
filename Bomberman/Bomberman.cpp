@@ -43,7 +43,6 @@ int main(int, char* [])
 {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
-
 	D2D::D2DEngine engine("../Data/");
 	engine.Run(load);
 	return 0;

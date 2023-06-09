@@ -12,7 +12,7 @@ namespace D2D
 		GameUI() = default;
 		virtual ~GameUI() = default;
 
-		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject, Observer* pPointsDisplay, Observer* pLivesDisplay);
+		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen);
 
 		virtual void OnSceneLoad() override;
 
@@ -22,13 +22,14 @@ namespace D2D
 
 		GameUIState* GetIntroState(){ return m_pIntroState.get(); }
 		GameUIState* GetPlayingState() { return m_pPlayingState.get(); }
-
+		GameUIState* GetGameOverState() { return m_pGameOverState.get(); }
 
 	private:
 		GameUIState* m_pState{};
 
 		std::unique_ptr<IntroState> m_pIntroState{};
 		std::unique_ptr<PlayingState> m_pPlayingState{};
+		std::unique_ptr<GameOverState> m_pGameOverState{};
 	};
 }
 

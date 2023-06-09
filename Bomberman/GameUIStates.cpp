@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "PlayerEvents.h"
 #include "InputManager.h"
+#include "GameData.h"
 
 #pragma region IntroState
 void D2D::IntroState::SetVariables(GameObject* pIntroScreen, GameObject* pPlayfield,
@@ -81,7 +82,14 @@ void D2D::PlayingState::ChangeState(GameUI* gameUI)
 {
 	if (m_ShouldRestart)
 	{
-		gameUI->SetState(gameUI->GetIntroState());
+		if (GameData::GetInstance().GetLivesAmount() < 0)
+		{
+			gameUI->SetState(gameUI->GetGameOverState());
+		}
+		else
+		{
+			gameUI->SetState(gameUI->GetIntroState());
+		}
 	}
 }
 
@@ -122,3 +130,36 @@ void D2D::PlayingState::Notify(const Event& event)
 	}
 }
 #pragma endregion PlayingState
+
+void D2D::GameOverState::SetVariables(GameObject* pGameOverScreen)
+{
+	m_pGameOverScreen = pGameOverScreen;
+}
+
+void D2D::GameOverState::Update()
+{
+	m_Timer -= TimeManager::GetInstance().GetDeltaTime();
+	if (m_Timer <= 0)
+	{
+		SceneManager::GetInstance().PreviousScene();
+	}
+}
+
+void D2D::GameOverState::OnStateEnter()
+{
+	ServiceLocator::GetSoundSystem().Play(8, 128, 0);
+	m_Timer = m_Time;
+
+	if (m_pGameOverScreen)
+	{
+		m_pGameOverScreen->SetActive(true);
+	}
+}
+
+void D2D::GameOverState::OnStateLeave()
+{
+	if (m_pGameOverScreen)
+	{
+		m_pGameOverScreen->SetActive(false);
+	}
+}
