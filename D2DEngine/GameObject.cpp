@@ -175,6 +175,21 @@ void D2D::GameObject::PostUpdate()
 	}
 }
 
+void D2D::GameObject::Destroy()
+{
+	m_ShouldDestroy = true;
+
+	for (auto& child : m_pChildren)
+	{
+		child->Destroy();
+	}
+
+	for (auto& component : m_pComponents)
+	{
+		component->Destroy();
+	}
+}
+
 D2D::GameObject* D2D::GameObject::CreateNewObject(const std::string& name)
 {
 	auto pNewObject{ std::make_unique<GameObject>(name) };

@@ -31,7 +31,7 @@ namespace D2D
 
 		virtual void OnGUI() {};
 		
-		void Destroy() { m_ShouldDestroy = true; }
+		virtual void Destroy() { m_ShouldDestroy = true; }
 		bool ShouldDestroy() { return m_ShouldDestroy; }
 
 		virtual void OnTriggerEnter(const Collider* /*pCollider*/){}

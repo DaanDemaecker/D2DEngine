@@ -41,7 +41,7 @@ namespace D2D
 
 		void PostUpdate();
 
-		void Destroy() { m_ShouldDestroy = true; }
+		void Destroy();
 		bool ShouldDestroy() const { return m_ShouldDestroy; }
 
 		GameObject* CreateNewObject(const std::string& name = "UnNamed");

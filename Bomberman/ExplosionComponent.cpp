@@ -2,7 +2,7 @@
 #include "ExplosionComponent.h"
 #include "WorldEvents.h"
 
-D2D::ExplosionComponent::~ExplosionComponent()
+void D2D::ExplosionComponent::Destroy()
 {
 	ExplosionOverEvent explosionOverEvent{};
 	explosionOverEvent.gridIndex = m_GridIndex;

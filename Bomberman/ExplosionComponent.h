@@ -8,9 +8,11 @@ namespace D2D
 	{
 	public:
 		ExplosionComponent() = default;
-		virtual ~ExplosionComponent() override;
+		virtual ~ExplosionComponent() override = default;
 
 		void SetGridIndex(int index) { m_GridIndex = index; }
+
+		virtual void Destroy() override;
 
 	private:
 		int m_GridIndex{};
