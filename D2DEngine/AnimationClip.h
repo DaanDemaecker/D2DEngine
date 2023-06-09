@@ -4,12 +4,19 @@
 #include "Subject.h"
 #include <memory>
 #include <map>
+#include <functional>
 
 namespace D2D
 {
 	class Texture2D;
 	class RenderComponent;
 	struct Event;
+
+	struct Transition
+	{
+		int toClip{};
+		std::function<bool()> predicate{};
+	};
 
 	class AnimationClip final : public Subject
 	{
@@ -31,6 +38,12 @@ namespace D2D
 
 		void Update();
 
+		void AddTransition(Transition transition);
+
+		void SetFrameDuration(float duration) { m_FrameDuration = duration; }
+
+		std::vector<Transition>& GetTransitions() { return m_Transitions; }
+
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};
 		RenderComponent* m_pRenderComponent{};
@@ -45,8 +58,10 @@ namespace D2D
 
 		Rect m_SrcRect{};
 
-		const float m_FrameDuration{ 1 / 15.f };
+		float m_FrameDuration{ 1 / 15.f };
 		float m_FrameTimer{};
+
+		std::vector<Transition> m_Transitions{};
 
 		void SetFrame();
 	};

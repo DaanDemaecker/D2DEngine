@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include <functional>
 #include "AnimationClip.h"
 
 namespace D2D
@@ -20,19 +19,8 @@ namespace D2D
 		bool m_ShouldAnimate{ true };
 
 	protected:
-
-		struct Transition
-		{
-			//Set to -1 for any clip
-			int fromClip{};
-			int toClip{};
-			std::function<bool()> predicate{};
-		};
-
 		std::vector<std::unique_ptr<AnimationClip>> m_pClips{};
 		int m_CurrentClip{};
-
-		std::vector<Transition> m_pTransitions{};
 	};
 }
 

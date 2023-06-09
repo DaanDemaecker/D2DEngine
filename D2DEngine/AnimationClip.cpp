@@ -60,6 +60,11 @@ void D2D::AnimationClip::Update()
 	}
 }
 
+void D2D::AnimationClip::AddTransition(Transition transition)
+{
+	m_Transitions.emplace_back(transition);
+}
+
 void D2D::AnimationClip::SetFrame()
 {
 	if (m_pRenderComponent != nullptr)

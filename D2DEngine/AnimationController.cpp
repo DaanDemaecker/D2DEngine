@@ -9,17 +9,16 @@ void D2D::AnimationController::SetShouldAnimate(bool shouldAnimate)
 
 void D2D::AnimationController::Update()
 {
-	for (auto& transition : m_pTransitions)
+	auto transitions = m_pClips[m_CurrentClip]->GetTransitions();
+
+	for (auto& transition : transitions)
 	{
-		if (transition.fromClip == -1 || transition.fromClip == m_CurrentClip)
+		if (transition.predicate())
 		{
-			if (transition.predicate())
-			{
-				m_CurrentClip = transition.toClip;
-				if(m_CurrentClip < static_cast<int>(m_pClips.size()))
-					m_pClips[m_CurrentClip]->SetCurrentSprite();
-				break;
-			}
+			m_CurrentClip = transition.toClip;
+			if (m_CurrentClip < static_cast<int>(m_pClips.size()))
+				m_pClips[m_CurrentClip]->SetCurrentSprite();
+			break;
 		}
 	}
 
