@@ -67,6 +67,7 @@ namespace D2D
 
 
 		const auto pBombmanagercomponent = pBombManager->AddComponent<BombManagerComponent>();
+		pBombmanagercomponent->SetPlayerIndex(idx);
 		pBombmanagercomponent->SetGrid(pGridComponent);
 		pBombmanagercomponent->SetBombSize(gridSize);
 

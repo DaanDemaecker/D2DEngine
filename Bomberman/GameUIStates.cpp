@@ -177,7 +177,14 @@ void D2D::GameOverState::Update()
 	m_Timer -= TimeManager::GetInstance().GetDeltaTime();
 	if (m_Timer <= 0)
 	{
-		SceneManager::GetInstance().NextScene();
+		if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
+		{
+			SceneManager::GetInstance().NextScene();
+		}
+		else
+		{
+			SceneManager::GetInstance().NextScene();
+		}
 	}
 }
 
@@ -213,7 +220,14 @@ void D2D::LevelEndState::Update()
 	m_Timer -= TimeManager::GetInstance().GetDeltaTime();
 	if (m_Timer <= 0)
 	{
-		SceneManager::GetInstance().NextScene();
+		if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
+		{
+			SceneManager::GetInstance().NextScene();
+		}
+		else
+		{
+			SceneManager::GetInstance().NextScene();
+		}
 	}
 }
 

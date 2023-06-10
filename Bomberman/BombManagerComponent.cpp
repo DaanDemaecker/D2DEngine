@@ -18,13 +18,6 @@ D2D::BombManagerComponent::BombManagerComponent()
 	const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
 
 	m_pBombtexture = pResourceManager.LoadTexture("sprites/SpriteSheets/Bomb.png");
-
-	auto powerups = GameData::GetInstance().GetPowerups();
-
-	for (const auto& type : powerups)
-	{
-		CollectPowerup(type);
-	}
 }
 
 void D2D::BombManagerComponent::Notify(const Event& event)
@@ -42,7 +35,7 @@ void D2D::BombManagerComponent::Notify(const Event& event)
 	}
 	else if (auto powerupCollectedEvent{ dynamic_cast<const PowerupCollectedEvent*>(&event) })
 	{
-		GameData::GetInstance().AddPowerup(powerupCollectedEvent->type);
+		GameData::GetInstance().AddPowerup(powerupCollectedEvent->type, m_PlayerIndex);
 		CollectPowerup(powerupCollectedEvent->type);
 	}
 }
@@ -57,6 +50,18 @@ void D2D::BombManagerComponent::RemoteControlTriggered()
 	if (m_RemoteControlActive && !m_pBombs.empty())
 	{
 		m_pBombs[0]->InstantExplosion();
+	}
+}
+
+void D2D::BombManagerComponent::SetPlayerIndex(int idx)
+{
+	m_PlayerIndex = idx;
+
+	auto powerups = GameData::GetInstance().GetPowerups(m_PlayerIndex);
+
+	for (const auto& type : powerups)
+	{
+		CollectPowerup(type);
 	}
 }
 

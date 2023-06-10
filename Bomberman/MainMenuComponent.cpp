@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "ServiceLocator.h"
+#include "GameData.h"
 #include <iostream>
 
 void D2D::MainMenuComponent::OnSceneLoad()
@@ -17,12 +18,14 @@ void D2D::MainMenuComponent::OnSceneUnload()
 
 void D2D::MainMenuComponent::SinglePlayerButton()
 {
+	GameData::GetInstance().SetGameMode(GameMode::SinglePlayer);
 	D2D::SceneManager::GetInstance().NextScene();
 }                                                     
  
 void D2D::MainMenuComponent::CoopButton()
 {
-	std::cout << "CoopButton\n";
+	GameData::GetInstance().SetGameMode(GameMode::Coop);
+	D2D::SceneManager::GetInstance().NextScene();
 }
 
 void D2D::MainMenuComponent::VersusButton()

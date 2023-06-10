@@ -272,7 +272,15 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	SetupEnemies();
 
-	SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize);
+	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
+	{
+		SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize);
+	}
+	else
+	{
+		SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize);
+		SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize);
+	}
 }
 
 void D2D::GridComponent::EndGame()

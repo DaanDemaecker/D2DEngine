@@ -25,7 +25,11 @@ namespace D2D
 
 		void RemoteControlTriggered();
 
+		void SetPlayerIndex(int idx);
+
 	private:
+		int m_PlayerIndex{};
+
 		GridComponent* m_pGrid;
 
 		std::shared_ptr<Texture2D> m_pBombtexture{};

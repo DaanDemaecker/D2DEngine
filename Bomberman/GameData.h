@@ -5,6 +5,13 @@
 
 namespace D2D
 {
+	enum class GameMode
+	{
+		SinglePlayer,
+		Coop,
+		Versus
+	};
+
 	class GameData final : public Singleton<GameData>
 	{
 	public:
@@ -17,9 +24,9 @@ namespace D2D
 		void SetScore(int score) { m_Score = score; }
 		int GetScore() const { return m_Score; }
 
-		void AddPowerup(PowerupType type);
+		void AddPowerup(PowerupType type, int idx);
 		void ResetPowerups();
-		std::vector<PowerupType>& GetPowerups();
+		std::vector<PowerupType>& GetPowerups(int idx);
 
 		void SetName(const std::string& name) { m_Name = name; }
 		const std::string& GetName() const { return m_Name; }
@@ -28,6 +35,8 @@ namespace D2D
 		int GetCurrentLevel() const { return m_CurrentLevel; }
 		int GetMaxLevel() const { return m_MaxLevel; }
 		
+		void SetGameMode(GameMode mode) { m_GameMode = mode; }
+		GameMode GetGameMode() const { return m_GameMode; }
 
 	private:
 		int m_LivesAmount{};
@@ -38,6 +47,9 @@ namespace D2D
 		int m_CurrentLevel{ 1 };
 		const int m_MaxLevel{ 3 };
 
-		std::vector<PowerupType> m_Powerups{};
+		std::vector<PowerupType> m_Powerups0{};
+		std::vector<PowerupType> m_Powerups1{};
+
+		GameMode m_GameMode{ GameMode::SinglePlayer };
 	};
 }
