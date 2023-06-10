@@ -20,12 +20,18 @@
 #include "PlaceBombCommand.h"
 #include "RemoteControlCommand.h"
 #include "Observer.h"
+#include "SDL.h"
+
+extern SDL_Window* g_window;
 
 namespace D2D
 {
 	GameObject* SetupPlayer(GameObject* pWorld, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay,
 		const std::string& sceneName, int idx, int controllerIdx, float gridSize)
 	{
+		int windowWidth{}, windowHeight{};
+		SDL_GetWindowSize(g_window, &windowWidth, &windowHeight);
+
 		auto& input = InputManager::GetInstance();
 		const auto font{ ResourceManager::GetInstance().LoadFont("Fonts/Minecraft.ttf", 15)};
 
@@ -41,13 +47,13 @@ namespace D2D
 
 		const auto pPlayer{ pWorld->CreateNewObject("Bomber Man " + std::to_string(idx)) };
 
-		pWorld->GetComponent<CameraComponent>()->SetPlayer(pPlayer->GetTransform().get());
-
 		auto pPlayerTransform = pPlayer->GetTransform().get();
 		pPlayerTransform->SetWorldPosition(pGridComponent->GetPlayerPosition(idx));
 
 		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>().get();
 		pPlayerComponent->SetSpeed(playerSpeed);
+		pPlayerComponent->SetPlayerHalfWidth(playerRadius);
+		pPlayerComponent->SetLevelWidth(static_cast<float>(windowWidth));
 
 		auto pPlayerRenderComponent = pPlayer->AddComponent<D2D::RenderComponent>();
 		pPlayerRenderComponent->SetOffset(-playerRadius, -playerHeight / 2);

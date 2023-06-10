@@ -28,8 +28,15 @@ void D2D::PlayerComponent::Update()
 
 	if (m_pTransform != nullptr && m_Movement != glm::vec2{} && !m_IsDead)
 	{
-		m_Movement = glm::normalize(m_Movement) * m_Speed;
-		m_pTransform->MoveLocalPosition(m_Movement * TimeManager::GetInstance().GetDeltaTime());
+		m_Movement = glm::normalize(m_Movement) * m_Speed * TimeManager::GetInstance().GetDeltaTime();
+
+		auto pos{ m_pTransform->GetWorldPosition() };
+
+		if (pos.x - m_PlayerHalfWidth + m_Movement.x > 0 &&
+			pos.x + m_PlayerHalfWidth + m_Movement.x < m_LevelWidth)
+		{
+			m_pTransform->MoveLocalPosition(m_Movement);
+		}
 		m_Movement = glm::vec2{};
 	}
 }

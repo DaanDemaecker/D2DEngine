@@ -22,6 +22,10 @@ namespace D2D
 
 		void SetSpeed(float speed) { m_Speed = speed; }
 
+		void SetPlayerHalfWidth(float halfWidth) { m_PlayerHalfWidth = halfWidth; }
+
+		void SetLevelWidth(float width) { m_LevelWidth = width; }
+
 		void PlaceBomb();
 
 		void KillPlayer();
@@ -37,6 +41,9 @@ namespace D2D
 	private:
 		Transform* m_pTransform{};
 		PlayerAnimator* m_pAnimator{};
+
+		float m_PlayerHalfWidth{};
+		float m_LevelWidth{};
 
 		glm::vec2 m_Movement{};
 		float m_Speed{ 20 };

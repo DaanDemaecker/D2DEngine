@@ -261,7 +261,8 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	ReadLevelFromFile(levelFile, cubeSize, pMainLevelUIObserver);
 
-	GetComponent<CameraComponent>()->SetLevelBounds(0, GetLevelWidth());
+	auto cameraComponent = GetComponent<CameraComponent>();
+	cameraComponent->SetLevelBounds(0, GetLevelWidth());
 
 	AddObserver(m_pEnemyManager);
 
@@ -274,12 +275,14 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 	{
-		SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize);
+		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 	else
 	{
-		SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize);
-		SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize);
+		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize);
+		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize);
+		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
 	}
 }
 
