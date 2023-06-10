@@ -14,6 +14,7 @@ void D2D::Door::OnTriggerEnter(const Collider* pCollider)
 	if (pCollider->HasComponent<PlayerComponent>())
 	{
 		ServiceLocator::GetSoundSystem().Play(11, 128, 0);
+		ServiceLocator::GetSoundSystem().StopMusic();
 
 		m_Timer = m_Time;
 	}

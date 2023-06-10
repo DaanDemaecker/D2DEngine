@@ -11,16 +11,19 @@
 #include "InputManager.h"
 #include "GameData.h"
 #include "WorldEvents.h"
+#include "TextComponent.h"
 
 #pragma region IntroState
 void D2D::IntroState::SetVariables(GameObject* pIntroScreen, GameObject* pPlayfield,
-	Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay)
+	Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay,
+	TextComponent* pText)
 {
 	m_pIntroScreen = pIntroScreen;
 	m_pGrid = pPlayfield->GetComponent<GridComponent>().get();
 	m_pPlayingStateObserver = pPlayingStateObserver;
 	m_pPointsDisplay = pPointsDisplay;
 	m_pLivesDisplay = pLivesDisplay;
+	m_pTextComponent = pText;
 }
 
 void D2D::IntroState::Update()
@@ -44,10 +47,15 @@ void D2D::IntroState::OnStateEnter()
 		m_pIntroScreen->SetActive(true);
 	}
 
+	if (m_pTextComponent != nullptr)
+	{
+		m_pTextComponent->SetText("STAGE " + std::to_string(GameData::GetInstance().GetCurrentLevel()));
+	}
+
 	if (m_pGrid != nullptr)
 	{
 		constexpr float gridSize{ 34.f };
-		m_LoadLevelThread = std::jthread(&GridComponent::SetupGame, m_pGrid, "../Data/TextFiles/Level1.txt", gridSize,
+		m_LoadLevelThread = std::jthread(&GridComponent::SetupGame, m_pGrid, "../Data/TextFiles/Level" + std::to_string(GameData::GetInstance().GetCurrentLevel()) +".txt", gridSize,
 			m_pPlayingStateObserver, m_pLivesDisplay, m_pPointsDisplay,
 			D2D::SceneManager::GetInstance().GetActiveScene()->GetName());
 	}
@@ -113,8 +121,6 @@ void D2D::PlayingState::OnStateEnter()
 
 	if (m_pPlayField != nullptr)
 		m_pPlayField->SetActive(true);
-
-	
 }
 
 void D2D::PlayingState::OnStateLeave()
@@ -135,16 +141,26 @@ void D2D::PlayingState::OnStateLeave()
 
 void D2D::PlayingState::Notify(const Event& event)
 {
-	if (m_LevelEnd)
+	if (m_LevelEnd || m_ShouldRestart)
 		return;
 
 	if (auto levelEndEvent{ dynamic_cast<const LevelCompleteEvent*>(&event) })
 	{
-		m_LevelEnd = true;
+		int level{ GameData::GetInstance().GetCurrentLevel() };
+		
+		if (level == GameData::GetInstance().GetMaxLevel())
+		{
+			m_LevelEnd = true;
+		}
+		else
+		{
+			m_ShouldRestart = true;
+			GameData::GetInstance().SetCurrentLevel(level + 1);
+		}
 	}
 	else if (auto animationFinishedEvent{ dynamic_cast<const PlayerDeathAnimationFinished*>(&event) })
 	{
-			m_ShouldRestart = true;
+		m_ShouldRestart = true;
 	}
 }
 #pragma endregion PlayingState

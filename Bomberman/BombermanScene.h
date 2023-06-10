@@ -157,7 +157,7 @@ namespace D2D
 		pLevelEndText->SetText("YOU WIN");
 
 
-		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pTimerComponent.get(), pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen, pLevelEndScreen);
+		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pTimerComponent.get(), pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen, pLevelEndScreen, pIntroScreenText.get());
 		
 		
 		scene.StartFrame();

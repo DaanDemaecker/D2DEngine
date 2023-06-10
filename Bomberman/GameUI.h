@@ -5,6 +5,7 @@
 namespace D2D
 {
 	class Observer;
+	class TextComponent;
 
 	class GameUI final : public Component
 	{
@@ -12,7 +13,9 @@ namespace D2D
 		GameUI() = default;
 		virtual ~GameUI() = default;
 
-		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject, Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen, GameObject* pLevelEndScreen);
+		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject,
+			Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen, GameObject* pLevelEndScreen,
+			TextComponent* pText);
 
 		virtual void OnSceneLoad() override;
 

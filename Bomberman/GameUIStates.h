@@ -9,6 +9,7 @@ namespace D2D
 	class GameUI;
 	class GameObject;
 	class GridComponent;
+	class TextComponent;
 
 	class GameUIState : public State
 	{
@@ -24,7 +25,8 @@ namespace D2D
 		~IntroState() = default;
 
 		void SetVariables( GameObject * pIntroScreen, GameObject* pPlayfield,
-			Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay);
+			Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay,
+			TextComponent* pText);
 
 		virtual void Update() override;
 
@@ -36,6 +38,9 @@ namespace D2D
 	private:
 		GameObject* m_pIntroScreen{ nullptr };
 		GridComponent* m_pGrid{ nullptr };
+
+
+		TextComponent* m_pTextComponent{};
 
 		Observer* m_pPlayingStateObserver{ nullptr };
 		Observer* m_pPointsDisplay{ nullptr };
@@ -68,6 +73,7 @@ namespace D2D
 	private:
 		bool m_ShouldRestart{ false };
 		bool m_LevelEnd{ false };
+
 
 		GameObject* m_pHud{ nullptr };
 		GameObject* m_pPlayField{ nullptr };
