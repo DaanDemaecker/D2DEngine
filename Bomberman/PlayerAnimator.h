@@ -13,7 +13,7 @@ namespace D2D
 		PlayerAnimator() = default;
 		virtual ~PlayerAnimator() override = default;
 
-		void Init(RenderComponent* pRenderComponent, Observer* pObserver);
+		void Init(std::vector<std::shared_ptr<Texture2D>> pSprites, RenderComponent* pRenderComponent, Observer* pObserver);
 
 		void SetDirection(const glm::vec2& direction) { m_Direction = direction; }
 

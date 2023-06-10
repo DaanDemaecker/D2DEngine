@@ -14,7 +14,7 @@ namespace D2D
 	class BombManagerComponent : public Component, public Observer
 	{
 	public:
-		BombManagerComponent();
+		BombManagerComponent() = default;
 		virtual ~BombManagerComponent() override = default;
 
 		virtual void Notify(const Event& event);
@@ -22,6 +22,8 @@ namespace D2D
 		void SetGrid(GridComponent* grid);
 
 		void SetBombSize(float size) { m_BombSize = size; }
+
+		void SetBombTexture(std::shared_ptr<Texture2D> texture) { m_pBombtexture = texture; }
 
 		void RemoteControlTriggered();
 

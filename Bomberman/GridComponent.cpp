@@ -25,31 +25,43 @@
 
 D2D::GridComponent::GridComponent()
 {
-	m_pWallTexture = ResourceManager::GetInstance().LoadTexture("Sprites/Wall.png");
-	m_pBrickWallTexture = ResourceManager::GetInstance().LoadTexture("Sprites/BrickWall.png");
-	m_pBrickExplosionTexture = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/BrickWallDestroy.png");
+	const auto& resourceManager = ResourceManager::GetInstance();
 
-	m_pExplosionTextures[ExplosionType::Center] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionCenter.png");
+	m_pWallTexture = resourceManager.LoadTexture("Sprites/Wall.png");
+	m_pBrickWallTexture = resourceManager.LoadTexture("Sprites/BrickWall.png");
+	m_pBrickExplosionTexture = resourceManager.LoadTexture("Sprites/Spritesheets/BrickWallDestroy.png");
 
-	m_pExplosionTextures[ExplosionType::LeftMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeftMiddle.png");
-	m_pExplosionTextures[ExplosionType::Left] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeft.png");
+	m_pExplosionTextures[ExplosionType::Center] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionCenter.png");
 
-	m_pExplosionTextures[ExplosionType::UpMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionUpMiddle.png");
-	m_pExplosionTextures[ExplosionType::Up] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionUp.png");
+	m_pExplosionTextures[ExplosionType::LeftMiddle] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeftMiddle.png");
+	m_pExplosionTextures[ExplosionType::Left] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeft.png");
 
-	m_pExplosionTextures[ExplosionType::RightMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionRightMiddle.png");
-	m_pExplosionTextures[ExplosionType::Right] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionRight.png");
+	m_pExplosionTextures[ExplosionType::UpMiddle] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionUpMiddle.png");
+	m_pExplosionTextures[ExplosionType::Up] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionUp.png");
 
-	m_pExplosionTextures[ExplosionType::DownMiddle] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDownMiddle.png");
-	m_pExplosionTextures[ExplosionType::Down] = ResourceManager::GetInstance().LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDown.png");
+	m_pExplosionTextures[ExplosionType::RightMiddle] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionRightMiddle.png");
+	m_pExplosionTextures[ExplosionType::Right] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionRight.png");
 
-	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonLeft.png"));
-	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonRight.png"));
-	m_pBalloonTextures.push_back(ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Enemies/BalloonDeath.png"));
+	m_pExplosionTextures[ExplosionType::DownMiddle] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDownMiddle.png");
+	m_pExplosionTextures[ExplosionType::Down] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDown.png");
 
-	m_pPowerupSprites[PowerupType::FireUp] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/FireUp.png");
-	m_pPowerupSprites[PowerupType::BombUp] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/BombUp.png");
-	m_pPowerupSprites[PowerupType::RemoteControl] = ResourceManager::GetInstance().LoadTexture("Sprites/Powerups/RemoteControl.png");
+	m_pBalloonTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/BalloonLeft.png"));
+	m_pBalloonTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/BalloonRight.png"));
+	m_pBalloonTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/BalloonDeath.png"));
+
+	m_pPowerupSprites[PowerupType::FireUp] = resourceManager.LoadTexture("Sprites/Powerups/FireUp.png");
+	m_pPowerupSprites[PowerupType::BombUp] = resourceManager.LoadTexture("Sprites/Powerups/BombUp.png");
+	m_pPowerupSprites[PowerupType::RemoteControl] = resourceManager.LoadTexture("Sprites/Powerups/RemoteControl.png");
+
+	m_pDoorTexture = resourceManager.LoadTexture("Sprites/Door.png");
+
+	m_pBombSprites = resourceManager.LoadTexture("Sprites/SpriteSheets/Bomb.png");
+
+	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerDown.png"));
+	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerUp.png"));
+	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerLeft.png"));
+	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerRight.png"));
+	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerDie.png"));
 }
 
 void D2D::GridComponent::OnSceneUnload()
@@ -275,13 +287,13 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 	{
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 	else
 	{
-		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize);
-		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize);
+		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
 	}
 }
@@ -516,7 +528,7 @@ void D2D::GridComponent::SpawnDoor(int gridIndex, Observer* pMainLevelUIObserver
 	auto pRenderComponent = pDoor->AddComponent<RenderComponent>();
 	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
 	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
-	pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/Door.png"));
+	pRenderComponent->SetTexture(m_pDoorTexture);
 
 	auto pCollider = pDoor->AddComponent<BoxCollider>();
 	pCollider->SetVariables(m_SquareSize * 0.9f, m_SquareSize * 0.9f);

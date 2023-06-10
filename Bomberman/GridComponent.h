@@ -83,6 +83,10 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBrickExplosionTexture{};
 
 		std::map<PowerupType, std::shared_ptr<Texture2D>> m_pPowerupSprites{};
+		std::shared_ptr<Texture2D> m_pDoorTexture{};
+		std::shared_ptr<Texture2D> m_pBombSprites{};
+
+		std::vector<std::shared_ptr<Texture2D>> m_pPlayerSprites{};
 
 		std::vector<std::shared_ptr<Texture2D>> m_pBalloonTextures{};
 

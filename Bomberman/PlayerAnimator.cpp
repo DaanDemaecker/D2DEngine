@@ -8,32 +8,29 @@
 
 #include <iostream>
 
-void D2D::PlayerAnimator::Init(RenderComponent* pRenderComponent, Observer* pObserver)
+void D2D::PlayerAnimator::Init(std::vector<std::shared_ptr<Texture2D>> pSprites, RenderComponent* pRenderComponent, Observer* pObserver)
 {
 	constexpr float deathClipFrameDuration{ 1 / 5.f };
 
-	auto downTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerDown.png");
+	if (pSprites.size() < 5)
+		return;
 	std::unique_ptr<AnimationClip> downClip{ std::make_unique<AnimationClip>(pRenderComponent) };
-	downClip->SetClip(downTexture, 3, 1, 3);
+	downClip->SetClip(pSprites[0], 3, 1, 3);
 
 
-	auto upTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerUp.png");
 	std::unique_ptr<AnimationClip> upClip{ std::make_unique<AnimationClip>(pRenderComponent) };
-	upClip->SetClip(upTexture, 3, 1, 3);
+	upClip->SetClip(pSprites[1], 3, 1, 3);
 
 
-	auto leftTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerLeft.png");
 	std::unique_ptr<AnimationClip> leftClip{ std::make_unique<AnimationClip>(pRenderComponent) };
-	leftClip->SetClip(leftTexture, 3, 1, 3);
+	leftClip->SetClip(pSprites[2], 3, 1, 3);
 
 
-	auto rightTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerRight.png");
 	std::unique_ptr<AnimationClip> rightClip{ std::make_unique<AnimationClip>(pRenderComponent) };
-	rightClip->SetClip(rightTexture, 3, 1, 3);
+	rightClip->SetClip(pSprites[3], 3, 1, 3);
 
-	auto deathTexture = ResourceManager::GetInstance().LoadTexture("Sprites/SpriteSheets/Player/PlayerDie.png");
 	std::unique_ptr<AnimationClip> deathClip{ std::make_unique<AnimationClip>(pRenderComponent) };
-	deathClip->SetClip(deathTexture, 7, 1, 7);
+	deathClip->SetClip(pSprites[4], 7, 1, 7);
 	deathClip->SetFrameDuration(deathClipFrameDuration);
 	deathClip->AddAnimationEvent(6, std::move(std::make_unique<PlayerDeathAnimationFinished>()));
 	deathClip->AddObserver(pObserver);

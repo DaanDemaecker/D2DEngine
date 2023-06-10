@@ -27,7 +27,8 @@ extern SDL_Window* g_window;
 namespace D2D
 {
 	GameObject* SetupPlayer(GameObject* pWorld, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay,
-		const std::string& sceneName, int idx, int controllerIdx, float gridSize)
+		const std::string& sceneName, int idx, int controllerIdx, float gridSize,
+		std::vector<std::shared_ptr<Texture2D>> playerSprites, std::shared_ptr<Texture2D> bombSprites)
 	{
 		int windowWidth{}, windowHeight{};
 		SDL_GetWindowSize(g_window, &windowWidth, &windowHeight);
@@ -60,7 +61,7 @@ namespace D2D
 		pPlayerRenderComponent->SetDestRectBounds(2 * playerRadius, playerHeight);
 
 		auto pPlayerAnimator = pPlayer->AddComponent<D2D::PlayerAnimator>();
-		pPlayerAnimator->Init(pPlayerRenderComponent.get(), pMainLevelUIObserver);
+		pPlayerAnimator->Init(playerSprites, pPlayerRenderComponent.get(), pMainLevelUIObserver);
 
 
 		auto pPlayerCollider = pPlayer->AddComponent<CapsuleCollider>();
@@ -73,6 +74,7 @@ namespace D2D
 
 
 		const auto pBombmanagercomponent = pBombManager->AddComponent<BombManagerComponent>();
+		pBombmanagercomponent->SetBombTexture(bombSprites);
 		pBombmanagercomponent->SetPlayerIndex(idx);
 		pBombmanagercomponent->SetGrid(pGridComponent);
 		pBombmanagercomponent->SetBombSize(gridSize);

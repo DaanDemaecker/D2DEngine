@@ -13,12 +13,6 @@
 #include "ServiceLocator.h"
 #include "GameData.h"
 
-D2D::BombManagerComponent::BombManagerComponent()
-{
-	const auto& pResourceManager{ D2D::ResourceManager::GetInstance() };
-
-	m_pBombtexture = pResourceManager.LoadTexture("sprites/SpriteSheets/Bomb.png");
-}
 
 void D2D::BombManagerComponent::Notify(const Event& event)
 {

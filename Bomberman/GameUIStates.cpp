@@ -183,7 +183,7 @@ void D2D::GameOverState::Update()
 		}
 		else
 		{
-			SceneManager::GetInstance().NextScene();
+			SceneManager::GetInstance().PreviousScene();
 		}
 	}
 }
@@ -226,7 +226,7 @@ void D2D::LevelEndState::Update()
 		}
 		else
 		{
-			SceneManager::GetInstance().NextScene();
+			SceneManager::GetInstance().PreviousScene();
 		}
 	}
 }
