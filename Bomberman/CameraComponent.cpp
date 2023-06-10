@@ -12,9 +12,14 @@ D2D::CameraComponent::CameraComponent()
 
 }
 
-void D2D::CameraComponent::SetPlayer(Transform* playerTransform)
+void D2D::CameraComponent::SetPlayer(Transform* playerTransform, Transform* player2Transform)
 {
-	m_pPlayerTransform = playerTransform;
+	m_pPlayerTransforms.clear();
+	m_pPlayerTransforms.push_back(playerTransform);
+	if (player2Transform != nullptr)
+	{
+		m_pPlayerTransforms.push_back(player2Transform);;
+	}
 }
 
 void D2D::CameraComponent::SetLevelBounds(float min, float max)
@@ -25,7 +30,7 @@ void D2D::CameraComponent::SetLevelBounds(float min, float max)
 
 void D2D::CameraComponent::LateUpdate()
 {
-	if (m_pPlayerTransform == nullptr)
+	if (m_pPlayerTransforms.size() <= 0)
 		return;
 
 	if (m_pTransform == nullptr)
@@ -35,7 +40,14 @@ void D2D::CameraComponent::LateUpdate()
 
 	if (m_pTransform != nullptr)
 	{
-		const auto playerPos = m_pPlayerTransform->GetLocalPosition();
+		glm::vec2 playerPos{};
+
+		for (auto& player : m_pPlayerTransforms)
+		{
+			playerPos += player->GetLocalPosition();
+		}
+		playerPos /= m_pPlayerTransforms.size();
+
 
 		float cameraX = m_WindowWidth / 2 - playerPos.x;
 

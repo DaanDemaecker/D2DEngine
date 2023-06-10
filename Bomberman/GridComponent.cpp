@@ -272,7 +272,7 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	SetupEnemies();
 
-	SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, cubeSize);
+	SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize);
 }
 
 void D2D::GridComponent::EndGame()
