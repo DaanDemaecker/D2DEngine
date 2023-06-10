@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "EnemyManager.h"
 #include "WorldEvents.h"
+#include "ServiceLocator.h"
 #include <algorithm>
 
 void D2D::EnemyManager::Notify(const Event& event)
@@ -15,10 +16,15 @@ void D2D::EnemyManager::Notify(const Event& event)
 	{
 		if (std::find(m_pEnemies.begin(), m_pEnemies.end(), enemyDieEvent->pEnemy) != m_pEnemies.end())
 		{
-
 			NotifyObservers(event);
 
 			m_pEnemies.erase(std::remove(m_pEnemies.begin(), m_pEnemies.end(), enemyDieEvent->pEnemy), m_pEnemies.end());
+
+			if (m_pEnemies.size() == 0)
+			{
+				NotifyObservers(EnemiesDeadEvent());
+				ServiceLocator::GetSoundSystem().Play(10, 128, 0);
+			}
 		}
 	}
 }

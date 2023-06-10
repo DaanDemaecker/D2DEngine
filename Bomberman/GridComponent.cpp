@@ -20,6 +20,7 @@
 #include "EnemyManager.h"
 #include "PlayerSetup.h"
 #include "GameData.h"
+#include "Door.h"
 #include <iostream>
 
 D2D::GridComponent::GridComponent()
@@ -66,7 +67,7 @@ void D2D::GridComponent::SetGrid(int rows, int columns, float cubeSize)
 	std::fill(m_Grid.begin(), m_Grid.end(), GridType::Empty);
 }
 
-void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cubeSize)
+void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cubeSize, Observer* pMainLevelUIObserver)
 {
 	std::ifstream file(fileName);
 	if (!file.is_open()) {
@@ -117,7 +118,7 @@ void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cu
 	}
 	file.close();
 
-	SetupPowerupAndWall();
+	SetupPowerupAndWall(pMainLevelUIObserver);
 	SetGridWalls();
 }
 
@@ -255,12 +256,12 @@ float D2D::GridComponent::GetLevelWidth()
 
 void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, const std::string& sceneName)
 {
-	ReadLevelFromFile(levelFile, cubeSize);
-
-	GetComponent<CameraComponent>()->SetLevelBounds(0, GetLevelWidth());
-
 	const auto pEnemyManager{ GetOwner()->CreateNewObject("EnemyManager") };
 	m_pEnemyManager = pEnemyManager->AddComponent<EnemyManager>().get();
+
+	ReadLevelFromFile(levelFile, cubeSize, pMainLevelUIObserver);
+
+	GetComponent<CameraComponent>()->SetLevelBounds(0, GetLevelWidth());
 
 	AddObserver(m_pEnemyManager);
 
@@ -468,14 +469,14 @@ void D2D::GridComponent::SpawnEnemy(int number)
 
 
 	auto pEnemyComponent = pEnemy->AddComponent<BalloonEnemy>();
-	pEnemyComponent->SetSpeed(3 * m_SquareSize);
+	pEnemyComponent->SetSpeed(1.5f * m_SquareSize);
 
 	auto spawnEvent = EnemySpawnEvent();
 	spawnEvent.pEnemy = pEnemyComponent.get();
 	NotifyObservers(spawnEvent);
 }
 
-void D2D::GridComponent::SetupPowerupAndWall()
+void D2D::GridComponent::SetupPowerupAndWall(Observer* pMainLevelUIObserver)
 {
 	int doorIndex{};
 	int powerupIndex{};
@@ -491,11 +492,11 @@ void D2D::GridComponent::SetupPowerupAndWall()
 	} while (m_Grid[powerupIndex] != BrickWall || powerupIndex == doorIndex);
 
 
-	SpawnDoor(doorIndex);
+	SpawnDoor(doorIndex, pMainLevelUIObserver);
 	SpawnPowerup(powerupIndex);
 }
 
-void D2D::GridComponent::SpawnDoor(int gridIndex)
+void D2D::GridComponent::SpawnDoor(int gridIndex, Observer* pMainLevelUIObserver)
 {
 	auto pDoor = GetOwner()->CreateNewObject("Door");
 
@@ -505,6 +506,15 @@ void D2D::GridComponent::SpawnDoor(int gridIndex)
 	pRenderComponent->SetOffset(-m_SquareSize / 2, -m_SquareSize / 2);
 	pRenderComponent->SetDestRectBounds(m_SquareSize, m_SquareSize);
 	pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/Door.png"));
+
+	auto pCollider = pDoor->AddComponent<BoxCollider>();
+	pCollider->SetVariables(m_SquareSize * 0.9f, m_SquareSize * 0.9f);
+	pCollider->AddToPhysicsManager(true);
+
+
+	auto pDoorComponent = pDoor->AddComponent<Door>();
+	m_pEnemyManager->AddObserver(pDoorComponent.get());
+	pDoorComponent->AddObserver(pMainLevelUIObserver);
 }
 
 void D2D::GridComponent::SpawnPowerup(int gridIndex)

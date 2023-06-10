@@ -182,6 +182,7 @@
     <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="DebugCommand.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="EnemyAnimator.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="ExplosionComponent.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="DebugCommand.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="EnemyAnimator.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="ExplosionComponent.h" />

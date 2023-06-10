@@ -150,6 +150,9 @@
     <ClCompile Include="FunctionCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Components\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="FunctionCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Components\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -67,6 +67,7 @@ namespace D2D
 
 	private:
 		bool m_ShouldRestart{ false };
+		bool m_LevelEnd{ false };
 
 		GameObject* m_pHud{ nullptr };
 		GameObject* m_pPlayField{ nullptr };
@@ -92,7 +93,28 @@ namespace D2D
 		const float m_Time{ 7.0f };
 
 		GameObject* m_pGameOverScreen{};
+	};
 
+	class LevelEndState final : public GameUIState
+	{
+	public:
+		LevelEndState() = default;
+		~LevelEndState() = default;
+
+		void SetVariables(GameObject* pLevelEndScreen);
+
+		virtual void Update() override;
+
+		virtual void ChangeState(GameUI*) override {};
+
+		virtual void OnStateEnter() override;
+		virtual void OnStateLeave() override;
+
+	private:
+		float m_Timer{};
+		const float m_Time{ 13.0f };
+
+		GameObject* m_pLevelEndcreen{};
 	};
 }
 

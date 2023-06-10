@@ -9,6 +9,7 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "ServiceLocator.h"
 #include "glm/glm.hpp"
 
 #include "SDL.h"
@@ -40,10 +41,13 @@ void D2D::HighScoreScreenComponent::OnSceneLoad()
 	{
 		m_pTextComponent->SetText(std::to_string(GameData::GetInstance().GetScore()));
 	}
+
+	ServiceLocator::GetSoundSystem().Play(9, 128, -1);
 }
 
 void D2D::HighScoreScreenComponent::OnSceneUnload()
 {
+	ServiceLocator::GetSoundSystem().StopMusic();
 	//InputManager::GetInstance().RemoveCommands(SceneManager::GetInstance().GetActiveScene()->GetName());
 }
 

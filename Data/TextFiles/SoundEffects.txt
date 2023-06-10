@@ -8,3 +8,7 @@ filePath = "Sound/"
 <"6" = "SoundEffects/LevelStart.wav">
 <"7" = "SoundEffects/PlayerDeath.wav">
 <"8" = "SoundEffects/GameOver.wav">
+<"9" = "Music/HighScoreScreen.mp3">
+<"10" = "SoundEffects/EnemiesDead.wav">
+<"11" = "SoundEffects/DoorReached.wav">
+<"12" = "SoundEffects/LevelEnd.wav">

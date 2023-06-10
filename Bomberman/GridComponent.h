@@ -76,7 +76,7 @@ namespace D2D
 		float m_SquareSize{};
 
 		int m_EnemieBorder{ 5 };
-		int m_EnemyAmount{ 5 };
+		int m_EnemyAmount{ 1 };
 
 		std::shared_ptr<Texture2D> m_pWallTexture{};
 		std::shared_ptr<Texture2D> m_pBrickWallTexture{};
@@ -100,7 +100,7 @@ namespace D2D
 		int GetGridNumber(const glm::vec2& pos);
 		glm::vec2 GetGridPos(int square);
 
-		void ReadLevelFromFile(const std::string& file, float cubeSize);
+		void ReadLevelFromFile(const std::string& file, float cubeSize, Observer* pMainLevelUIObserver);
 
 		void SetGridWalls();
 
@@ -116,9 +116,9 @@ namespace D2D
 
 		void SpawnEnemy(int number);
 
-		void SetupPowerupAndWall();
+		void SetupPowerupAndWall(Observer* pMainLevelUIObserver);
 
-		void SpawnDoor(int gridIndex);
+		void SpawnDoor(int gridIndex, Observer* pMainLevelUIObserver);
 		void SpawnPowerup(int gridIndex);
 	};
 }

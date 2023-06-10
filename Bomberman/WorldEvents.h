@@ -59,4 +59,16 @@ namespace D2D
 	public:
 		StartGameEvent() = default;
 	};
+
+	struct EnemiesDeadEvent final : public Event
+	{
+	public:
+		EnemiesDeadEvent() = default;
+	};
+
+	struct LevelCompleteEvent final : public Event
+	{
+	public:
+		LevelCompleteEvent() = default;
+	};
 }

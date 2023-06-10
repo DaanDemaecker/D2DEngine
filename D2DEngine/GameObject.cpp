@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Transform.h"
 #include "InputManager.h"
+#include <iostream>
 
 D2D::GameObject::~GameObject()
 {

@@ -83,6 +83,11 @@ void D2D::PlayingState::Update()
 
 void D2D::PlayingState::ChangeState(GameUI* gameUI)
 {
+	if (m_LevelEnd)
+	{
+		gameUI->SetState(gameUI->GetLevelEndState());
+	}
+
 	if (m_ShouldRestart)
 	{
 		if (GameData::GetInstance().GetLivesAmount() < 0)
@@ -101,6 +106,7 @@ void D2D::PlayingState::OnStateEnter()
 	ServiceLocator::GetSoundSystem().Play(0, 128, -1);
 
 	m_ShouldRestart = false;
+	m_LevelEnd = false;
 
 	if (m_pHud != nullptr)
 		m_pHud->SetActive(true);
@@ -129,13 +135,22 @@ void D2D::PlayingState::OnStateLeave()
 
 void D2D::PlayingState::Notify(const Event& event)
 {
-	if (auto animationFinishedEvent{ dynamic_cast<const PlayerDeathAnimationFinished*>(&event) })
+	if (m_LevelEnd)
+		return;
+
+	if (auto levelEndEvent{ dynamic_cast<const LevelCompleteEvent*>(&event) })
+	{
+		m_LevelEnd = true;
+	}
+	else if (auto animationFinishedEvent{ dynamic_cast<const PlayerDeathAnimationFinished*>(&event) })
 	{
 			m_ShouldRestart = true;
 	}
 }
 #pragma endregion PlayingState
 
+
+#pragma region GameOver
 void D2D::GameOverState::SetVariables(GameObject* pGameOverScreen)
 {
 	m_pGameOverScreen = pGameOverScreen;
@@ -168,3 +183,40 @@ void D2D::GameOverState::OnStateLeave()
 		m_pGameOverScreen->SetActive(false);
 	}
 }
+#pragma endregion
+
+
+#pragma region LevelEnd
+void D2D::LevelEndState::SetVariables(GameObject* pLevelEndScreen)
+{
+	m_pLevelEndcreen = pLevelEndScreen;
+}
+
+void D2D::LevelEndState::Update()
+{
+	m_Timer -= TimeManager::GetInstance().GetDeltaTime();
+	if (m_Timer <= 0)
+	{
+		SceneManager::GetInstance().NextScene();
+	}
+}
+
+void D2D::LevelEndState::OnStateEnter()
+{
+	m_Timer = m_Time;
+	if (m_pLevelEndcreen != nullptr)
+	{
+		m_pLevelEndcreen->SetActive(true);
+	}
+	ServiceLocator::GetSoundSystem().Play(12, 128, 0);
+}
+
+void D2D::LevelEndState::OnStateLeave()
+{
+	if (m_pLevelEndcreen != nullptr)
+	{
+		m_pLevelEndcreen->SetActive(false);
+	}
+}
+
+#pragma endregion LevelEnd

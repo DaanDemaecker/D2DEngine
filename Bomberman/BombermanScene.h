@@ -142,8 +142,22 @@ namespace D2D
 		pGameOverScreenText->SetText("GAME OVER");
 
 
+		const auto pLevelEndScreen{ pGameUI->CreateNewObject("Level end screen") };
+		pLevelEndScreen->SetActive(false);
+		const auto pLevelEndRenderer{ pLevelEndScreen->AddComponent<RenderComponent>() };
+		pLevelEndRenderer->SetTexture(pIntroScreenBackgroundTexture);
+		pLevelEndRenderer->SetDestRectBounds(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
 
-		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pTimerComponent.get(), pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen);
+		const auto pLevelEndScreenTextObject{ pLevelEndScreen->CreateNewObject("Level end text") };
+		const auto pLevelEndRender{ pLevelEndScreenTextObject->AddComponent<RenderComponent>() };
+		const auto pLevelEndText{ pLevelEndScreenTextObject->AddComponent<TextComponent>() };
+		pLevelEndScreenTextObject->GetTransform()->SetWorldPosition(static_cast<float>(windowWidth) / 2.f - 150, static_cast<float>(windowHeight) / 2.f);
+		pLevelEndText->SetFont(pBigFont);
+		pLevelEndText->SetColor(255.f, 255.f, 255.f, 255.f);
+		pLevelEndText->SetText("YOU WIN");
+
+
+		pGameUIComponent->Initialize(pIntroScreen, pHud, pWorld, pTimerComponent.get(), pPointsDisplayComponent.get(), pLivesDisplayComponent.get(), pGameOverScreen, pLevelEndScreen);
 		
 		
 		scene.StartFrame();
