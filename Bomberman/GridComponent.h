@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "PlayerComponent.h"
 #include "Observer.h"
+#include "BaseEnemyComponent.h"
 #include <map>
 
 namespace D2D
@@ -118,7 +119,7 @@ namespace D2D
 
 		void DeleteBrickWall(int number);
 
-		void SpawnEnemy(int number);
+		void SpawnEnemy(int number, EnemyType type);
 
 		void SetupPowerupAndWall(Observer* pMainLevelUIObserver);
 

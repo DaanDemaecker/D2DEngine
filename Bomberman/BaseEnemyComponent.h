@@ -11,7 +11,10 @@ namespace D2D
 
 	enum class EnemyType
 	{
-		Balloom
+		Balloom,
+		Oneal,
+		Doll,
+		Minvo
 	};
 
 	class BaseEnemyComponent : public Component, public Subject

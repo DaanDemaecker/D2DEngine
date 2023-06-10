@@ -78,9 +78,6 @@
     <ClCompile Include="BaseEnemyComponent.cpp">
       <Filter>Components\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="BalloonEnemy.cpp">
-      <Filter>Components\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyAnimator.cpp">
       <Filter>Components\AnimatorControllers</Filter>
     </ClCompile>
@@ -189,9 +186,6 @@
       <Filter>Components\AnimatorControllers</Filter>
     </ClInclude>
     <ClInclude Include="BaseEnemyComponent.h">
-      <Filter>Components\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="BalloonEnemy.h">
       <Filter>Components\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAnimator.h">

@@ -1,4 +1,5 @@
 #pragma once
+#include "glm/glm.hpp"
 
 namespace D2D
 {
@@ -13,6 +14,16 @@ namespace D2D
 		Down,
 		Left
 	};
+
+	Direction Flip(Direction direction);
+
+	Direction Rotate(Direction direction);
+
+	glm::vec2 DirectionToVec(Direction direction);
+
+	Direction VectToDirection(const glm::vec2 vec);
+
+
 
 	class EnemyMovementBaseState
 	{
@@ -37,9 +48,18 @@ namespace D2D
 		virtual void Update(Transform* pTransform, Collider* pCollider, float speed) override;
 
 	private:
+		Direction m_Direction{ Direction::Left };
+
+		float m_TurnTimer{5.f};
+		const float m_TurnTime{5.f};
+
 		float m_MarginX{};
 		float m_MarginY{};
 		float m_RaycastDistance{};
+
+		bool ShouldFlip(Transform* pTransform, Collider* pCollider);
+
+		bool Shouldturn(Transform* pTransform, Collider* pCollider);
 	};
 }
 

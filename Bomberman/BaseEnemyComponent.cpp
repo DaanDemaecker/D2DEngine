@@ -11,7 +11,7 @@
 
 void D2D::BaseEnemyComponent::Update()
 {
-	if (m_pMovement != nullptr && m_pCollider != nullptr)
+	if (!m_IsDead && m_pMovement != nullptr && m_pCollider != nullptr)
 	{
 		m_pMovement->Update(GetTransform(), m_pCollider, m_Speed);
 	}
@@ -23,6 +23,7 @@ void D2D::BaseEnemyComponent::SetVariables(EnemyType type, float speed, Collider
 	m_Speed = speed;
 	m_pCollider = pCollider;
 	m_pTrigger = pTrigger;
+	m_pAnimator = GetComponent<EnemyAnimator>().get();
 }
 
 void D2D::BaseEnemyComponent::SetMovementState(std::unique_ptr<EnemyMovementBaseState> pState)
@@ -35,6 +36,8 @@ void D2D::BaseEnemyComponent::OnTriggerEnter(const Collider* pCollider)
 {
 	if (pCollider->GetComponent<ExplosionComponent>())
 	{
+
+
 		if (m_pAnimator != nullptr)
 		{
 			m_pAnimator->Kill();

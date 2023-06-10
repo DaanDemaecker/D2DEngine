@@ -173,7 +173,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BalloonEnemy.cpp" />
     <ClCompile Include="BaseEnemyComponent.cpp" />
     <ClCompile Include="BombComponent.cpp" />
     <ClCompile Include="Bomberman.cpp" />
@@ -215,7 +214,6 @@
     <ClCompile Include="TimerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BalloonEnemy.h" />
     <ClInclude Include="BaseEnemyComponent.h" />
     <ClInclude Include="BombComponent.h" />
     <ClInclude Include="BombermanScene.h" />

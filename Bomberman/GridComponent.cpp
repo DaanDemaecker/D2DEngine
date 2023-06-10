@@ -12,7 +12,6 @@
 #include "ExplosionComponent.h"
 #include "BombComponent.h"
 #include "SingleClipAnimator.h"
-#include "BalloonEnemy.h"
 #include "CapsuleCollider.h"
 #include "EnemyAnimator.h"
 #include "Powerup.h"
@@ -460,17 +459,20 @@ void D2D::GridComponent::SetupEnemies()
 
 			goodPosition = m_Grid[position] == Empty && position % m_Columns > m_EnemieBorder;
 		}
-		SpawnEnemy(position);
+		SpawnEnemy(position, EnemyType::Balloom);
 	}
 }
 
-void D2D::GridComponent::SpawnEnemy(int number)
+void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 {
 	const float enemyTriggerHeight{ m_SquareSize * .9f };
 	const float enemyTriggerWidth{ m_SquareSize  * 0.8f };
 
 	const float enemyHeight{ enemyTriggerHeight * 0.9f };
 	const float enemyWidth{ enemyTriggerWidth * 0.9f };
+
+	const float slowSpeed{ 1.5f * m_SquareSize };
+	//const float fastSpeed{ slowSpeed * 1.5f };
 
 
 	const auto pEnemy = GetOwner()->CreateNewObject("Enemy");
@@ -490,11 +492,23 @@ void D2D::GridComponent::SpawnEnemy(int number)
 	auto pCollider = pEnemy->AddComponent<CapsuleCollider>();
 	pCollider->SetVariables(enemyHeight, enemyWidth / 2);
 	pCollider->AddToPhysicsManager(false);
-
-
 	auto pEnemyComponent = pEnemy->AddComponent<BaseEnemyComponent>();
-	pEnemyComponent->SetVariables(EnemyType::Balloom, 1.5f * m_SquareSize, pCollider.get(), pTrigger.get());
-	pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth/2.5f, enemyHeight/2.5f, 20.f));
+
+	switch (type)
+	{
+	case D2D::EnemyType::Balloom:
+		pEnemyComponent->SetVariables(EnemyType::Balloom, slowSpeed, pCollider.get(), pTrigger.get());
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
+		break;
+	case D2D::EnemyType::Oneal:
+		break;
+	case D2D::EnemyType::Doll:
+		break;
+	case D2D::EnemyType::Minvo:
+		break;
+	default:
+		break;
+	}
 
 	auto spawnEvent = EnemySpawnEvent();
 	spawnEvent.pEnemy = pEnemyComponent.get();
