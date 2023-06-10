@@ -27,10 +27,13 @@ D2D::GridComponent::GridComponent()
 {
 	const auto& resourceManager = ResourceManager::GetInstance();
 
+	//Walls
 	m_pWallTexture = resourceManager.LoadTexture("Sprites/Wall.png");
 	m_pBrickWallTexture = resourceManager.LoadTexture("Sprites/BrickWall.png");
 	m_pBrickExplosionTexture = resourceManager.LoadTexture("Sprites/Spritesheets/BrickWallDestroy.png");
 
+
+	//Explosions
 	m_pExplosionTextures[ExplosionType::Center] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionCenter.png");
 
 	m_pExplosionTextures[ExplosionType::LeftMiddle] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionLeftMiddle.png");
@@ -45,18 +48,40 @@ D2D::GridComponent::GridComponent()
 	m_pExplosionTextures[ExplosionType::DownMiddle] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDownMiddle.png");
 	m_pExplosionTextures[ExplosionType::Down] = resourceManager.LoadTexture("Sprites/Spritesheets/Explosion/ExplosionDown.png");
 
+
+	//Enemies
 	m_pBalloonTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/BalloonLeft.png"));
 	m_pBalloonTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/BalloonRight.png"));
 	m_pBalloonTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/BalloonDeath.png"));
 
+	m_pOnealTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/OnealLeft.png"));
+	m_pOnealTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/OnealRight.png"));
+	m_pOnealTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/OnealDeath.png"));
+
+	m_pDollTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/DollLeft.png"));
+	m_pDollTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/DollRight.png"));
+	m_pDollTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/DollDeath.png"));
+
+	m_pMinvoTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/MinvoLeft.png"));
+	m_pMinvoTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/MinvoRight.png"));
+	m_pMinvoTextures.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Enemies/MinvoDeath.png"));
+
+
+	//Powerups
 	m_pPowerupSprites[PowerupType::FireUp] = resourceManager.LoadTexture("Sprites/Powerups/FireUp.png");
 	m_pPowerupSprites[PowerupType::BombUp] = resourceManager.LoadTexture("Sprites/Powerups/BombUp.png");
 	m_pPowerupSprites[PowerupType::RemoteControl] = resourceManager.LoadTexture("Sprites/Powerups/RemoteControl.png");
 
+
+	//Door
 	m_pDoorTexture = resourceManager.LoadTexture("Sprites/Door.png");
 
+
+	//Bomb
 	m_pBombSprites = resourceManager.LoadTexture("Sprites/SpriteSheets/Bomb.png");
 
+
+	//Player
 	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerDown.png"));
 	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerUp.png"));
 	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerLeft.png"));
@@ -459,7 +484,7 @@ void D2D::GridComponent::SetupEnemies()
 
 			goodPosition = m_Grid[position] == Empty && position % m_Columns > m_EnemieBorder;
 		}
-		SpawnEnemy(position, EnemyType::Balloom);
+		SpawnEnemy(position, EnemyType::Minvo);
 	}
 }
 
@@ -472,7 +497,7 @@ void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 	const float enemyWidth{ enemyTriggerWidth * 0.9f };
 
 	const float slowSpeed{ 1.5f * m_SquareSize };
-	//const float fastSpeed{ slowSpeed * 1.5f };
+	const float fastSpeed{ slowSpeed * 1.5f };
 
 
 	const auto pEnemy = GetOwner()->CreateNewObject("Enemy");
@@ -483,7 +508,6 @@ void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 	pRenderComponent->SetDestRectBounds(enemyWidth, enemyHeight);
 
 	auto pAnimator = pEnemy->AddComponent<EnemyAnimator>();
-	pAnimator->Init(pRenderComponent.get(), m_pBalloonTextures);
 
 	auto pTrigger = pEnemy->AddComponent<BoxCollider>();
 	pTrigger->SetVariables(enemyTriggerWidth, enemyTriggerHeight);
@@ -497,14 +521,24 @@ void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 	switch (type)
 	{
 	case D2D::EnemyType::Balloom:
-		pEnemyComponent->SetVariables(EnemyType::Balloom, slowSpeed, pCollider.get(), pTrigger.get());
+		pAnimator->Init(pRenderComponent.get(), m_pBalloonTextures);
+		pEnemyComponent->SetVariables(type, slowSpeed, pCollider.get(), pTrigger.get());
 		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
 		break;
 	case D2D::EnemyType::Oneal:
+		pAnimator->Init(pRenderComponent.get(), m_pOnealTextures);
+		pEnemyComponent->SetVariables(type, slowSpeed, pCollider.get(), pTrigger.get());
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
 		break;
 	case D2D::EnemyType::Doll:
+		pAnimator->Init(pRenderComponent.get(), m_pDollTextures);
+		pEnemyComponent->SetVariables(type, fastSpeed, pCollider.get(), pTrigger.get());
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
 		break;
 	case D2D::EnemyType::Minvo:
+		pAnimator->Init(pRenderComponent.get(), m_pMinvoTextures);
+		pEnemyComponent->SetVariables(type, fastSpeed, pCollider.get(), pTrigger.get());
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
 		break;
 	default:
 		break;

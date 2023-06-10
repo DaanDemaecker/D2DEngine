@@ -6,6 +6,7 @@ namespace D2D
 	class BaseEnemyComponent;
 	class Transform;
 	class Collider;
+	class EnemyAnimator;
 
 	enum class Direction
 	{
@@ -30,12 +31,9 @@ namespace D2D
 	public:
 		virtual ~EnemyMovementBaseState() = default;
 
-		virtual void SetEnemy(BaseEnemyComponent* pEnemy) { m_pEnemy = pEnemy; }
+		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) = 0;
 
-		virtual void Update(Transform* pTransform, Collider* pCollider, float speed) = 0;
-
-	protected:
-		BaseEnemyComponent* m_pEnemy{};
+		virtual void OnStateChange(BaseEnemyComponent* pEnemy) = 0;
 	};
 
 	class EnemyWanderState final : public EnemyMovementBaseState
@@ -45,7 +43,9 @@ namespace D2D
 		EnemyWanderState(float marginX, float marginY, float distance);
 		~EnemyWanderState() = default;
 
-		virtual void Update(Transform* pTransform, Collider* pCollider, float speed) override;
+		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
+
+		virtual void OnStateChange(BaseEnemyComponent* /*pEnemy*/) override {}
 
 	private:
 		Direction m_Direction{ Direction::Left };

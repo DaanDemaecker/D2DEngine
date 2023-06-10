@@ -5,7 +5,7 @@
 #include "PlayerComponent.h"
 #include "Transform.h"
 #include "Collider.h"
-#include <iostream>
+#include "EnemyAnimator.h"
 
 D2D::Direction D2D::Flip(D2D::Direction direction)
 {
@@ -92,7 +92,7 @@ D2D::EnemyWanderState::EnemyWanderState(float marginX, float marginY, float dist
 	m_RaycastDistance = distance;
 }
 
-void D2D::EnemyWanderState::Update(Transform* pTransform, Collider* pCollider, float speed)
+void D2D::EnemyWanderState::Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
 {
 	if (m_TurnTimer > 0)
 	{
@@ -109,8 +109,9 @@ void D2D::EnemyWanderState::Update(Transform* pTransform, Collider* pCollider, f
 	}
 	
 
-
 	glm::vec2 frontDirection{ DirectionToVec(m_Direction) };
+
+	pAnimator->FacingRight(frontDirection.x > 0);
 
 	if (!pTransform->MoveLocalPosition(frontDirection * speed * TimeManager::GetInstance().GetDeltaTime()))
 	{

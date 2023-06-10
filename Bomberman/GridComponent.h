@@ -90,6 +90,9 @@ namespace D2D
 		std::vector<std::shared_ptr<Texture2D>> m_pPlayerSprites{};
 
 		std::vector<std::shared_ptr<Texture2D>> m_pBalloonTextures{};
+		std::vector<std::shared_ptr<Texture2D>> m_pOnealTextures{};
+		std::vector<std::shared_ptr<Texture2D>> m_pDollTextures{};
+		std::vector<std::shared_ptr<Texture2D>> m_pMinvoTextures{};
 
 
 		std::map<ExplosionType,std::shared_ptr<Texture2D>> m_pExplosionTextures{};

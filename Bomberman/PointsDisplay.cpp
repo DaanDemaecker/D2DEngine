@@ -25,6 +25,15 @@ void D2D::PointsDisplay::Notify(const Event& event)
 		case EnemyType::Balloom:
 			m_Score += 100;
 			break;
+		case EnemyType::Oneal:
+			m_Score += 200;
+			break;
+		case EnemyType::Doll:
+			m_Score += 400;
+			break;
+		case EnemyType::Minvo:
+			m_Score += 800;
+			break;
 		default:
 			break;
 		}

@@ -11,9 +11,9 @@
 
 void D2D::BaseEnemyComponent::Update()
 {
-	if (!m_IsDead && m_pMovement != nullptr && m_pCollider != nullptr)
+	if (!m_IsDead && m_pMovement != nullptr && m_pCollider != nullptr && m_pAnimator != nullptr)
 	{
-		m_pMovement->Update(GetTransform(), m_pCollider, m_Speed);
+		m_pMovement->Update(m_pAnimator, GetTransform(), m_pCollider, m_Speed);
 	}
 }
 
@@ -29,19 +29,17 @@ void D2D::BaseEnemyComponent::SetVariables(EnemyType type, float speed, Collider
 void D2D::BaseEnemyComponent::SetMovementState(std::unique_ptr<EnemyMovementBaseState> pState)
 {
 	m_pMovement = std::move(pState);
-	m_pMovement->SetEnemy(this);
 }
 
 void D2D::BaseEnemyComponent::OnTriggerEnter(const Collider* pCollider)
 {
 	if (pCollider->GetComponent<ExplosionComponent>())
 	{
-
-
 		if (m_pAnimator != nullptr)
 		{
 			m_pAnimator->Kill();
 		}
+
 		GetOwner()->RemoveComponent<BoxCollider>();
 		GetOwner()->RemoveComponent<CapsuleCollider>();
 		m_IsDead = true;
