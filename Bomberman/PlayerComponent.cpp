@@ -8,6 +8,9 @@
 #include "ServiceLocator.h"
 #include <iostream>
 
+#include "PhysicsManager.h"
+#include "Renderer.h"
+
 void D2D::PlayerComponent::Update()
 {
 	if (m_pTransform == nullptr)

@@ -2,6 +2,7 @@
 #include "BoxCollider.h"
 #include "CapsuleCollider.h"
 #include "Renderer.h"
+#include "Transform.h"
 
 #include <cmath>
 #include <algorithm>
@@ -334,6 +335,29 @@ void D2D::PhysicsManager::GetPenetrationDepth(const glm::vec2& point, const glm:
     depth = penetrationDepth * scale * penetrationDirection;
 }
 
+void D2D::PhysicsManager::RaycastDirectional(const glm::vec2& p1, const glm::vec2& direction, float t, const Collider* toIgnore, std::vector<Collider*>& hits)
+{
+    for (auto& pBoxCollider : m_pBoxColliders)
+    {
+        if (pBoxCollider == toIgnore)
+            continue;
+
+        auto rect{ pBoxCollider->GetBounds() };
+        if (RaycastDirectional(p1, direction, t, rect))
+            hits.push_back(pBoxCollider);
+    }
+
+    for (auto& pCapsuleColliders : m_pCapsuleColliders)
+    {
+        if (pCapsuleColliders == toIgnore)
+            continue;
+
+        auto capsule{ pCapsuleColliders->GetBounds() };
+        if (RaycastDirectional(p1, direction, t, capsule))
+            hits.push_back(pCapsuleColliders);
+    }
+}
+
 bool D2D::PhysicsManager::Raycast(const Rect& rect, const glm::vec2 startPos, const glm::vec2 endPos)
 {
     float left = rect.x;
@@ -572,4 +596,120 @@ void D2D::PhysicsManager::CheckColliderForTrigger(CapsuleCollider* pCollider)
             }
         }
     }
+}
+
+D2D::Collider* D2D::PhysicsManager::RaycastDirectional(const glm::vec2& p1, const glm::vec2& direction, float t, const D2D::Collider* toIgnore)
+{
+    std::vector<D2D::Collider*> hits{};
+
+    RaycastDirectional(p1, direction, t, toIgnore, hits);
+
+    float closestSquared{ FLT_MAX };
+    int closestIndex{ -1 };
+
+
+    for (int i{}; i < static_cast<int>(hits.size()); ++i)
+    {
+        auto p{ hits[i]->GetTransform()->GetWorldPosition() };
+        float distanceSquared{ (p.x - p1.x) * (p.x - p1.x) + (p.y - p1.y) * (p.y - p1.y) };
+        if (distanceSquared < closestSquared)
+        {
+            closestSquared = distanceSquared;
+            closestIndex = i;
+        }
+    }
+
+
+    if (closestIndex == -1)
+        return nullptr;
+    else
+        return hits[closestIndex];
+}
+
+D2D::Collider* D2D::PhysicsManager::Raycast(const glm::vec2& p1, const glm::vec2& p2, const D2D::Collider* toIgnore)
+{
+    glm::vec2 direction{ p2 - p1 };
+
+    float t{ static_cast<float>(direction.length()) };
+
+    direction /= t;
+
+    return RaycastDirectional(p1, direction, t, toIgnore);
+}
+
+bool D2D::PhysicsManager::RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t, const Rect& rectangle)
+{
+    float left = rectangle.x;
+    float right = rectangle.x + rectangle.w;
+    float top = rectangle.y;
+    float bottom = rectangle.y + rectangle.h;
+
+    float x1 = origin.x;
+    float y1 = origin.y;
+    float x2 = origin.x + direction.x * t;
+    float y2 = origin.y + direction.y * t;
+
+    // Check if the line is outside the bounding box of the rectangle
+    if (x1 < left && x2 < left) return false;
+    if (x1 > right && x2 > right) return false;
+    if (y1 < top && y2 < top) return false;
+    if (y1 > bottom && y2 > bottom) return false;
+
+    // Check if the line intersects with any of the rectangle's edges
+    float m = (y2 - y1) / (x2 - x1); // Slope of the line
+
+    // Check left edge
+    float y = m * (left - x1) + y1;
+    if (y >= top && y <= bottom) return true;
+
+    // Check right edge
+    y = m * (right - x1) + y1;
+    if (y >= top && y <= bottom) return true;
+
+    // Check top edge
+    float x = (top - y1) / m + x1;
+    if (x >= left && x <= right) return true;
+
+    // Check bottom edge
+    x = (bottom - y1) / m + x1;
+    if (x >= left && x <= right) return true;
+
+    return false;
+}
+
+bool D2D::PhysicsManager::RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t, Capsule& capsule)
+{
+    if (RaycastDirectional(origin, direction, t, capsule.GetRect()) ||
+        RaycastDirectional(origin, direction, t, capsule.GetTopCenter(), capsule.radius) ||
+        RaycastDirectional(origin, direction, t, capsule.GetBotCenter(), capsule.radius))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool D2D::PhysicsManager::RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t, const glm::vec2& c, float r)
+{
+    bool hit = false;
+
+    glm::vec2 perpendicularDirection(-direction.y, direction.x);
+    glm::vec2 oc = c - origin;
+    float d = glm::dot(oc, perpendicularDirection);
+
+    if (d > r) {
+        return hit;
+    }
+
+    glm::vec2 intersection = origin + direction * t;
+    glm::vec2 ic = c - intersection;
+    float distanceToCenter = glm::length(ic);
+
+    if (distanceToCenter > r) {
+        return hit;
+    }
+
+    hit = true;
+
+    return hit;
 }

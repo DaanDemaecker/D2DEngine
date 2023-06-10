@@ -5,6 +5,7 @@
 
 namespace D2D
 {
+	class Collider;
 	class BoxCollider;
 	class CapsuleCollider;
 	struct Rect;
@@ -39,6 +40,9 @@ namespace D2D
 		void CheckColliderForTrigger(BoxCollider* pCollider);
 		void CheckColliderForTrigger(CapsuleCollider* pCollider);
 
+		Collider* RaycastDirectional(const glm::vec2& p1, const glm::vec2& direction, float t, const Collider* toIgnore = nullptr);
+		Collider* Raycast(const glm::vec2& p1, const glm::vec2& p2, const Collider* toIgnore = nullptr);
+
 	private:
 		friend class Singleton<PhysicsManager>;
 		PhysicsManager() = default;
@@ -49,5 +53,14 @@ namespace D2D
 		std::vector<BoxCollider*> m_pBoxTriggers{};
 
 		void GetPenetrationDepth(const glm::vec2& point, const glm::vec2& center, float radius, glm::vec2& depth);
+
+		void RaycastDirectional(const glm::vec2& p1, const glm::vec2& direction, float t, const Collider* toIgnore, std::vector<Collider*>& hits);
+
+		bool RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t , const Rect& rectangle);
+
+		bool RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t, Capsule& capsule);
+
+		bool RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t, const glm::vec2& c, float r);
+
 	};
 }
