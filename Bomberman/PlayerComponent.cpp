@@ -46,7 +46,7 @@ void D2D::PlayerComponent::Update()
 
 void D2D::PlayerComponent::PlaceBomb()
 {
-	if (m_IsDead)
+	if (m_IsDead || !IsActive())
 		return;
 
 	if (m_pTransform == nullptr)

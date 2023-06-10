@@ -4,6 +4,7 @@
 #include <thread>
 #include "Subject.h"
 #include <string>
+#include <glm/glm.hpp>
 
 namespace D2D
 {
@@ -25,7 +26,7 @@ namespace D2D
 		InputState() = default;
 		~InputState() = default;
 
-		void SetVariables(GameObject* screen, TextComponent* text1, TextComponent* text2, TextComponent* text3, TextComponent* done, GameObject* selector);
+		void SetVariables(GameObject* screen, TextComponent* text1, TextComponent* text2, TextComponent* text3, TextComponent* done);
 
 		virtual void Update() override {};
 
@@ -43,12 +44,14 @@ namespace D2D
 		bool m_Active{ false };
 		GameObject* m_pScreen{};
 
+		const glm::vec3 m_Yellow{ 253.f, 255.f, 32.f };
+		const glm::vec3 m_White{ 255.f, 255.f, 255.f };
+
 		bool m_Continue{ false };
 
 		int m_Selected{};
 		std::vector<TextComponent*> m_pLetters{};
 		TextComponent* m_pDone{};
-		GameObject* m_pSelector{};
 	};
 
 	class HighscoresState final : public HighScoreStates

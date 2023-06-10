@@ -74,7 +74,7 @@ void D2D::BalloonEnemy::OnTriggerEnter(const Collider* pCollider)
 		GetOwner()->RemoveComponent<CapsuleCollider>();
 		m_IsDead = true;
 
-		auto dieEvent{ EnemyDieEvent()};
+		auto dieEvent{ EnemyDieEvent() };
 		dieEvent.pEnemy = this;
 		dieEvent.enemyType = m_Type;
 

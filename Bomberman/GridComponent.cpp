@@ -21,6 +21,7 @@
 #include "PlayerSetup.h"
 #include "GameData.h"
 #include "Door.h"
+#include "EnemyMovementStates.h"
 #include <iostream>
 
 D2D::GridComponent::GridComponent()
@@ -287,13 +288,13 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 	{
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 	else
 	{
-		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
-		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 2, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
 	}
 }
@@ -491,8 +492,9 @@ void D2D::GridComponent::SpawnEnemy(int number)
 	pCollider->AddToPhysicsManager(false);
 
 
-	auto pEnemyComponent = pEnemy->AddComponent<BalloonEnemy>();
-	pEnemyComponent->SetSpeed(1.5f * m_SquareSize);
+	auto pEnemyComponent = pEnemy->AddComponent<BaseEnemyComponent>();
+	pEnemyComponent->SetVariables(EnemyType::Balloom, 1.5f * m_SquareSize, pCollider.get(), pTrigger.get());
+	pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth/2.5f, enemyHeight/2.5f, 20.f));
 
 	auto spawnEvent = EnemySpawnEvent();
 	spawnEvent.pEnemy = pEnemyComponent.get();

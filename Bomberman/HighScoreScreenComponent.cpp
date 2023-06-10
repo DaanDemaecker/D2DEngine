@@ -106,7 +106,7 @@ void D2D::HighScoreScreenComponent::SetupInputState(GameObject* pInputWindow)
 
 	textPos.x += difference;
 
-	const auto letter2Component{ pInputWindow->CreateNewObject("Letter 2") };
+	const auto letter2Component{pInputWindow->CreateNewObject("Letter 2")};
 	letter2Component->GetTransform()->SetWorldPosition(textPos);
 
 	auto letter2Render{ letter2Component->AddComponent<RenderComponent>() };
@@ -134,7 +134,7 @@ void D2D::HighScoreScreenComponent::SetupInputState(GameObject* pInputWindow)
 	textPos.x += difference;
 	textPos.y += 20;
 
-	const auto doneComponent{ pInputWindow->CreateNewObject("Done") };
+	const auto doneComponent{pInputWindow->CreateNewObject("Done")};
 	doneComponent->GetTransform()->SetWorldPosition(textPos);
 
 	auto doneRenderer{ doneComponent->AddComponent<RenderComponent>() };
@@ -142,13 +142,6 @@ void D2D::HighScoreScreenComponent::SetupInputState(GameObject* pInputWindow)
 	doneText->SetFont(pSmallFont);
 	doneText->SetColor(255.f, 255.f, 255.f);
 	doneText->SetText("DONE");
-
-
-	const auto selectorObject{ letter1Component->CreateNewObject("Selector") };
-	selectorObject->GetTransform()->SetLocalPosition(lineDifference);
-
-	auto selectorRender{ selectorObject->AddComponent<RenderComponent>() };
-	selectorRender->SetTexture(selectorTexture);
 
 
 	auto scoreObject{ pInputWindow->CreateNewObject("Score Object") };
@@ -170,7 +163,7 @@ void D2D::HighScoreScreenComponent::SetupInputState(GameObject* pInputWindow)
 	m_pTextComponent->SetColor(255.f, 255.f, 255.f);
 	m_pTextComponent->SetText("test");
 
-	m_pInputState->SetVariables(pInputWindow, letter1Text.get(), letter2Text.get(), letter3Text.get(), doneText.get(), selectorObject);
+	m_pInputState->SetVariables(pInputWindow, letter1Text.get(), letter2Text.get(), letter3Text.get(), doneText.get());
 }
 
 void D2D::HighScoreScreenComponent::AddArrows(GameObject* pLetter, std::shared_ptr<Texture2D> upArrow, std::shared_ptr<Texture2D> downArrow)

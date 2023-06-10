@@ -32,7 +32,7 @@ namespace D2D
 	private:
 		int m_PlayerIndex{};
 
-		GridComponent* m_pGrid;
+		GridComponent* m_pGrid{};
 
 		std::shared_ptr<Texture2D> m_pBombtexture{};
 		float m_BombSize{};

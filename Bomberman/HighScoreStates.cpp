@@ -17,16 +17,18 @@
 extern SDL_Window* g_window;
 
 #pragma region InputState
-void D2D::InputState::SetVariables(GameObject* screen, TextComponent* text1, TextComponent* text2, TextComponent* text3, TextComponent* done, GameObject* selector)
+void D2D::InputState::SetVariables(GameObject* screen, TextComponent* text1, TextComponent* text2, TextComponent* text3, TextComponent* done)
 {
 	m_pScreen = screen;
 
 	m_Selected = 0;
+
+	m_pLetters.clear();
 	m_pLetters.push_back(text1);
 	m_pLetters.push_back(text2);
 	m_pLetters.push_back(text3);
+
 	m_pDone = done;
-	m_pSelector = selector;
 
 	auto& pInputManager{ InputManager::GetInstance() };
 
@@ -53,34 +55,25 @@ void D2D::InputState::HorizontalScroll(int direction)
 	{
 		if (m_pDone != nullptr)
 		{
-			m_pDone->SetColor(255.f, 255.f, 255.f);
+			m_pDone->SetColor(m_White.x, m_White.y, m_White.z);
 		}
-
-		if (m_pSelector != nullptr)
-		{
-			m_pSelector->SetActive(true);
-		}
+	}
+	else
+	{
+		m_pLetters[oldSelection]->SetColor(m_White.x, m_White.y, m_White.z);
 	}
 
 	if (m_Selected == 3)
 	{
 		if (m_pDone != nullptr)
 		{
-			m_pDone->SetColor(253.f, 255.f, 32.f);
-		}
-
-		if (m_pSelector != nullptr)
-		{
-			m_pSelector->SetActive(false);
+			m_pDone->SetColor(m_Yellow.x, m_Yellow.y, m_Yellow.z);
 		}
 	}
-
-	if (m_pSelector != nullptr && m_Selected < static_cast<int>(m_pLetters.size()))
+	else
 	{
-		m_pSelector->SetActive(true);
-		m_pSelector->SetParent(m_pLetters[m_Selected]->GetOwner(), false);
+		m_pLetters[m_Selected]->SetColor(m_Yellow.x, m_Yellow.y, m_Yellow.z);
 	}
-	
 }
 
 void D2D::InputState::VerticalScroll(int direction)
@@ -132,18 +125,17 @@ void D2D::InputState::OnStateEnter()
 		m_pScreen->SetActive(true);
 	}
 	m_Selected = 0;
-	if (m_pSelector != nullptr && m_pLetters.size() > 0)
-	{
-		m_pSelector->SetActive(true);
-		m_pSelector->SetParent(m_pLetters[0]->GetOwner(), false);
-	}
 	for (auto& letter : m_pLetters)
 	{
 		letter->SetText("A");
+		letter->SetColor(m_White.x, m_White.y, m_White.z);
 	}
+
+	m_pLetters[0]->SetColor(m_Yellow.x, m_Yellow.y, m_Yellow.z);
+
 	if (m_pDone != nullptr)
 	{
-		m_pDone->SetColor(255.f, 255.f, 255.f);
+		m_pDone->SetColor(m_White.x, m_White.y, m_White.z);
 	}
 
 }

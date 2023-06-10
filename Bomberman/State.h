@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 
 namespace D2D
 {

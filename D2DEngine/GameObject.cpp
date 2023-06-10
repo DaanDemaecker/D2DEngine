@@ -6,7 +6,6 @@
 
 D2D::GameObject::~GameObject()
 {
-
 }
 
 void D2D::GameObject::Init()

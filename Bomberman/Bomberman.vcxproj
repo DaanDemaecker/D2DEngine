@@ -185,6 +185,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="EnemyAnimator.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EnemyMovementStates.cpp" />
     <ClCompile Include="ExplosionComponent.cpp" />
     <ClCompile Include="FunctionCommand.cpp" />
     <ClCompile Include="GameData.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="EnemyAnimator.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EnemyMovementStates.h" />
     <ClInclude Include="ExplosionComponent.h" />
     <ClInclude Include="FunctionCommand.h" />
     <ClInclude Include="GameData.h" />
