@@ -7,6 +7,13 @@
 #include <cmath>
 #include <algorithm>
 
+#include <iostream>
+
+void D2D::PhysicsManager::AddIgnoreLayers(const std::string& tag1, const std::string& tag2)
+{
+    m_IgnoreLayers[tag1].push_back(tag2);
+}
+
 void D2D::PhysicsManager::AddCollider(BoxCollider* pCollider)
 {
 	if ((pCollider != nullptr) && (std::find(m_pBoxColliders.begin(), m_pBoxColliders.end(), pCollider) == m_pBoxColliders.end()))
@@ -74,9 +81,12 @@ bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, glm::vec2& direction, 
 
     const auto movedRect{ Rect{rect.x + direction.x, rect.y + direction.y, rect.w, rect.h} };
 
+    auto tag{ pCollider->GetOwner()->GetTag() };
+
 	for (const auto& otherCollider : m_pBoxColliders)
 	{
-		if (otherCollider == pCollider || !otherCollider->IsActive())continue;
+		if (otherCollider == pCollider || !otherCollider->IsActive() ||
+            ShouldIgnoreLayers(tag, otherCollider->GetOwner()->GetTag()))continue;
 		
         auto otherRect = D2D::Rect{ otherCollider->GetBounds() };
 
@@ -89,7 +99,8 @@ bool D2D::PhysicsManager::CanMove(BoxCollider* pCollider, glm::vec2& direction, 
 
     for (const auto& otherCollider : m_pCapsuleColliders)
     {
-        if (!otherCollider->IsActive())
+        if (!otherCollider->IsActive() ||
+            ShouldIgnoreLayers(tag, otherCollider->GetOwner()->GetTag()))
             continue;
 
         auto otherCapsule = otherCollider->GetBounds();
@@ -126,9 +137,12 @@ bool D2D::PhysicsManager::CanMove(CapsuleCollider* pCollider, glm::vec2& directi
     const auto movedC2{ movedCapsule.GetBotCenter() };
 
 
+    std::string tag{ pCollider->GetOwner()->GetTag() };
+
     for (const auto& otherCollider : m_pBoxColliders)
     {
-        if (!otherCollider->IsActive())
+        if (!otherCollider->IsActive() ||
+            ShouldIgnoreLayers(tag, otherCollider->GetOwner()->GetTag()))
             continue;
 
         auto otherRect = D2D::Rect{ otherCollider->GetBounds() };
@@ -292,7 +306,8 @@ bool D2D::PhysicsManager::CanMove(CapsuleCollider* pCollider, glm::vec2& directi
 
     for (const auto& otherCollider : m_pCapsuleColliders)
     {
-        if (otherCollider == pCollider || !otherCollider->IsActive())continue;
+        if (otherCollider == pCollider || !otherCollider->IsActive() ||
+            ShouldIgnoreLayers(tag, otherCollider->GetOwner()->GetTag()))continue;
 
         auto otherCapsule = otherCollider->GetBounds();
         auto otherRect = D2D::Rect{ otherCapsule.GetRect() };
@@ -712,4 +727,14 @@ bool D2D::PhysicsManager::RaycastDirectional(const glm::vec2& origin, const glm:
     hit = true;
 
     return hit;
+}
+
+bool D2D::PhysicsManager::ShouldIgnoreLayers(const std::string& tag1, const std::string& tag2)
+{
+    auto& tags{ m_IgnoreLayers[tag1] };
+
+    if (std::find(tags.begin(), tags.end(), tag2) == tags.end())
+        return false;
+
+    return true;
 }

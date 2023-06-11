@@ -43,11 +43,11 @@ namespace D2D
 		const float playerHeight{ gridSize * .9f };
 		const float playerRadius{ gridSize / 2.f * 0.8f };
 
-		const auto pBombManager{ pWorld->CreateNewObject("BombManager", "Player")};
+		const auto pBombManager{ pWorld->CreateNewObject("BombManager")};
 
 		const auto pGridComponent{ pWorld->GetComponent<GridComponent>().get() };
 
-		const auto pPlayer{ pWorld->CreateNewObject("Bomber Man " + std::to_string(idx)) };
+		const auto pPlayer{ pWorld->CreateNewObject("Bomber Man " + std::to_string(idx), "Player") };
 
 		auto pPlayerTransform = pPlayer->GetTransform().get();
 		pPlayerTransform->SetWorldPosition(pGridComponent->GetPlayerPosition(idx));

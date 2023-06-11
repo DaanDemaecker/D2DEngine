@@ -17,6 +17,7 @@
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
 #include "DebugSDLSoundSystem.h"
+#include "PhysicsManager.h"
 
 
 void load()
@@ -29,6 +30,13 @@ void load()
 	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::DebugSDLSoundSystem>());
 #endif
 	D2D::ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
+
+	auto& physics = D2D::PhysicsManager::GetInstance();
+	physics.AddIgnoreLayers("Player", "Enemy");
+	physics.AddIgnoreLayers("Player", "Player");
+	physics.AddIgnoreLayers("Enemy", "Enemy");
+	physics.AddIgnoreLayers("Enemy", "Player");
+
 
 	auto startScreenScene = D2D::SceneManager::GetInstance().CreateScene("StartScreen");
 	D2D::LoadStartScreenScene(*startScreenScene);

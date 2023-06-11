@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <map>
+#include <string>
 
 namespace D2D
 {
@@ -15,6 +16,8 @@ namespace D2D
 	class PhysicsManager final : public Singleton<PhysicsManager>
 	{
 	public:
+		void AddIgnoreLayers(const std::string& tag1, const std::string& tag2);
+
 		void AddCollider(BoxCollider* pCollider);
 		void AddCollider(CapsuleCollider* pCollider);
 		void RemoveCollider(BoxCollider* pCollider);
@@ -53,6 +56,8 @@ namespace D2D
 
 		std::vector<BoxCollider*> m_pBoxTriggers{};
 
+		std::map<std::string, std::vector<std::string>> m_IgnoreLayers{};
+
 		void GetPenetrationDepth(const glm::vec2& point, const glm::vec2& center, float radius, glm::vec2& depth);
 
 		void RaycastDirectional(const glm::vec2& p1, const glm::vec2& direction, float t, const Collider* toIgnore, std::vector<Collider*>& hits);
@@ -63,5 +68,7 @@ namespace D2D
 
 		bool RaycastDirectional(const glm::vec2& origin, const glm::vec2& direction, float t, const glm::vec2& c, float r);
 
+
+		bool ShouldIgnoreLayers(const std::string& tag1, const std::string& tag2);
 	};
 }
