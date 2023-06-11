@@ -22,6 +22,7 @@
 #include "Door.h"
 #include "EnemyMovementStates.h"
 #include <iostream>
+#include <regex>
 
 D2D::GridComponent::GridComponent()
 {
@@ -121,42 +122,75 @@ void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cu
 	int currentIndex{};
 
 	std::string line;
-	while (std::getline(file, line)) {
-		for (char c : line)
+	while (std::getline(file, line))
+	{
+		if (line[0] == 'L')
 		{
-			switch (c) {
-			case 'w':
-				m_Grid.push_back(D2D::Wall);
-				break;
-			case 'b':
+			for (char c : line)
 			{
-				int random = rand() % 100;
-				if (random <= brickChance)
+				switch (c)
 				{
-					m_Grid.push_back(D2D::BrickWall);
+				case 'L':
+					continue;
+					break;
+				case 'w':
+					m_Grid.push_back(D2D::Wall);
+					break;
+				case 'b':
+				{
+					int random = rand() % 100;
+					if (random <= brickChance)
+					{
+						m_Grid.push_back(D2D::BrickWall);
+					}
+					else
+					{
+						m_Grid.push_back(D2D::Empty);
+					}
 				}
-				else
-				{
+				break;
+				case 'p':
+					m_PlayerSpawns.push_back(currentIndex);
+				case 'e':
 					m_Grid.push_back(D2D::Empty);
+					break;
 				}
+				++currentIndex;
+				if (m_Rows == 0)
+					++m_Columns;
 			}
-				break;
-			case 'p':
-				m_PlayerSpawns.push_back(currentIndex);
-			case 'e':
-				m_Grid.push_back(D2D::Empty);
-				break;
-			}
-			++currentIndex;
-			if (m_Rows == 0)
-				++m_Columns;
+			m_Rows++;
 		}
-		m_Rows++;
+		else if (line[0] == 'E')
+		{
+			ReadEnemies(line);
+		}
 	}
 	file.close();
 
 	SetupPowerupAndWall(pMainLevelUIObserver);
 	SetGridWalls();
+}
+
+void D2D::GridComponent::ReadEnemies(const std::string& enemyString)
+{
+	std::cout << enemyString << std::endl;
+
+	std::regex pattern(R"((\d+) (\d+) (\d+) (\d+))");
+
+	m_Enemies.clear();
+
+	std::smatch matches;
+	if (std::regex_search(enemyString, matches, pattern))
+	{
+		for (int i{}; i < matches.size(); ++i)
+		{
+			if (i == 0)
+				continue;
+
+			m_Enemies.push_back(std::stoi(matches[i]));
+		}
+	}
 }
 
 void D2D::GridComponent::Notify(const Event& event)
@@ -473,18 +507,22 @@ void D2D::GridComponent::DeleteBrickWall(int number)
 
 void D2D::GridComponent::SetupEnemies()
 {
-	for (int i{}; i < m_EnemyAmount; ++i)
+	for (int j{}; j < m_Enemies.size(); ++j)
 	{
-		bool goodPosition{false};
-		int position{};
 
-		while (!goodPosition)
+		for (int i{}; i < m_Enemies[j]; ++i)
 		{
-			position = rand() % m_Grid.size();
+			bool goodPosition{ false };
+			int position{};
 
-			goodPosition = m_Grid[position] == Empty && position % m_Columns > m_EnemieBorder;
+			while (!goodPosition)
+			{
+				position = rand() % m_Grid.size();
+
+				goodPosition = m_Grid[position] == Empty && position % m_Columns > m_EnemieBorder;
+			}
+			SpawnEnemy(position, static_cast<EnemyType>(j));
 		}
-		SpawnEnemy(position, EnemyType::Minvo);
 	}
 }
 
