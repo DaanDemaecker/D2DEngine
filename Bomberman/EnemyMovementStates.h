@@ -120,5 +120,22 @@ namespace D2D
 
 		void LookForPlayer(Transform* pTransform, Collider* pCollider);
 	};
+
+	class ControlledState final : public EnemyMovementBaseState
+	{
+	public:
+		ControlledState() = default;
+		~ControlledState() = default;
+
+		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override ;
+
+		virtual void OnStateChange(BaseEnemyComponent* /*pEnemy*/) override {}
+
+		virtual void SetDirection(const glm::vec2& direction);
+
+	private:
+		glm::vec2 m_Direction{};
+
+	};
 }
 

@@ -88,6 +88,10 @@ D2D::GridComponent::GridComponent()
 	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerLeft.png"));
 	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerRight.png"));
 	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerDie.png"));
+
+
+	//Crosshair
+	m_pCrosshairSprite = resourceManager.LoadTexture("Sprites/Crosshair.png");
 }
 
 void D2D::GridComponent::OnSceneUnload()
@@ -174,8 +178,6 @@ void D2D::GridComponent::ReadLevelFromFile(const std::string& fileName, float cu
 
 void D2D::GridComponent::ReadEnemies(const std::string& enemyString)
 {
-	std::cout << enemyString << std::endl;
-
 	std::regex pattern(R"((\d+) (\d+) (\d+) (\d+))");
 
 	m_Enemies.clear();
@@ -183,7 +185,7 @@ void D2D::GridComponent::ReadEnemies(const std::string& enemyString)
 	std::smatch matches;
 	if (std::regex_search(enemyString, matches, pattern))
 	{
-		for (int i{}; i < matches.size(); ++i)
+		for (int i{}; i < static_cast<int>(matches.size()); ++i)
 		{
 			if (i == 0)
 				continue;
@@ -346,14 +348,24 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 	{
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
+	}
+	else if(GameData::GetInstance().GetGameMode() == GameMode::Coop)
+	{
+		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
 	}
 	else
 	{
-		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
-		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 2, cubeSize, m_pPlayerSprites, m_pBombSprites);
-		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
+		auto parent{ GetOwner()->CreateNewObject("Crosshai Parent") };
+
+		SetupVerusPlayer(sceneName, parent, m_pCrosshairSprite, 0, m_SquareSize);
+
+
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 }
 
@@ -507,7 +519,7 @@ void D2D::GridComponent::DeleteBrickWall(int number)
 
 void D2D::GridComponent::SetupEnemies()
 {
-	for (int j{}; j < m_Enemies.size(); ++j)
+	for (int j{}; j < static_cast<int>(m_Enemies.size()); ++j)
 	{
 
 		for (int i{}; i < m_Enemies[j]; ++i)

@@ -20,6 +20,7 @@
 #include "PlaceBombCommand.h"
 #include "RemoteControlCommand.h"
 #include "Observer.h"
+#include "VersusPlayer.h"
 #include "SDL.h"
 
 extern SDL_Window* g_window;
@@ -103,5 +104,28 @@ namespace D2D
 		input.AddGamepadCommand(controllerIdx, GamepadButton::ButtonEast, D2D::keyState::Down, std::make_unique<D2D::RemoteControlCommand>(pBombmanagercomponent.get()), sceneName);
 
 		return pPlayer;
+	}
+
+	void SetupVerusPlayer(const std::string& sceneName, GameObject* pParent, std::shared_ptr<Texture2D> pTexture, int controllerIdx, float gridSize)
+	{
+		constexpr float hudSize{ 50.f };
+
+		float playerSpeed{ 4 * gridSize };
+
+		int windowWidth{}, windowHeight{};
+		SDL_GetWindowSize(g_window, &windowWidth, &windowHeight);
+
+
+		auto pPlayer{ pParent->CreateNewObject("Versus Player") };
+		pPlayer->GetTransform()->SetWorldPosition(static_cast<float>(windowWidth) / 2, static_cast<float>(windowHeight) / 2);
+
+		auto playerRender{ pPlayer->AddComponent<RenderComponent>() };
+		playerRender->SetOffset(-gridSize / 2, -gridSize / 2);
+		playerRender->SetDestRectBounds(gridSize, gridSize);
+		playerRender->SetTexture(pTexture);
+
+		auto pPlayerComponent{ pPlayer->AddComponent<VersusPlayer>() };
+		pPlayerComponent->Setup(sceneName, playerSpeed, controllerIdx, {0, hudSize}, {windowWidth, windowHeight});
+
 	}
 }

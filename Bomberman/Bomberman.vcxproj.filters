@@ -153,6 +153,9 @@
     <ClCompile Include="EnemyMovementStates.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="VersusPlayer.cpp">
+      <Filter>Components\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -274,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="EnemyMovementStates.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusPlayer.h">
+      <Filter>Components\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

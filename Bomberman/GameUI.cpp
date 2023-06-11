@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameUI.h"
 #include "PlayerEvents.h"
+#include "GameData.h"
 
 void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject,
 	Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen, GameObject* pLevelEndScreen,
@@ -33,6 +34,7 @@ void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, G
 void D2D::GameUI::OnSceneLoad()
 {
 	SetState(m_pIntroState.get());
+	GameData::GetInstance().SetCurrentLevel(1);
 }
 
 void D2D::GameUI::Update()

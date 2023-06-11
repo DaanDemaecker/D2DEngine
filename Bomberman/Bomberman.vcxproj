@@ -212,6 +212,7 @@
     <ClCompile Include="SelfDestroyingAnimator.cpp" />
     <ClCompile Include="SingleClipAnimator.cpp" />
     <ClCompile Include="TimerComponent.cpp" />
+    <ClCompile Include="VersusPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseEnemyComponent.h" />
@@ -253,6 +254,7 @@
     <ClInclude Include="StartScreenScene.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="TimerComponent.h" />
+    <ClInclude Include="VersusPlayer.h" />
     <ClInclude Include="WorldEvents.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

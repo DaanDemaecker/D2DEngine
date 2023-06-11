@@ -30,5 +30,6 @@ void D2D::MainMenuComponent::CoopButton()
 
 void D2D::MainMenuComponent::VersusButton()
 {
-	std::cout << "VersusButton\n";
+	GameData::GetInstance().SetGameMode(GameMode::Versus);
+	D2D::SceneManager::GetInstance().NextScene();
 }

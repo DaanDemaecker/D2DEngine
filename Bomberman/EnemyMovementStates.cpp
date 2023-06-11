@@ -381,3 +381,12 @@ void D2D::ChasingState::LookForPlayer(Transform* pTransform, Collider* pCollider
 
 
 #pragma endregion chasingState
+
+void D2D::ControlledState::Update(EnemyAnimator* /*pAnimator*/, Transform* /*pTransform*/, Collider* /*pCollider*/, float /*speed*/)
+{
+}
+
+void D2D::ControlledState::SetDirection(const glm::vec2& direction)
+{
+	m_Direction = direction;
+}
