@@ -47,13 +47,13 @@ void D2D::ImGuiInfoComponent::CreateWindow()
             ImGui::Text("Controller:");
             ImGui::Text("Coop:");
             ImGui::Text("-Move             DPAD");
-            ImGui::Text("-Place Bomb       SOUTh BUTTON");
+            ImGui::Text("-Place Bomb       SOUTH BUTTON");
             ImGui::Text("-Remote Detonate  EAST BUTTON");
             ImGui::Text("");
 
             ImGui::Text("Versus:");
             ImGui::Text("-Move             DPAD");
-            ImGui::Text("-Posess Enemy     SOUTh BUTTON");
+            ImGui::Text("-Posess Enemy     SOUTH BUTTON");
 
 
             ImGui::TreePop();
