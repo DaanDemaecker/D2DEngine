@@ -43,7 +43,7 @@ namespace D2D
 		const float playerHeight{ gridSize * .9f };
 		const float playerRadius{ gridSize / 2.f * 0.8f };
 
-		const auto pBombManager{ pWorld->CreateNewObject("BombManager") };
+		const auto pBombManager{ pWorld->CreateNewObject("BombManager", "Player")};
 
 		const auto pGridComponent{ pWorld->GetComponent<GridComponent>().get() };
 

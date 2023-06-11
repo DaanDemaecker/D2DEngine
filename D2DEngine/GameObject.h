@@ -13,8 +13,8 @@ namespace D2D
 	class GameObject final
 	{
 	public:
-		GameObject() : GameObject("UnNamed"){}
-		GameObject(const std::string& name) : m_Name{name}{}
+		GameObject() : GameObject("UnNamed", "Default") {}
+		GameObject(const std::string& name = "UnNamed", const std::string& tag = "Default") : m_Name{name}, m_Tag{tag} {}
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -44,7 +44,7 @@ namespace D2D
 		void Destroy();
 		bool ShouldDestroy() const { return m_ShouldDestroy; }
 
-		GameObject* CreateNewObject(const std::string& name = "UnNamed");
+		GameObject* CreateNewObject(const std::string& name = "UnNamed", const std::string& tag = "Default");
 		void RemoveAllChildren();
 
 		void OnTriggerEnter(const Collider* pCollider);
@@ -68,11 +68,13 @@ namespace D2D
 		std::shared_ptr<Transform> GetTransform() { return m_pTransform; }
 
 		const std::string& GetName() const { return m_Name; }
+		const std::string& GetTag() const { return m_Tag; }
 
 		bool IsActive() const { return m_IsActive; }
 		void SetActive(bool isActive);
 	private:
 		const std::string m_Name;
+		const std::string m_Tag;
 		bool m_IsActive{ true };
 
 		GameObject* m_pParent{};

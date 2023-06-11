@@ -551,7 +551,7 @@ void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 	const float fastSpeed{ slowSpeed * 2.f };
 
 
-	const auto pEnemy = GetOwner()->CreateNewObject("Enemy");
+	const auto pEnemy = GetOwner()->CreateNewObject("Enemy", "Enemy");
 	pEnemy->GetTransform()->SetWorldPosition(GetGridPos(number));
 
 	auto pRenderComponent = pEnemy->AddComponent<RenderComponent>();

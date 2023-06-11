@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include <glm/glm.hpp>
 #include <vector>
+#include <map>
 
 namespace D2D
 {

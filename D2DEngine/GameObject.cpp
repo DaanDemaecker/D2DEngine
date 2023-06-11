@@ -190,9 +190,9 @@ void D2D::GameObject::Destroy()
 	}
 }
 
-D2D::GameObject* D2D::GameObject::CreateNewObject(const std::string& name)
+D2D::GameObject* D2D::GameObject::CreateNewObject(const std::string& name, const std::string& tag)
 {
-	auto pNewObject{ std::make_unique<GameObject>(name) };
+	auto pNewObject{ std::make_unique<GameObject>(name, tag) };
 
 	pNewObject->Init();
 

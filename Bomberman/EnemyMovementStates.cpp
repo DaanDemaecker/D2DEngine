@@ -131,7 +131,7 @@ bool D2D::EnemyWanderState::ShouldFlip(Transform* pTransform, Collider* pCollide
 	auto pos{ pTransform->GetWorldPosition() };
 
 	auto result = PhysicsManager::GetInstance().RaycastDirectional(pos, frontDirection, m_RaycastDistance, pCollider);
-	if (result != nullptr && result->GetComponent<PlayerComponent>() == nullptr)
+	if (result != nullptr && result->GetComponent<PlayerComponent>() == nullptr && result->GetComponent<BaseEnemyComponent>() == nullptr)
 	{
 		return true;
 	}
@@ -151,8 +151,8 @@ bool D2D::EnemyWanderState::Shouldturn(Transform* pTransform, Collider* pCollide
 	auto result1 = PhysicsManager::GetInstance().RaycastDirectional(p1, rayDirection, m_RaycastSideDistance, pCollider);
 	auto result2 = PhysicsManager::GetInstance().RaycastDirectional(p2, rayDirection, m_RaycastSideDistance, pCollider);
 
-	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr) &&
-		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr))
+	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr || result1->GetComponent<BaseEnemyComponent>() != nullptr) &&
+		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr || result2->GetComponent<BaseEnemyComponent>() != nullptr))
 	{
 		m_Direction = rotDirection;
 		return true;
@@ -164,8 +164,8 @@ bool D2D::EnemyWanderState::Shouldturn(Transform* pTransform, Collider* pCollide
 	result1 = PhysicsManager::GetInstance().RaycastDirectional(p1, rayDirection, m_RaycastSideDistance, pCollider);
 	result2 = PhysicsManager::GetInstance().RaycastDirectional(p2, rayDirection, m_RaycastSideDistance, pCollider);
 
-	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr) &&
-		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr))
+	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr || result1->GetComponent<BaseEnemyComponent>() != nullptr) &&
+		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr || result2->GetComponent<BaseEnemyComponent>() != nullptr))
 	{
 		m_Direction = rotDirection;
 		return true;
@@ -231,7 +231,7 @@ bool D2D::EnemyLookingState::ShouldFlip(Transform* pTransform, Collider* pCollid
 	auto pos{ pTransform->GetWorldPosition() };
 
 	auto result = PhysicsManager::GetInstance().RaycastDirectional(pos, frontDirection, m_RaycastDistance, pCollider);
-	if (result != nullptr && result->GetComponent<PlayerComponent>() == nullptr)
+	if (result != nullptr && result->GetComponent<PlayerComponent>() == nullptr && result->GetComponent<BaseEnemyComponent>() == nullptr)
 	{
 		return true;
 	}
@@ -251,8 +251,8 @@ bool D2D::EnemyLookingState::Shouldturn(Transform* pTransform, Collider* pCollid
 	auto result1 = PhysicsManager::GetInstance().RaycastDirectional(p1, rayDirection, m_RaycastSideDistance, pCollider);
 	auto result2 = PhysicsManager::GetInstance().RaycastDirectional(p2, rayDirection, m_RaycastSideDistance, pCollider);
 
-	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr) &&
-		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr))
+	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr || result1->GetComponent<BaseEnemyComponent>() != nullptr) &&
+		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr || result2->GetComponent<BaseEnemyComponent>() != nullptr))
 	{
 		m_Direction = rotDirection;
 		return true;
@@ -264,8 +264,8 @@ bool D2D::EnemyLookingState::Shouldturn(Transform* pTransform, Collider* pCollid
 	result1 = PhysicsManager::GetInstance().RaycastDirectional(p1, rayDirection, m_RaycastSideDistance, pCollider);
 	result2 = PhysicsManager::GetInstance().RaycastDirectional(p2, rayDirection, m_RaycastSideDistance, pCollider);
 
-	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr) &&
-		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr))
+	if ((result1 == nullptr || result1->GetComponent<PlayerComponent>() != nullptr || result1->GetComponent<BaseEnemyComponent>() != nullptr) &&
+		(result2 == nullptr || result2->GetComponent<PlayerComponent>() != nullptr || result2->GetComponent<BaseEnemyComponent>() != nullptr))
 	{
 		m_Direction = rotDirection;
 		return true;
