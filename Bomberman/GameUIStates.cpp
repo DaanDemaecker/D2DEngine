@@ -200,6 +200,8 @@ void D2D::GameOverState::OnStateEnter()
 	ServiceLocator::GetSoundSystem().Play(8, 128, 0);
 	m_Timer = m_Time;
 
+	GameData::GetInstance().SetCurrentLevel(1);
+
 	if (m_pGameOverScreen)
 	{
 		m_pGameOverScreen->SetActive(true);
@@ -229,10 +231,12 @@ void D2D::LevelEndState::Update()
 	{
 		if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 		{
+			GameData::GetInstance().SetCurrentLevel(1);
 			SceneManager::GetInstance().NextScene();
 		}
 		else
 		{
+			GameData::GetInstance().SetCurrentLevel(1);
 			SceneManager::GetInstance().PreviousScene();
 		}
 	}

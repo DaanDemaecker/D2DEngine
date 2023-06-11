@@ -87,7 +87,8 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pDoorTexture{};
 		std::shared_ptr<Texture2D> m_pBombSprites{};
 
-		std::vector<std::shared_ptr<Texture2D>> m_pPlayerSprites{};
+		std::vector<std::shared_ptr<Texture2D>> m_pPlayer1Sprites{};
+		std::vector<std::shared_ptr<Texture2D>> m_pPlayer2Sprites{};
 		std::shared_ptr<Texture2D> m_pCrosshairSprite{};
 
 		std::vector<std::shared_ptr<Texture2D>> m_pBalloonTextures{};

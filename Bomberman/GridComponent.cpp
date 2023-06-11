@@ -83,11 +83,17 @@ D2D::GridComponent::GridComponent()
 
 
 	//Player
-	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerDown.png"));
-	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerUp.png"));
-	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerLeft.png"));
-	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerRight.png"));
-	m_pPlayerSprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/PlayerDie.png"));
+	m_pPlayer1Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player1Down.png"));
+	m_pPlayer1Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player1Up.png"));
+	m_pPlayer1Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player1Left.png"));
+	m_pPlayer1Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player1Right.png"));
+	m_pPlayer1Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player1Die.png"));
+
+	m_pPlayer2Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player2Down.png"));
+	m_pPlayer2Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player2Up.png"));
+	m_pPlayer2Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player2Left.png"));
+	m_pPlayer2Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player2Right.png"));
+	m_pPlayer2Sprites.push_back(resourceManager.LoadTexture("Sprites/SpriteSheets/Player/Player2Die.png"));
 
 
 	//Crosshair
@@ -348,13 +354,13 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 	{
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, cubeSize, m_pPlayer1Sprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 	else if(GameData::GetInstance().GetGameMode() == GameMode::Coop)
 	{
-		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
-		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 1, cubeSize, m_pPlayer2Sprites, m_pBombSprites);
+		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, cubeSize, m_pPlayer1Sprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
 	}
 	else
@@ -364,7 +370,7 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 		SetupVerusPlayer(sceneName, parent, m_pCrosshairSprite, m_SquareSize);
 
 
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, cubeSize, m_pPlayer1Sprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 }
