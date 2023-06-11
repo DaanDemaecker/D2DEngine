@@ -6,8 +6,6 @@
 
 namespace D2D
 {
-	class PlayerComponent;
-
 	class FunctionCommand final : public Command
 	{
 	public:

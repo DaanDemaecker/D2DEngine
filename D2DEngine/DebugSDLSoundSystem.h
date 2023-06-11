@@ -18,7 +18,12 @@ namespace D2D
 
 		virtual void StopMusic() override;
 
+		virtual void SetVolume(float volume) override;
+
+		virtual void ToggleMute() override;
+
 	private:
+
 		std::unique_ptr<SDLSoundSystem> m_pSDLSoundSystem{};
 	};
 }

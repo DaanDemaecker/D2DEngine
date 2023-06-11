@@ -136,8 +136,9 @@ void D2D::PlayingState::OnStateLeave()
 		m_pPlayField->GetComponent<GridComponent>()->EndGame();
 		m_pPlayField->SetActive(false);
 	}
-
+	
 	InputManager::GetInstance().RemoveCommands(SceneManager::GetInstance().GetActiveScene()->GetName());
+	SceneManager::GetInstance().GetActiveScene()->BindInfoWindowCommand();
 }
 
 void D2D::PlayingState::Notify(const Event& event)

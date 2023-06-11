@@ -33,6 +33,8 @@ namespace D2D
 
 		void PostUpdate();
 
+		void BindInfoWindowCommand();
+
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;

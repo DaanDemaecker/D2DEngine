@@ -18,6 +18,10 @@ namespace D2D
 
 		virtual void Play(unsigned short id, int voume, int loops = 0) override;
 
+		virtual void SetVolume(float volume) override { m_Volume = volume; if (!m_IsMuted) { m_ActualVolume = volume; } }
+
+		virtual void ToggleMute() override;
+
 		virtual void ReadSoundSheet(const std::string& filePath) override;
 
 		void Run();
@@ -25,6 +29,11 @@ namespace D2D
 		virtual void StopMusic();
 
 	private:
+		float m_Volume{ 1.f };
+		float m_ActualVolume{ 1.f };
+
+		bool m_IsMuted{ false };
+
 		std::map<unsigned short, Mix_Chunk*> m_pSoundChunks{};
 		std::map<unsigned short, _Mix_Music*> m_pSoundMusic{};
 

@@ -18,6 +18,8 @@
 #include "SDLSoundSystem.h"
 #include "DebugSDLSoundSystem.h"
 #include "PhysicsManager.h"
+#include "InputManager.h"
+#include "ToggleSoundCommand.h"
 
 
 void load()
@@ -30,6 +32,7 @@ void load()
 	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::DebugSDLSoundSystem>());
 #endif
 	D2D::ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
+	D2D::ServiceLocator::GetSoundSystem().SetVolume(0.1f);
 
 	auto& physics = D2D::PhysicsManager::GetInstance();
 	physics.AddIgnoreLayers("Player", "Enemy");
@@ -48,6 +51,8 @@ void load()
 	D2D::LoadHighscoreScene(*highScoreScene);
 
 	D2D::SceneManager::GetInstance().SetActiveScene(startScreenScene);
+
+	D2D::InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_M, D2D::keyState::Down, std::make_unique<D2D::ToggleSoundCommand>(), "");
 
 	std::cout << "\n Pres Tab to toggle the info window \n \n";
 }

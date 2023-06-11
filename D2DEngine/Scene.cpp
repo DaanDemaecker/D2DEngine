@@ -31,11 +31,7 @@ Scene::Scene(const std::string& name) : m_name(name)
 	m_pCanvas = std::make_unique<GameObject>("Canvas");
 	m_pCanvas->Init();
 
-	auto pInfoComponent = m_pSceneRoot->AddComponent<ImGuiInfoComponent>().get();
-
-	pInfoComponent->SetCanvas(m_pCanvas.get());
-
-	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent), m_name);
+	BindInfoWindowCommand();
 }
 
 Scene::~Scene()
@@ -119,6 +115,15 @@ void D2D::Scene::PostUpdate()
 {
 	m_pSceneRoot->PostUpdate();
 	m_pCanvas->PostUpdate();
+}
+
+void D2D::Scene::BindInfoWindowCommand()
+{
+	auto pInfoComponent = m_pSceneRoot->AddComponent<ImGuiInfoComponent>().get();
+
+	pInfoComponent->SetCanvas(m_pCanvas.get());
+
+	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_TAB, keyState::Down, std::make_unique<InfoCommand>(pInfoComponent), m_name);
 }
 
 

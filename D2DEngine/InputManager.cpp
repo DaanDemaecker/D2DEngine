@@ -99,7 +99,12 @@ namespace D2D
 
 		for (auto& command : m_KeyboardCommands)
 		{
-			if (command->sceneName != currentScenName)
+			if (command->sceneName == "")
+			{
+				command->sceneName = "";
+			}
+
+			if (!(command->sceneName == "" || command->sceneName == currentScenName))
 				continue;
 
 			switch (command->state)
@@ -123,7 +128,7 @@ namespace D2D
 
 		for (auto& command : m_GamepadCommands)
 		{
-			if (command->sceneName != currentScenName)
+			if (command->sceneName != "" && command->sceneName != currentScenName)
 				continue;
 
 			if (m_pGamePads[command->gamepadIndex] == nullptr)

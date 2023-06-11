@@ -37,9 +37,25 @@ void D2D::SDLSoundSystem::Play(unsigned short id, int volume, int loops)
 {
 	std::unique_lock<std::mutex> lock{ m_Mutex };
 
-	m_Queue.push_back(std::make_tuple(id, volume, loops));
+	m_Queue.push_back(std::make_tuple(id, static_cast<int>(volume * m_ActualVolume), loops));
 
 	m_ConditionVariable.notify_one();
+}
+
+void D2D::SDLSoundSystem::ToggleMute()
+{
+	m_IsMuted = !m_IsMuted;
+	
+	if (m_IsMuted)
+	{
+		Mix_VolumeMusic(0);
+		m_ActualVolume = 0;
+	}
+	else
+	{
+		Mix_VolumeMusic(static_cast<int>(128 * m_Volume));
+		m_ActualVolume = m_Volume;
+	}
 }
 
 void D2D::SDLSoundSystem::ReadSoundSheet(const std::string& filePath)

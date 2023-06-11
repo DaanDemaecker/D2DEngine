@@ -156,6 +156,9 @@
     <ClCompile Include="VersusPlayer.cpp">
       <Filter>Components\Player</Filter>
     </ClCompile>
+    <ClCompile Include="ToggleSoundCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanScene.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="VersusPlayer.h">
       <Filter>Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleSoundCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

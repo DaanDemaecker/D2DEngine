@@ -19,6 +19,10 @@ namespace D2D
 
 		virtual void StopMusic() = 0;
 
+		virtual void ToggleMute() = 0;
+
+		virtual void SetVolume(float volume) = 0;
+
 		virtual void ReadSoundSheet(const std::string& filePath) = 0;
 
 	};
@@ -32,6 +36,10 @@ namespace D2D
 		virtual void Play(unsigned short , int, int = 0) override {}
 
 		virtual void StopMusic() override {}
+
+		virtual void ToggleMute() override {}
+
+		virtual void SetVolume(float) override {}
 
 		virtual void ReadSoundSheet(const std::string&) override {}
 
