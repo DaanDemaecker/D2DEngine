@@ -28,7 +28,7 @@ extern SDL_Window* g_window;
 namespace D2D
 {
 	GameObject* SetupPlayer(GameObject* pWorld, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, Subject* pTimer,
-		const std::string& sceneName, int idx, int controllerIdx, float gridSize,
+		const std::string& sceneName, int idx, float gridSize,
 		std::vector<std::shared_ptr<Texture2D>> playerSprites, std::shared_ptr<Texture2D> bombSprites)
 	{
 		int windowWidth{}, windowHeight{};
@@ -95,6 +95,8 @@ namespace D2D
 			input.AddKeyboardCommand(SDL_SCANCODE_Q, D2D::keyState::Down, std::make_unique<D2D::RemoteControlCommand>(pBombmanagercomponent.get()), sceneName);
 
 		}
+
+		int controllerIdx = input.GetGamePad();
 		
 		input.AddGamepadCommand(controllerIdx, GamepadButton::DpadUp, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ 0, -1 }, pPlayerComponent), sceneName);
 		input.AddGamepadCommand(controllerIdx, GamepadButton::DpadLeft, D2D::keyState::pressed, std::make_unique<D2D::PlayerMovementCommand>(glm::vec2{ -1, 0 }, pPlayerComponent), sceneName);
@@ -107,7 +109,7 @@ namespace D2D
 		return pPlayer;
 	}
 
-	void SetupVerusPlayer(const std::string& sceneName, GameObject* pParent, std::shared_ptr<Texture2D> pTexture, int controllerIdx, float gridSize)
+	void SetupVerusPlayer(const std::string& sceneName, GameObject* pParent, std::shared_ptr<Texture2D> pTexture, float gridSize)
 	{
 		constexpr float hudSize{ 50.f };
 
@@ -126,6 +128,9 @@ namespace D2D
 		playerRender->SetTexture(pTexture);
 
 		auto pPlayerComponent{ pPlayer->AddComponent<VersusPlayer>() };
+
+		int controllerIdx = InputManager::GetInstance().GetGamePad();
+
 		pPlayerComponent->Setup(sceneName, playerSpeed, controllerIdx, {0, hudSize}, {windowWidth, windowHeight});
 
 	}

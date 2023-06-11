@@ -55,6 +55,25 @@ namespace D2D
 		return true;
 	}
 
+	int InputManager::GetGamePad()
+	{
+		RemoveDisconnectedControllers();
+
+		for (int i{}; i < m_MaxIndex; ++i)
+		{
+			if (m_pGamePads[i] != nullptr)
+				continue;
+
+
+			if (CheckIndex(i))
+			{
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
 	void InputManager::AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName)
 	{
 		m_KeyboardCommands.push_back(std::make_unique<KeyboardCommand>(keyCode, keyState, std::move(pCommand), sceneName));
@@ -162,13 +181,21 @@ namespace D2D
 		if (m_pGamePads[index] != nullptr)
 			return true;
 
-		std::cout << "Created new controller with index " << index << "\n";
 		m_pGamePads[index] = std::make_unique<GamePad>(index);
+
+		if (m_pGamePads[index]->ShouldDelete())
+		{
+			RemoveDisconnectedControllers();
+			return false;
+		}
+
 		return true;
 	}
 
 	void InputManager::RemoveDisconnectedControllers()
 	{
+		RemoveUnusedControllers();
+
 		for(int i{}; i <= m_MaxIndex; i++)
 		{
 			if (m_pGamePads[i] == nullptr)
@@ -178,8 +205,26 @@ namespace D2D
 			{
 				RemoveGamepadCommands(i);
 				m_pGamePads[i] = nullptr;
-				std::cout << "Deleted controller with index " << i << "\n";
 			}
+		}
+	}
+
+	void InputManager::RemoveUnusedControllers()
+	{
+		for (auto& gamePad : m_pGamePads)
+		{
+			if (gamePad == nullptr)
+				continue;
+
+			if (!gamePad->ShouldDelete())
+			{
+				gamePad->SetShouldDelete(true);
+			}
+		}
+
+		for (auto& command : m_GamepadCommands)
+		{
+			m_pGamePads[command->gamepadIndex]->SetShouldDelete(false);
 		}
 	}
 }

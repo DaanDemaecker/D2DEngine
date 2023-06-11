@@ -52,6 +52,8 @@ namespace D2D
 
 		bool ProcessInput();
 
+		int GetGamePad();
+
 		void AddKeyboardCommand(SDL_Scancode keyCode, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName);
 
 		void AddGamepadCommand(int index, GamepadButton button, keyState keyState, std::unique_ptr<Command> pCommand, const std::string& sceneName);
@@ -71,5 +73,6 @@ namespace D2D
 		void HandleCommands();
 		bool CheckIndex(int index);
 		void RemoveDisconnectedControllers();
+		void RemoveUnusedControllers();
 	};
 }

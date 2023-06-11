@@ -1,7 +1,6 @@
 #pragma once
 #include "Enums.h"
 #include <Windows.h>
-//#include <Xinput.h>
 
 namespace D2D
 {
@@ -26,6 +25,8 @@ namespace D2D
 		bool IsDown(GamepadButton button);
 
 		int GetIndex() const { return m_GamepadIndex; }
+
+		void SetShouldDelete(bool shouldDelete) { m_ShouldDelete = shouldDelete; }
 
 		bool ShouldDelete() const { return m_ShouldDelete; }
 

@@ -39,6 +39,8 @@ namespace D2D
 
 		int GetIndex() const { return m_pImpl->GetIndex(); }
 
+		void SetShouldDelete(bool shouldDelete) { m_pImpl->SetShouldDelete(shouldDelete); }
+
 		bool ShouldDelete() const { return m_pImpl->ShouldDelete(); }
 
 	private:
