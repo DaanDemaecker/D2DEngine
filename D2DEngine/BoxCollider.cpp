@@ -31,6 +31,7 @@ void D2D::BoxCollider::AddToPhysicsManager(bool isTrigger)
 	if (m_IsTrigger)
 	{
 		PhysicsManager::GetInstance().AddTrigger(this);
+		GetOwner()->GetTransform()->SetCollider(this);
 	}
 	else
 	{

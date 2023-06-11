@@ -31,7 +31,7 @@ namespace D2D
 	public:
 		virtual ~EnemyMovementBaseState() = default;
 
-		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) = 0;
+		virtual void FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) = 0;
 
 		virtual void OnStateChange(BaseEnemyComponent* pEnemy) = 0;
 	};
@@ -43,7 +43,7 @@ namespace D2D
 		EnemyWanderState(float marginX, float marginY, float frontDistance, float sideDistance);
 		~EnemyWanderState() = default;
 
-		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
+		virtual void FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
 
 		virtual void OnStateChange(BaseEnemyComponent* /*pEnemy*/) override {}
 
@@ -70,7 +70,7 @@ namespace D2D
 		EnemyLookingState(float marginX, float marginY, float frontDistance, float sideDistance, float playerDistance);
 		~EnemyLookingState() = default;
 
-		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
+		virtual void FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
 
 		virtual void OnStateChange(BaseEnemyComponent* pEnemy) override;
 
@@ -102,7 +102,7 @@ namespace D2D
 		ChasingState(float marginX, float marginY, float frontDistance, float sideDistance, float playerDistance, Transform* pPlayerTransform);
 		~ChasingState() = default;
 
-		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
+		virtual void FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override;
 
 		virtual void OnStateChange(BaseEnemyComponent* pEnemy) override;
 
@@ -127,7 +127,7 @@ namespace D2D
 		ControlledState() = default;
 		~ControlledState() = default;
 
-		virtual void Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override ;
+		virtual void FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed) override ;
 
 		virtual void OnStateChange(BaseEnemyComponent* /*pEnemy*/) override {}
 

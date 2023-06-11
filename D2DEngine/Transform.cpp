@@ -72,14 +72,49 @@ bool D2D::Transform::MoveLocalPosition(float x, float y)
 
 bool D2D::Transform::MoveLocalPosition(const glm::vec2& dir)
 {
+	if (m_pBoxCollider != nullptr && m_pCapsuleCollider != nullptr)
+	{
+		if (m_pBoxCollider->IsTrigger())
+		{
+			glm::vec2 direction{ dir };
+			if (PhysicsManager::GetInstance().CanMove(m_pCapsuleCollider, direction))
+			{
+				SetLocalPosition(m_LocalPosition + direction);
+				CheckTriggers();
+				return true;
+			}
+			else return false;
+		}
+		else
+		{
+			glm::vec2 direction{ dir };
+			if (PhysicsManager::GetInstance().CanMove(m_pBoxCollider, direction))
+			{
+				SetLocalPosition(m_LocalPosition + direction);
+				CheckTriggers();
+				return true;
+			}
+			else return false;
+		}
+	}
+	
 	if (m_pBoxCollider != nullptr)
 	{
 		glm::vec2 direction{ dir };
-		if (PhysicsManager::GetInstance().CanMove(m_pBoxCollider, direction))
+		if (m_pBoxCollider->IsTrigger())
 		{
 			SetLocalPosition(m_LocalPosition + direction);
 			CheckTriggers();
 			return true;
+		}
+		else
+		{
+			if (PhysicsManager::GetInstance().CanMove(m_pBoxCollider, direction))
+			{
+				SetLocalPosition(m_LocalPosition + direction);
+				CheckTriggers();
+				return true;
+			}
 		}
 
 	}
@@ -123,9 +158,17 @@ void D2D::Transform::CheckTriggers()
 {
 	if (m_pBoxCollider != nullptr)
 	{
+		if (m_pBoxCollider->IsTrigger())
+		{
+			PhysicsManager::GetInstance().CheckTrigger(m_pBoxCollider);
+		}
+		else
+		{
 			PhysicsManager::GetInstance().CheckColliderForTrigger(m_pBoxCollider);
+		}
 	}
-	else if (m_pCapsuleCollider != nullptr)
+	
+	if (m_pCapsuleCollider != nullptr)
 	{
 			PhysicsManager::GetInstance().CheckColliderForTrigger(m_pCapsuleCollider);
 	}

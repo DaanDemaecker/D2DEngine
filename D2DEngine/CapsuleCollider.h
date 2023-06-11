@@ -23,8 +23,6 @@ namespace D2D
 		Capsule& GetBounds();
 
 	private:
-		bool m_IsTrigger{};
-
 		Capsule m_Bounds{};
 
 		Transform* m_pTransform{};

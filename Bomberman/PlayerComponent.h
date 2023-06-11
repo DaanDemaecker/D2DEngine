@@ -16,7 +16,9 @@ namespace D2D
 		PlayerComponent() = default;
 		virtual ~PlayerComponent() override = default;
 
-		virtual void Update() override;
+		virtual void FixedUpdate() override;
+
+		virtual void LateUpdate() override;
 
 		void SetPlayerIndex(int idx) { m_PlayerIndex = idx; m_PlayerDieEvent.playerIndex = idx; }
 

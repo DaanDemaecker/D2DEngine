@@ -97,11 +97,11 @@ D2D::EnemyWanderState::EnemyWanderState(float marginX, float marginY, float fron
 	m_RaycastSideDistance = sideDistance;
 }
 
-void D2D::EnemyWanderState::Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
+void D2D::EnemyWanderState::FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
 {
 	if (m_TurnTimer > 0)
 	{
-		m_TurnTimer -= TimeManager::GetInstance().GetDeltaTime();
+		m_TurnTimer -= TimeManager::GetInstance().GetFixedTime();
 	}
 
 	if (m_TurnTimer <= 0 && Shouldturn(pTransform, pCollider))
@@ -118,7 +118,7 @@ void D2D::EnemyWanderState::Update(EnemyAnimator* pAnimator, Transform* pTransfo
 
 	pAnimator->FacingRight(frontDirection.x > 0);
 
-	if (!pTransform->MoveLocalPosition(frontDirection * speed * TimeManager::GetInstance().GetDeltaTime()))
+	if (!pTransform->MoveLocalPosition(frontDirection * speed * TimeManager::GetInstance().GetFixedTime()))
 	{
 		m_TurnTimer = 0;
 	}
@@ -187,11 +187,11 @@ D2D::EnemyLookingState::EnemyLookingState(float marginX, float marginY, float fr
 	m_PlayerRaycastDistance = playerDistance;
 }
 
-void D2D::EnemyLookingState::Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
+void D2D::EnemyLookingState::FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
 {
 	if (m_TurnTimer > 0)
 	{
-		m_TurnTimer -= TimeManager::GetInstance().GetDeltaTime();
+		m_TurnTimer -= TimeManager::GetInstance().GetFixedTime();
 	}
 
 	if (m_TurnTimer <= 0 && Shouldturn(pTransform, pCollider))
@@ -208,7 +208,7 @@ void D2D::EnemyLookingState::Update(EnemyAnimator* pAnimator, Transform* pTransf
 
 	pAnimator->FacingRight(frontDirection.x > 0);
 
-	if (!pTransform->MoveLocalPosition(frontDirection * speed * TimeManager::GetInstance().GetDeltaTime()))
+	if (!pTransform->MoveLocalPosition(frontDirection * speed * TimeManager::GetInstance().GetFixedTime()))
 	{
 		m_TurnTimer = 0;
 	}
@@ -313,9 +313,9 @@ D2D::ChasingState::ChasingState(float marginX, float marginY, float frontDistanc
 	m_pPlayerTransform = pPlayerTransform;
 }
 
-void D2D::ChasingState::Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
+void D2D::ChasingState::FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* pCollider, float speed)
 {
-	m_Timer -= TimeManager::GetInstance().GetDeltaTime();
+	m_Timer -= TimeManager::GetInstance().GetFixedTime();
 
 	auto pos{ pTransform->GetWorldPosition() };
 	auto playerPos{ m_pPlayerTransform->GetWorldPosition() };
@@ -337,7 +337,7 @@ void D2D::ChasingState::Update(EnemyAnimator* pAnimator, Transform* pTransform, 
 
 	LookForPlayer(pTransform, pCollider);
 
-	pTransform->MoveLocalPosition(direction * speed * TimeManager::GetInstance().GetDeltaTime());
+	pTransform->MoveLocalPosition(direction * speed * TimeManager::GetInstance().GetFixedTime());
 }
 
 void D2D::ChasingState::OnStateChange(BaseEnemyComponent* pEnemy)
@@ -382,15 +382,13 @@ void D2D::ChasingState::LookForPlayer(Transform* pTransform, Collider* pCollider
 
 #pragma endregion chasingState
 
-void D2D::ControlledState::Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* /*pCollider*/, float speed)
+void D2D::ControlledState::FixedUpdate(EnemyAnimator* pAnimator, Transform* pTransform, Collider* /*pCollider*/, float speed)
 {
 	pAnimator->FacingRight(m_Direction.x > 0);
 
-	m_Direction *= TimeManager::GetInstance().GetDeltaTime() * speed;
+	m_Direction *= TimeManager::GetInstance().GetFixedTime() * speed;
 
 	pTransform->MoveLocalPosition(m_Direction);
-
-	m_Direction = glm::vec2{};
 }
 
 void D2D::ControlledState::SetDirection(const glm::vec2& direction)

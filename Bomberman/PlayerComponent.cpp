@@ -6,12 +6,13 @@
 #include "ExplosionComponent.h"
 #include "Collider.h"
 #include "ServiceLocator.h"
+#include "BaseEnemyComponent.h"
 #include <iostream>
 
 #include "PhysicsManager.h"
 #include "Renderer.h"
 
-void D2D::PlayerComponent::Update()
+void D2D::PlayerComponent::FixedUpdate()
 {
 	if (m_pTransform == nullptr)
 	{
@@ -31,7 +32,7 @@ void D2D::PlayerComponent::Update()
 
 	if (m_pTransform != nullptr && m_Movement != glm::vec2{} && !m_IsDead)
 	{
-		m_Movement = glm::normalize(m_Movement) * m_Speed * TimeManager::GetInstance().GetDeltaTime();
+		m_Movement = glm::normalize(m_Movement) * m_Speed * TimeManager::GetInstance().GetFixedTime();
 
 		auto pos{ m_pTransform->GetWorldPosition() };
 
@@ -40,8 +41,12 @@ void D2D::PlayerComponent::Update()
 		{
 			m_pTransform->MoveLocalPosition(m_Movement);
 		}
-		m_Movement = glm::vec2{};
 	}
+}
+
+void D2D::PlayerComponent::LateUpdate()
+{
+	m_Movement = glm::vec2{};
 }
 
 void D2D::PlayerComponent::PlaceBomb()
@@ -77,6 +82,10 @@ void D2D::PlayerComponent::PickupItem()
 void D2D::PlayerComponent::OnTriggerEnter(const Collider* pCollider)
 {
 	if (pCollider->HasComponent<ExplosionComponent>())
+	{
+		KillPlayer();
+	}
+	else if (pCollider->HasComponent<BaseEnemyComponent>())
 	{
 		KillPlayer();
 	}

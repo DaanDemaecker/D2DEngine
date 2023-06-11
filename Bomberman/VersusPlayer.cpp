@@ -13,7 +13,7 @@
 #include "Subject.h"
 #include <iostream>
 
-void D2D::VersusPlayer::Update()
+void D2D::VersusPlayer::FixedUpdate()
 {
 	if (m_pControlledEnemy == nullptr)
 	{
@@ -85,7 +85,7 @@ void D2D::VersusPlayer::Notify(const Event& event)
 
 void D2D::VersusPlayer::MovePlayer()
 {
-	m_Direction = glm::normalize(m_Direction) * m_Speed * TimeManager::GetInstance().GetDeltaTime();
+	m_Direction = glm::normalize(m_Direction) * m_Speed * TimeManager::GetInstance().GetFixedTime();
 
 	auto pos{ GetTransform()->GetWorldPosition()};
 

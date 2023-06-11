@@ -18,8 +18,10 @@ namespace D2D
 
 		std::vector<Collider*>& GetCollidersInTrigger() { return m_pCollidersInTrigger; }
 
-
+		bool IsTrigger() const { return m_IsTrigger; }
 	private:
 		std::vector<Collider*> m_pCollidersInTrigger{};
+	protected:
+		bool m_IsTrigger{ false };
 	};
 }

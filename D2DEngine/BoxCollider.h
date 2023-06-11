@@ -21,8 +21,6 @@ namespace D2D
 		BoxColliderBounds& GetBounds();
 
 	private:
-		bool m_IsTrigger{ false };
-
 		BoxColliderBounds m_Bounds{};
 
 		Transform* m_pTransform{};

@@ -23,7 +23,7 @@ namespace D2D
 		BaseEnemyComponent() = default;
 		virtual ~BaseEnemyComponent() override = default;
 
-		virtual void Update();
+		virtual void FixedUpdate();
 
 		void SetVariables(EnemyType type, float speed, Collider* pCollider, Collider* pTrigger);
 

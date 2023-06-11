@@ -13,7 +13,7 @@ namespace D2D
 		VersusPlayer() = default;
 		virtual ~VersusPlayer() override = default;
 
-		virtual void Update() override;
+		virtual void FixedUpdate() override;
 
 		void Setup(const std::string& sceneName, float speed, int controllerIdx, const glm::vec2& levelMin, const glm::vec2& levelMax);
 
