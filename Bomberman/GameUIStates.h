@@ -25,7 +25,7 @@ namespace D2D
 		~IntroState() = default;
 
 		void SetVariables( GameObject * pIntroScreen, GameObject* pPlayfield,
-			Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay,
+			Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay, Subject* pTimer,
 			TextComponent* pText);
 
 		virtual void Update() override;
@@ -45,6 +45,7 @@ namespace D2D
 		Observer* m_pPlayingStateObserver{ nullptr };
 		Observer* m_pPointsDisplay{ nullptr };
 		Observer* m_pLivesDisplay{ nullptr };
+		Subject* m_pTimer{ nullptr };
 
 		std::jthread m_LoadLevelThread{};
 

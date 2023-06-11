@@ -37,10 +37,10 @@ namespace D2D
 		std::shared_ptr<Texture2D> m_pBombtexture{};
 		float m_BombSize{};
 
-		int m_BombStrength{2};
-		int m_BombAmount{5};
+		int m_BombStrength{1};
+		int m_BombAmount{1};
 
-		bool m_RemoteControlActive{ true };
+		bool m_RemoteControlActive{ false };
 
 		void SpawnBomb(const glm::vec2& pos);
 

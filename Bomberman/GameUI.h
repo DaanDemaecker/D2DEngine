@@ -14,7 +14,7 @@ namespace D2D
 		virtual ~GameUI() = default;
 
 		void Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject,
-			Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen, GameObject* pLevelEndScreen,
+			Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, Subject* pTimer, GameObject* pGameOverScreen, GameObject* pLevelEndScreen,
 			TextComponent* pText);
 
 		virtual void OnSceneLoad() override;

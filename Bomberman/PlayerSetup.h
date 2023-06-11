@@ -27,7 +27,7 @@ extern SDL_Window* g_window;
 
 namespace D2D
 {
-	GameObject* SetupPlayer(GameObject* pWorld, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay,
+	GameObject* SetupPlayer(GameObject* pWorld, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, Subject* pTimer,
 		const std::string& sceneName, int idx, int controllerIdx, float gridSize,
 		std::vector<std::shared_ptr<Texture2D>> playerSprites, std::shared_ptr<Texture2D> bombSprites)
 	{
@@ -53,6 +53,7 @@ namespace D2D
 		pPlayerTransform->SetWorldPosition(pGridComponent->GetPlayerPosition(idx));
 
 		const auto pPlayerComponent = pPlayer->AddComponent<D2D::PlayerComponent>().get();
+		pTimer->AddObserver(pPlayerComponent);
 		pPlayerComponent->SetSpeed(playerSpeed);
 		pPlayerComponent->SetPlayerHalfWidth(playerRadius);
 		pPlayerComponent->SetLevelWidth(static_cast<float>(windowWidth));

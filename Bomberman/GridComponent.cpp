@@ -327,7 +327,7 @@ float D2D::GridComponent::GetLevelWidth()
 	return m_SquareSize * m_Columns;
 }
 
-void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, const std::string& sceneName)
+void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize, Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, Subject* pTimer, const std::string& sceneName)
 {
 	const auto pEnemyManager{ GetOwner()->CreateNewObject("EnemyManager") };
 	m_pEnemyManager = pEnemyManager->AddComponent<EnemyManager>().get();
@@ -348,23 +348,23 @@ void D2D::GridComponent::SetupGame(const std::string& levelFile, float cubeSize,
 
 	if (GameData::GetInstance().GetGameMode() == GameMode::SinglePlayer)
 	{
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 	else if(GameData::GetInstance().GetGameMode() == GameMode::Coop)
 	{
-		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 1, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
-		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player2 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 1, 0, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player1 = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player1->GetTransform().get(), player2->GetTransform().get());
 	}
 	else
 	{
-		auto parent{ GetOwner()->CreateNewObject("Crosshai Parent") };
+		auto parent{ GetOwner()->CreateNewObject("Crosshair Parent") };
 
 		SetupVerusPlayer(sceneName, parent, m_pCrosshairSprite, 0, m_SquareSize);
 
 
-		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
+		auto player = SetupPlayer(GetOwner(), pMainLevelUIObserver, pLivesDisplay, pPointsDisplay, pTimer, sceneName, 0, 1, cubeSize, m_pPlayerSprites, m_pBombSprites);
 		cameraComponent->SetPlayer(player->GetTransform().get());
 	}
 }

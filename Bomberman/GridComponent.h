@@ -67,7 +67,7 @@ namespace D2D
 		float GetLevelWidth();
 
 		void SetupGame(const std::string& levelFile, float cubeSize, 
-			Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay,
+			Observer* pMainLevelUIObserver, Observer* pLivesDisplay, Observer* pPointsDisplay, Subject* pTimer,
 			const std::string& sceneName);
 		void EndGame();
 

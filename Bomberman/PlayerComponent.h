@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Subject.h"
 #include "PlayerEvents.h"
+#include "Observer.h"
 
 namespace D2D
 {
@@ -10,7 +11,7 @@ namespace D2D
 	class Collider;
 	enum class PowerupType;
 
-	class PlayerComponent final : public Component, public Subject
+	class PlayerComponent final : public Component, public Subject, public Observer
 	{
 	public:
 		PlayerComponent() = default;
@@ -39,6 +40,8 @@ namespace D2D
 		virtual void OnTriggerEnter(const Collider* pCollider) override;
 
 		void PowerupCollected(PowerupType powerupType);
+
+		virtual void Notify(const Event& event) override;
 	
 	private:
 		Transform* m_pTransform{};

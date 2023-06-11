@@ -11,6 +11,7 @@
 
 #include "PhysicsManager.h"
 #include "Renderer.h"
+#include "WorldEvents.h"
 
 void D2D::PlayerComponent::FixedUpdate()
 {
@@ -68,6 +69,9 @@ void D2D::PlayerComponent::PlaceBomb()
 
 void D2D::PlayerComponent::KillPlayer()
 {
+	if (m_IsDead)
+		return;
+
 	NotifyObservers(m_PlayerDieEvent);
 	ServiceLocator::GetSoundSystem().Play(7, 128, 0);
 	m_pAnimator->Kill();
@@ -85,10 +89,6 @@ void D2D::PlayerComponent::OnTriggerEnter(const Collider* pCollider)
 	{
 		KillPlayer();
 	}
-	else if (pCollider->HasComponent<BaseEnemyComponent>())
-	{
-		KillPlayer();
-	}
 }
 
 void D2D::PlayerComponent::PowerupCollected(PowerupType powerupType)
@@ -97,4 +97,12 @@ void D2D::PlayerComponent::PowerupCollected(PowerupType powerupType)
 	powerupEvent.type = powerupType;
 
 	NotifyObservers(powerupEvent);
+}
+
+void D2D::PlayerComponent::Notify(const Event& event)
+{
+	if (auto timeOverEvent{ dynamic_cast<const TimerOverEvent*>(&event) })
+	{
+		KillPlayer();
+	}
 }

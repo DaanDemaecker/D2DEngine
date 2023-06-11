@@ -15,7 +15,7 @@
 
 #pragma region IntroState
 void D2D::IntroState::SetVariables(GameObject* pIntroScreen, GameObject* pPlayfield,
-	Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay,
+	Observer* pPlayingStateObserver, Observer* pPointsDisplay, Observer* pLivesDisplay, Subject* pTimer,
 	TextComponent* pText)
 {
 	m_pIntroScreen = pIntroScreen;
@@ -24,6 +24,7 @@ void D2D::IntroState::SetVariables(GameObject* pIntroScreen, GameObject* pPlayfi
 	m_pPointsDisplay = pPointsDisplay;
 	m_pLivesDisplay = pLivesDisplay;
 	m_pTextComponent = pText;
+	m_pTimer = pTimer;
 }
 
 void D2D::IntroState::Update()
@@ -56,7 +57,7 @@ void D2D::IntroState::OnStateEnter()
 	{
 		constexpr float gridSize{ 34.f };
 		m_LoadLevelThread = std::jthread(&GridComponent::SetupGame, m_pGrid, "../Data/TextFiles/Level" + std::to_string(GameData::GetInstance().GetCurrentLevel()) +".txt", gridSize,
-			m_pPlayingStateObserver, m_pLivesDisplay, m_pPointsDisplay,
+			m_pPlayingStateObserver, m_pLivesDisplay, m_pPointsDisplay, m_pTimer,
 			D2D::SceneManager::GetInstance().GetActiveScene()->GetName());
 	}
 

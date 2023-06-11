@@ -4,7 +4,7 @@
 #include "GameData.h"
 
 void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, GameObject* pPlayfieldObject,
-	Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, GameObject* pGameOverScreen, GameObject* pLevelEndScreen,
+	Observer* pTimerDisplay, Observer* pPointsDisplay, Observer* pLivesDisplay, Subject* pTimer, GameObject* pGameOverScreen, GameObject* pLevelEndScreen,
 	TextComponent* pText)
 {
 	if (pHud != nullptr)
@@ -22,7 +22,7 @@ void D2D::GameUI::Initialize(GameObject* pIntroScreenObject, GameObject* pHud, G
 	m_pGameOverState = std::make_unique<GameOverState>();
 	m_pLevelEndState = std::make_unique<LevelEndState>();
 
-	m_pIntroState->SetVariables(pIntroScreenObject, pPlayfieldObject, m_pPlayingState.get(), pPointsDisplay, pLivesDisplay, pText);
+	m_pIntroState->SetVariables(pIntroScreenObject, pPlayfieldObject, m_pPlayingState.get(), pPointsDisplay, pLivesDisplay, pTimer, pText);
 	m_pIntroState->AddObserver(pTimerDisplay);
 	m_pPlayingState->SetVariables(pHud, pPlayfieldObject);
 	m_pGameOverState->SetVariables(pGameOverScreen);
