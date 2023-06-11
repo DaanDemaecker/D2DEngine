@@ -32,7 +32,7 @@ void load()
 	D2D::ServiceLocator::RegisterSoundSystem(std::make_unique<D2D::DebugSDLSoundSystem>());
 #endif
 	D2D::ServiceLocator::GetSoundSystem().ReadSoundSheet("/TextFiles/SoundEffects.txt");
-	D2D::ServiceLocator::GetSoundSystem().SetVolume(0.1f);
+	D2D::ServiceLocator::GetSoundSystem().SetVolume(0.5f);
 
 	auto& physics = D2D::PhysicsManager::GetInstance();
 	physics.AddIgnoreLayers("Player", "Enemy");
