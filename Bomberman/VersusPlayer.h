@@ -19,6 +19,8 @@ namespace D2D
 
 		void Move(const glm::vec2& directoin);
 
+		void Pick();
+
 
 		virtual void Notify(const Event& event) override;
 

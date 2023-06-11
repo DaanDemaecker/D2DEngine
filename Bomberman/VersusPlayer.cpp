@@ -5,6 +5,13 @@
 #include "FunctionCommand.h"
 #include "TimeManager.h"
 #include "Transform.h"
+#include "PhysicsManager.h"
+#include "Collider.h"
+#include "EnemyMovementStates.h"
+#include "RenderComponent.h"
+#include "BaseEnemyComponent.h"
+#include "Subject.h"
+#include <iostream>
 
 void D2D::VersusPlayer::Update()
 {
@@ -32,6 +39,8 @@ void D2D::VersusPlayer::Setup(const std::string& sceneName, float speed, int con
 	input.AddGamepadCommand(controllerIdx, GamepadButton::DpadDown, D2D::keyState::pressed, std::make_unique<D2D::FunctionCommand>(std::bind(&VersusPlayer::Move, this, glm::vec2{ 0, 1 })), sceneName);
 	input.AddGamepadCommand(controllerIdx, GamepadButton::DpadRight, D2D::keyState::pressed, std::make_unique<D2D::FunctionCommand>(std::bind(&VersusPlayer::Move, this, glm::vec2{ 1, 0 })), sceneName);
 
+	input.AddGamepadCommand(controllerIdx, GamepadButton::ButtonSouth, D2D::keyState::Down, std::make_unique<D2D::FunctionCommand>(std::bind(&VersusPlayer::Pick, this)), sceneName);
+
 }
 
 void D2D::VersusPlayer::Move(const glm::vec2& direction)
@@ -39,11 +48,38 @@ void D2D::VersusPlayer::Move(const glm::vec2& direction)
 	m_Direction = direction;
 }
 
+void D2D::VersusPlayer::Pick()
+{
+	if (m_pControlledEnemy != nullptr)
+		return;
+
+	auto pos{ GetTransform()->GetWorldPosition() };
+
+	auto result{ PhysicsManager::GetInstance().Raycast(pos - glm::vec2{1, 1}, pos + glm::vec2{1, 1})};
+
+	if (result != nullptr)
+	{
+		auto pEnemy{result->GetComponent<BaseEnemyComponent>()};
+
+		if (pEnemy)
+		{
+			auto pEnemyController{ std::make_unique<ControlledState>() };
+			m_pControlledEnemy = pEnemyController.get();
+
+			pEnemy->SetMovementState(std::move(pEnemyController));
+			pEnemy->AddObserver(this);
+
+			GetComponent<RenderComponent>()->SetActive(false);
+		}
+	}
+}
+
 void D2D::VersusPlayer::Notify(const Event& event)
 {
 	if (const auto enemyDieEvent{ dynamic_cast<const EnemyDieEvent*>(&event) })
 	{
 		m_pControlledEnemy = nullptr;
+		GetComponent<RenderComponent>()->SetActive(true);
 	}
 }
 
@@ -74,4 +110,6 @@ void D2D::VersusPlayer::MovePlayer()
 
 void D2D::VersusPlayer::MoveEnemy()
 {
+	m_pControlledEnemy->SetDirection(m_Direction);
+	m_Direction = glm::vec2{};
 }

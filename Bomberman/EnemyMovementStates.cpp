@@ -382,8 +382,15 @@ void D2D::ChasingState::LookForPlayer(Transform* pTransform, Collider* pCollider
 
 #pragma endregion chasingState
 
-void D2D::ControlledState::Update(EnemyAnimator* /*pAnimator*/, Transform* /*pTransform*/, Collider* /*pCollider*/, float /*speed*/)
+void D2D::ControlledState::Update(EnemyAnimator* pAnimator, Transform* pTransform, Collider* /*pCollider*/, float speed)
 {
+	pAnimator->FacingRight(m_Direction.x > 0);
+
+	m_Direction *= TimeManager::GetInstance().GetDeltaTime() * speed;
+
+	pTransform->MoveLocalPosition(m_Direction);
+
+	m_Direction = glm::vec2{};
 }
 
 void D2D::ControlledState::SetDirection(const glm::vec2& direction)
