@@ -497,7 +497,8 @@ void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 	const float enemyWidth{ enemyTriggerWidth * 0.9f };
 
 	const float slowSpeed{ 1.5f * m_SquareSize };
-	const float fastSpeed{ slowSpeed * 1.5f };
+	const float normalSpeed{ slowSpeed * 1.5f };
+	const float fastSpeed{ slowSpeed * 2.f };
 
 
 	const auto pEnemy = GetOwner()->CreateNewObject("Enemy");
@@ -523,22 +524,22 @@ void D2D::GridComponent::SpawnEnemy(int number, EnemyType type)
 	case D2D::EnemyType::Balloom:
 		pAnimator->Init(pRenderComponent.get(), m_pBalloonTextures);
 		pEnemyComponent->SetVariables(type, slowSpeed, pCollider.get(), pTrigger.get());
-		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, enemyHeight * 0.6f, m_SquareSize));
 		break;
 	case D2D::EnemyType::Oneal:
 		pAnimator->Init(pRenderComponent.get(), m_pOnealTextures);
-		pEnemyComponent->SetVariables(type, slowSpeed, pCollider.get(), pTrigger.get());
-		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
+		pEnemyComponent->SetVariables(type, normalSpeed, pCollider.get(), pTrigger.get());
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyLookingState>(enemyWidth / 2.5f, enemyHeight / 2.5f, enemyHeight * 0.6f, m_SquareSize, 3.f * m_SquareSize));
 		break;
 	case D2D::EnemyType::Doll:
 		pAnimator->Init(pRenderComponent.get(), m_pDollTextures);
-		pEnemyComponent->SetVariables(type, fastSpeed, pCollider.get(), pTrigger.get());
-		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
+		pEnemyComponent->SetVariables(type, normalSpeed, pCollider.get(), pTrigger.get());
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, enemyHeight * 0.6f, m_SquareSize));
 		break;
 	case D2D::EnemyType::Minvo:
 		pAnimator->Init(pRenderComponent.get(), m_pMinvoTextures);
 		pEnemyComponent->SetVariables(type, fastSpeed, pCollider.get(), pTrigger.get());
-		pEnemyComponent->SetMovementState(std::make_unique<EnemyWanderState>(enemyWidth / 2.5f, enemyHeight / 2.5f, 20.f));
+		pEnemyComponent->SetMovementState(std::make_unique<EnemyLookingState>(enemyWidth / 2.5f, enemyHeight / 2.5f, enemyHeight * 0.6f, m_SquareSize, 3.f * m_SquareSize));
 		break;
 	default:
 		break;

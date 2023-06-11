@@ -14,6 +14,8 @@ void D2D::BaseEnemyComponent::Update()
 	if (!m_IsDead && m_pMovement != nullptr && m_pCollider != nullptr && m_pAnimator != nullptr)
 	{
 		m_pMovement->Update(m_pAnimator, GetTransform(), m_pCollider, m_Speed);
+
+		m_pMovement->OnStateChange(this);
 	}
 }
 
