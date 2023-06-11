@@ -12,6 +12,8 @@
 #include "GameData.h"
 #include "WorldEvents.h"
 #include "TextComponent.h"
+#include "InputManager.h"
+#include "FunctionCommand.h"
 
 #pragma region IntroState
 void D2D::IntroState::SetVariables(GameObject* pIntroScreen, GameObject* pPlayfield,
@@ -113,6 +115,9 @@ void D2D::PlayingState::ChangeState(GameUI* gameUI)
 void D2D::PlayingState::OnStateEnter()
 {
 	ServiceLocator::GetSoundSystem().Play(0, 128, -1);
+	InputManager::GetInstance().AddKeyboardCommand(SDL_SCANCODE_F1, keyState::Down,
+		std::make_unique<FunctionCommand>(std::bind(&D2D::PlayingState::Notify, this, LevelCompleteEvent())),
+		SceneManager::GetInstance().GetActiveScene()->GetName());
 
 	m_ShouldRestart = false;
 	m_LevelEnd = false;
