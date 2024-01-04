@@ -12,6 +12,7 @@ The goal was to make a small component-based engine that teaches us programming 
 The main features of this engine are:
 - GameObjects
 - Components
+- Scenes
 - Sound effects
 - Box and capsule physics
 - Keyboard and controller input
