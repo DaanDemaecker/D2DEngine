@@ -5,7 +5,7 @@ The D2D engine is a very small 2D engine made by Daan Demaecker for the end assi
 
 ## Goals
 
-The goal was to make a small component-based engine that teaches us programming patterns often used in the industry. To prove that our engine actually works, we were each assigned a game to recreate using our very own engine.
+The goal was to make a small component-based engine that teaches us programming patterns often used in the industry. To prove that our engine actually works, we were each assigned a game to recreate using our very own engine. The game assigned to me was the classic Bomberman.
 
 ## Features
 
